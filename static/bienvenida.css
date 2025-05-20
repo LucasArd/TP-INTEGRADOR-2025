@@ -1,0 +1,67 @@
+/* Bienvenida */
+html {
+    line-height: 1.15; /* 1 */
+    -webkit-text-size-adjust: 100%; /* 2 */
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+.nunito{
+  font-family: "Nunito", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: bold;
+  font-style: normal;
+}
+body{
+  background: #585123;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to top, #eec170, #772f1a);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to top, #eec170, #772f1a); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra horizontalmente */
+    justify-content: center; /* Centra verticalmente */
+    height: 100vh; /* Altura total de la pantalla */
+}
+
+.contenedor-logo{
+    width: 300px;
+    height: 500px;
+    margin-bottom: 5rem;
+    
+}
+
+.img-circular{
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+
+.contenedor-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra horizontalmente */
+    justify-content: center; /* Centra verticalmente */
+    margin-bottom: 10rem;
+    
+}
+
+
+
+.raise:hover,
+.raise:focus {
+  box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
+  transform: translateY(-0.25em);
+}
+.raise{
+  border-radius: 6px;
+  background: #585123;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom, #eec170, #772f1a);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #eec170, #772f1a);
+}
+
+
