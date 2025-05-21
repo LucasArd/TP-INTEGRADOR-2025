@@ -80,13 +80,22 @@ header {
 }
 
 .card {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.445);
+    background-color: whitesmoke;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border-radius: 8px;
+    padding: 15px;
 }
 
 .card:hover {
     transform: scale(1.05);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 6px 12px rgb(241, 129, 0)
+}
+
+#zapatillas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 50px;
+    padding: 20px;
 }
 

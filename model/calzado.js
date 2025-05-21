@@ -1,12 +1,9 @@
 export class Calzado{
     id;
     name;
+    type;
     color;
-    sizes = [
-        sizeUS,
-        sizeEU,
-        sizeUK,
-    ]
+    sizes;
     image;
     url;
     constructor(id,name,type,color,sizes,image,url){
@@ -32,7 +29,7 @@ export class Calzado{
         pDesign.textContent = `Diseño: ${this.design}`;
         
         const pSizes = document.createElement("p");
-        pSizes.textContent = `Talles: ${this.generes.join(', ')}`;
+        pSizes.textContent = `Talles: ${this.sizes.join(', ')}`;
 
         const a = document.createElement('a');
         a.href = this.url;
