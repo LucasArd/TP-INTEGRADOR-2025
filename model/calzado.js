@@ -16,32 +16,68 @@ export class Calzado{
         this.url = url;
     }
 
-    createHtmlElement(){
-        const div = document.createElement("div");
-        div.classList.add("card", "h-100");
-        const h2 = document.createElement("h2");
-        h2.textContent = this.name;
-        const pType = document.createElement("p");
-        pType.textContent = `Tipo: ${this.type}`;
-        const pColor = document.createElement("p");
-        pColor.textContent = `Color: ${this.color}`;
-        const pDesign = document.createElement("p");
-        pDesign.textContent = `Diseño: ${this.design}`;
-        
-        const pSizes = document.createElement("p");
-        pSizes.textContent = `Talles: ${this.sizes.join(', ')}`;
+    createHtmlElement() {
+    const card = document.createElement("div");
+    card.classList.add("card");
+    card.style.width = "18rem";
 
-        const a = document.createElement('a');
-        a.href = this.url;
-        a.target = "_blank";
+    // Imagen
+    const img = document.createElement("img");
+    img.src = this.image;
+    img.classList.add("card-img-top");
+    img.alt = this.name;
+    card.appendChild(img);
 
-        const img = document.createElement('img');
-        img.src = this.image;
-        img.alt = this.name;
-        img.width = 200;
-        a.appendChild(img);
+    // Card body con título y descripción
+    const cardBody = document.createElement("div");
+    cardBody.classList.add("card-body");
 
-        [h2, pType, pColor, pDesign, pSizes, a].forEach(elem=> div.appendChild(elem));
-        return div;
-    }
+    const h5 = document.createElement("h5");
+    h5.classList.add("card-title");
+    h5.textContent = this.name;
+
+    const p = document.createElement("p");
+    p.classList.add("card-text");
+    p.textContent = `Tipo: ${this.type} - Color: ${this.color}`;
+
+    cardBody.appendChild(h5);
+    cardBody.appendChild(p);
+    card.appendChild(cardBody);
+
+    // Lista de detalles
+    const ul = document.createElement("ul");
+    ul.classList.add("list-group", "list-group-flush");
+
+    const liType = document.createElement("li");
+    liType.classList.add("list-group-item");
+    liType.textContent = `Tipo: ${this.type}`;
+
+    const liColor = document.createElement("li");
+    liColor.classList.add("list-group-item");
+    liColor.textContent = `Color: ${this.color}`;
+
+    const liSizes = document.createElement("li");
+    liSizes.classList.add("list-group-item");
+    liSizes.textContent = `Talles: ${this.sizes.join(', ')}`;
+
+    ul.appendChild(liType);
+    ul.appendChild(liColor);
+    ul.appendChild(liSizes);
+    card.appendChild(ul);
+
+    // Card body con enlaces
+    const cardBodyLinks = document.createElement("div");
+    cardBodyLinks.classList.add("card-body");
+
+    const link = document.createElement("a");
+    link.href = this.url;
+    link.classList.add("card-link");
+    link.target = "_blank";
+    link.textContent = "Ver producto";
+
+    cardBodyLinks.appendChild(link);
+    card.appendChild(cardBodyLinks);
+
+    return card;
+}
 }
