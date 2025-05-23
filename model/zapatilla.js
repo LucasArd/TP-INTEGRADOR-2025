@@ -3,8 +3,8 @@ import { Calzado } from './calzado.js';
 export class Zapatilla extends Calzado {
     design;
 
-    constructor(id, name, type = "street", color, sizes, image, url, design = "") {
-        super(id, name, type, color, sizes, image, url);
+    constructor(id, name, type = "street", color, sizes, image, url, price, design = "") {
+        super(id, name, type, color, sizes, image, url, price);
         this.design = design;
     }
 

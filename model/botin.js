@@ -3,8 +3,8 @@ import { Calzado } from './calzado.js';
 export class Botin extends Calzado {
     spikeLength;
 
-    constructor(id, name, type, color, sizes, image, url, spikeLength = null) {
-        super(id, name, type, color, sizes, image, url);
+    constructor(id, name, type, color, sizes, image, url, price, spikeLength = null) {
+        super(id, name, type, color, sizes, image, url, price);
 
         if (type.toLowerCase() === 'cesped') {
             this.spikeLength = spikeLength; // pued ser TALL o SMALL

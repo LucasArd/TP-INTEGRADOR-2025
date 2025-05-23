@@ -21,7 +21,7 @@ header {
     grid-area: 1 / 1 / 2 / 3;
     background-color: #772f1a;
     padding: 20px;
-    height: 70px;
+    height: 90px;
     color: #f58549;
     align-items: center;
     display: flex;
@@ -98,6 +98,5 @@ header {
     gap: 50px;
     padding: 20px;
     justify-items: center;
-    
 }
 

@@ -6,7 +6,8 @@ export class Calzado{
     sizes;
     image;
     url;
-    constructor(id,name,type,color,sizes,image,url){
+    price;
+    constructor(id,name,type,color,sizes,image,url,price){
         this.id = id;
         this.name = name;
         this.type = type;
@@ -14,6 +15,7 @@ export class Calzado{
         this.sizes = sizes;
         this.image = image;
         this.url = url;
+        this.price = price;
     }
 
     createHtmlElement() {
@@ -38,7 +40,7 @@ export class Calzado{
 
     const p = document.createElement("p");
     p.classList.add("card-text");
-    p.textContent = `Tipo: ${this.type} - Color: ${this.color}`;
+    p.textContent = `Precio: $${this.price}`;
 
     cardBody.appendChild(h5);
     cardBody.appendChild(p);
