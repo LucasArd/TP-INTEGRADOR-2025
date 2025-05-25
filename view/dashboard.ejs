@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/dashboard.css">
+    <title>DASHBOARD</title>
+</head>
+
+<body>
+    <main class="main">
+        <header class="nunito">
+            <div class="contenedor-logo">
+                <img src="../resources/img/imagen_logo_circular.webp" alt="logo_circular" class="contenedor-logo-img">
+                <h1 class="contenedor-logo-h1">JustPickIt</h1>
+            </div>
+            <!-- <search>
+                <input type="text" id="txt_busqueda" placeholder="Buscar...">
+                <i class="fa-solid fa-magnifying-glass" id="i_lupa"></i>
+            </search> -->
+            <!-- NAVEGACION TEMPORAL, HAY QUE SACAR BIENVENIDA Y TICKET -->
+            <nav class="nav">
+                <ul class="nav-menu">
+                    <li class="nav-menu-item">
+                        <a href="bienvenida.html" class="nav-menu-link">Bienvenida</a>
+                    </li>
+                    <li class="nav-menu-item">
+                        <a href="productos.html" class="nav-menu-link">Productos</a>
+                    </li>
+                    <li class="nav-menu-item">
+                        <a href="carrito.html" class="nav-menu-link">Carrito</a>
+                    </li>
+                    <li class="nav-menu-item">
+                        <a href="ticket.html" class="nav-menu-link">Ticket</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+    </main>
+
+    <h1>Detalles de la Zapatilla</h1>
+    <ul>
+        <% zapatillas.forEach(z=> { %>
+            <li>
+                <h2>
+                    <%= z.name %>
+                </h2>
+                <p>Estilo: <%= z.type %>
+                </p>
+                <p>Color: <%= z.color %></p>
+                <% if (Array.isArray(z.talles)) { %>
+                    <p>Talles: <%= z.sizes.join(",") %></p>
+                <% } else { %>
+                    <p>Talles: No disponibles</p>
+                <% } %>
+
+                <p>Precio: $<%= z.price %></p>
+
+                <img src=" /img/<%=z.image %>" alt="<%= z.name %>" width="200"/>
+
+                <p><a href="<%= z.link %>" target="_blank">Ver más</a></p>
+            </li>
+            <% }); %>
+    </ul>
+</body>
+
+</html>

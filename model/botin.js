@@ -1,4 +1,4 @@
-import { Calzado } from './calzado.js';
+const { Calzado } = require('./calzado'); 
 
 export class Botin extends Calzado {
     spikeLength;

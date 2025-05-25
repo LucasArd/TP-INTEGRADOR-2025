@@ -1,6 +1,7 @@
-import { Calzado } from './calzado.js';
+// import { Calzado } from './calzado.js';
+const { Calzado } = require('./calzado');
 
-export class Zapatilla extends Calzado {
+class Zapatilla extends Calzado {
     design;
 
     constructor(id, name, type = "street", color, sizes, image, url, price, design = "") {
@@ -20,3 +21,5 @@ export class Zapatilla extends Calzado {
         return div;
     }
 }
+
+module.exports = {Zapatilla};
