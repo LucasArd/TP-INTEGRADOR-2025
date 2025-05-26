@@ -1,12 +1,17 @@
-const { Zapatilla } = require('../../model/zapatilla');
+import { Zapatilla } from "../../model/zapatilla.js";
 
-const ejs = require('ejs');//npm install ejs.
-const path = require('path');
-const express = require('express') 
+import ejs from 'ejs';       // npm install ejs
+import path from 'path';
+import express from 'express';
 
-const app = express()
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
+// Para obtener __dirname en ES Modules:
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
+const app = express();
 
 app.use(express.static(path.join(__dirname, '../../static'))); // Esto seria un middleware
 
@@ -50,16 +55,17 @@ const zapatilla3 = new Zapatilla(
 );
 
 
-async function dashboard(req,res){
+async function dashboard(req, res) {
     const zapatillas = [zapatilla1, zapatilla2, zapatilla3];
-    let html = await ejs.renderFile(path.join(__dirname, '../../', 'view', 'dashboard.ejs') , { zapatillas });
+    let html = await ejs.renderFile(path.join(__dirname, '../../', 'view', 'dashboard.ejs'), { zapatillas });
     res.status(200).send(html);
 }
 
 app.get('/', dashboard);
 
-const port=3000
+const port = 3000
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+    console.log(`Example app listening on port ${port}\n`);
+    console.log(`Acceder en: http://localhost:3000/`);
 })
 

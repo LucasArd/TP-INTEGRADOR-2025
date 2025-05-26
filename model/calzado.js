@@ -1,4 +1,4 @@
-class Calzado{
+export class Calzado{
     id;
     name;
     type;
@@ -83,4 +83,3 @@ class Calzado{
     return card;
 }
 }
-module.exports = { Calzado };
