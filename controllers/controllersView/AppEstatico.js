@@ -5,8 +5,6 @@ import { modelPath, staticPath } from '../../paths/rutasVistas.js';
 const app = express()
 const port = 3000
 
-
-// http://localhost:3000/bienvenida.html
 app.use(express.static(staticPath));
 
 app.use("/model",express.static(modelPath));

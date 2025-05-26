@@ -23,7 +23,7 @@ const zapatilla1 = new Zapatilla(
     "Nike Air Max 90",
     "running",
     "Rojo",
-    [38, 39, 40, 41],
+    [38, 39, 40],
     "nike_air_max_90.jpg",
     "https://www.nike.com/air-max-90",
     120.99,
@@ -61,7 +61,25 @@ async function dashboard(req, res) {
     res.status(200).send(html);
 }
 
+async function viewAlta(req,res){
+    let html = await ejs.renderFile( path.join(__dirname, '../../', 'view', 'alta.ejs') , {nombre:'Horacio',apellido:'Serrano',abm:'A'} );
+    res.status(200).send(html);
+}
+
+async function viewBaja(req,res){
+    let html = await ejs.renderFile( path.join(__dirname, '../../', 'view', 'dashboard.ejs') , {nombre:'Horacio',apellido:'Serrano',abm:'B'} );
+    res.status(200).send(html);
+}
+
+async function viewMod(req,res){
+    let html = await ejs.renderFile( path.join(__dirname, '../../', 'view', 'dashboard.ejs') , {nombre:'Horacio',apellido:'Serrano',abm:'M'} );
+    res.status(200).send(html);
+}
+
 app.get('/', dashboard);
+app.get('/alta',viewAlta)
+app.get('/baja',viewBaja)
+app.get('/modificacion',viewMod)
 
 const port = 3000
 app.listen(port, () => {

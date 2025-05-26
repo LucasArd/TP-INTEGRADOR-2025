@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/dashboard.css">
+    <title>DASHBOARD</title>
+</head>
+
+<body>
+    <main class="main">
+        <header class="nunito">
+            <div class="contenedor-logo">
+                <img src="../resources/img/imagen_logo_circular.webp" alt="logo_circular" class="contenedor-logo-img">
+                <h1 class="contenedor-logo-h1">JustPickIt</h1>
+            </div>
+            <nav class="nav">
+                <ul class="nav-menu">
+                    <li class="nav-menu-item">
+                        <a href="/" class="nav-menu-link">Dashboard</a>
+                    </li>
+                    <li class="nav-menu-item">
+                        <a href="alta" class="nav-menu-link">Alta</a>
+                    </li>
+                    <li class="nav-menu-item">
+                        <a href="baja" class="nav-menu-link">Baja</a>
+                    </li>
+                    <li class="nav-menu-item">
+                        <a href="modificacion" class="nav-menu-link">Modificacion</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+    </main>
+    <form>
+    <% if (abm=='A') { %>
+        <form method="POST" action="/alta" class="form-alta">
+            <div>
+                <label for="txtName">Nombre:</label>
+                <input type="text" id="txtName" placeholder="Ingrese su nombre"/>
+            </div>
+
+            <div>
+                <label for="selType">Tipo:</label>
+                <select id="selType">
+                    <option value="0" disabled selected>Ingrese el tipo de calzado</option>
+                    <option value="1">Zapatilla</option>
+                    <option value="2">Botin</option>
+                </select>
+            </div>
+            <div>
+                <label for="txtColor">Color:</label>
+                <input type="text" id="txtColor" placeholder="Ingrese el color">
+            </div>
+            <div>
+                <label for="">Sizes:</label>
+                <input type="text" id="" placeholder="">
+            </div>
+            <div>
+                <label for="txtPrice">Precio:</label>
+                <input type="text" id="txtPrice" placeholder="Ingrese el precio">
+            </div>
+
+            <!-- Exclusivos de Botines -->
+            <div>
+                <label for="txtBootType">Tipo de Botin:</label>
+                <input type="text" id="txtBootType" placeholder="">
+            </div>
+            <div>
+                <label for="txtSpike">Tamaño de los Tapones:</label>
+                <input type="text" id="txtSpike" placeholder="">
+            </div>
+            
+            <!-- Exclusivos de Zapatilla -->
+            <div>
+                <label for="txtSneakerType">Tipo de Zapatilla:</label>
+                <input type="text" id="txtSneakerType" placeholder="">
+            </div>
+            <div>
+                <label for="txtSpike">Tamaño de los Tapones:</label>
+                <input type="text" id="txtSpike" placeholder="">
+            </div>
+            <div>
+                <label for="txtUrl">Link de refencia:</label>
+                <input type="text" id="txtUrl" placeholder="www.nike.com/zapatillaEjemplo">
+            </div>
+
+
+
+        </form>
+    <% } %>
+
+       
+
+    <% if (abm=='A') { %>
+        <input type="submit" class="btn btn-success" value="Alta">
+    <% } %>
+    </form>
+
+</body>
+
+</html>
