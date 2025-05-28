@@ -1,12 +1,13 @@
-
-body{
+body {
     background-color: gray;
+    margin: 0;
 }
-.nunito{
-  font-family: "Nunito", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: bold;
-  font-style: normal;
+
+.nunito {
+    font-family: "Nunito", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: bold;
+    font-style: normal;
 }
 
 .main {
@@ -36,59 +37,66 @@ header {
     height: 200vh;
 }
 
-.contenedor-logo{
+.contenedor-logo {
     display: flex;
     align-items: center;
 }
 
-.contenedor-logo-img{
+.contenedor-logo-img {
     width: 80px;
     height: auto;
 }
 
-.contenedor-logo-h1{
+.contenedor-logo-h1 {
     margin-left: 15px;
 }
 
-#txt_busqueda{
+#txt_busqueda {
     border-radius: 25px;
-    width: 150px;   
+    width: 150px;
     background: #eec170;
-    padding-left: 7px;    
+    padding-left: 7px;
 }
 
-.nav-menu{
+.nav-menu {
     display: flex;
     list-style: none;
 }
 
-.nav-menu-item{
+.nav-menu-item {
     font-size: 14px;
     margin: 0 10px;
     text-transform: uppercase;
 }
 
-.nav-menu-link{
+.nav-menu-link {
     padding: 5px;
     color: white;
     text-decoration: none;
 }
 
-.nav-menu-link:hover{
+.nav-menu-link:hover {
     background-color: #eec170;
     transition: 0.5s;
 }
+
 table {
     border: 2px solid black;
     border-collapse: collapse;
     width: 60%;
     margin: 20px auto;
 }
-th, td {
+
+th,
+td {
     border: 1px solid #aaa;
     padding: 8px 12px;
     text-align: center;
 }
+
 th {
     background-color: #eee;
+}
+.form-alta{
+    background-color: red;
 }

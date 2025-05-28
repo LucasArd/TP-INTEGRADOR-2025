@@ -33,71 +33,66 @@
             </nav>
         </header>
     </main>
-    <form>
-    <% if (abm=='A') { %>
+    <% if (abm=='A' ) { %>
         <form method="POST" action="/alta" class="form-alta">
             <div>
                 <label for="txtName">Nombre:</label>
-                <input type="text" id="txtName" placeholder="Ingrese su nombre"/>
+                <input type="text" id="txtName""/>
             </div>
 
             <div>
-                <label for="selType">Tipo:</label>
+                <label for=" selType">Tipo:</label>
                 <select id="selType">
-                    <option value="0" disabled selected>Ingrese el tipo de calzado</option>
+                    <option value="0" disabled selected>Seleccionar...</option>
                     <option value="1">Zapatilla</option>
                     <option value="2">Botin</option>
                 </select>
             </div>
             <div>
                 <label for="txtColor">Color:</label>
-                <input type="text" id="txtColor" placeholder="Ingrese el color">
+                <input type="text" id="txtColor">
             </div>
             <div>
                 <label for="">Sizes:</label>
-                <input type="text" id="" placeholder="">
+                <input type="text" id="">
             </div>
             <div>
                 <label for="txtPrice">Precio:</label>
-                <input type="text" id="txtPrice" placeholder="Ingrese el precio">
+                <input type="text" id="txtPrice">
             </div>
 
             <!-- Exclusivos de Botines -->
             <div>
-                <label for="txtBootType">Tipo de Botin:</label>
-                <input type="text" id="txtBootType" placeholder="">
+                <label for="selType">Tipo de Botin:</label>
+                <select id="selType">
+                    <option value="0" disabled selected>Seleccionar...</option>
+                    <option value="1">Cesped</option>
+                    <option value="2">Piso</option>
+                </select>
             </div>
             <div>
                 <label for="txtSpike">Tamaño de los Tapones:</label>
-                <input type="text" id="txtSpike" placeholder="">
+                <input type="text" id="txtSpike">
             </div>
-            
+
             <!-- Exclusivos de Zapatilla -->
             <div>
                 <label for="txtSneakerType">Tipo de Zapatilla:</label>
-                <input type="text" id="txtSneakerType" placeholder="">
+                <input type="text" id="txtSneakerType">
             </div>
             <div>
                 <label for="txtSpike">Tamaño de los Tapones:</label>
-                <input type="text" id="txtSpike" placeholder="">
+                <input type="text" id="txtSpike">
             </div>
             <div>
                 <label for="txtUrl">Link de refencia:</label>
-                <input type="text" id="txtUrl" placeholder="www.nike.com/zapatillaEjemplo">
+                <input type="text" id="txtUrl" placeholder="nike.com/zapatillaEjemplo">
             </div>
-
-
-
+            
+            <input type="submit" value="Alta">
         </form>
-    <% } %>
 
-       
-
-    <% if (abm=='A') { %>
-        <input type="submit" class="btn btn-success" value="Alta">
-    <% } %>
-    </form>
-
+        <% } %>
 </body>
 
 </html>

@@ -62,17 +62,17 @@ async function dashboard(req, res) {
 }
 
 async function viewAlta(req,res){
-    let html = await ejs.renderFile( path.join(__dirname, '../../', 'view', 'alta.ejs') , {nombre:'Horacio',apellido:'Serrano',abm:'A'} );
+    let html = await ejs.renderFile( path.join(__dirname, '../../', 'view', 'alta.ejs') , {abm:'A'} );
     res.status(200).send(html);
 }
 
 async function viewBaja(req,res){
-    let html = await ejs.renderFile( path.join(__dirname, '../../', 'view', 'dashboard.ejs') , {nombre:'Horacio',apellido:'Serrano',abm:'B'} );
+    let html = await ejs.renderFile( path.join(__dirname, '../../', 'view', 'dashboard.ejs') , {abm:'B'} );
     res.status(200).send(html);
 }
 
 async function viewMod(req,res){
-    let html = await ejs.renderFile( path.join(__dirname, '../../', 'view', 'dashboard.ejs') , {nombre:'Horacio',apellido:'Serrano',abm:'M'} );
+    let html = await ejs.renderFile( path.join(__dirname, '../../', 'view', 'dashboard.ejs') , {abm:'M'} );
     res.status(200).send(html);
 }
 

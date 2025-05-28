@@ -10,7 +10,10 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Poetsen+One&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="login.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/productos.css">
+
     <title>JustPickIt</title>
 </head>
 
@@ -18,10 +21,16 @@
     <main class="main">
         <header class="nunito">
             <div class="contenedor-logo">
-                <img src="./resources/img/imagen_logo_circular.webp" alt="logo_circular" class="contenedor-logo-img">
+                <img src="../resources/img/imagen_logo_circular.webp" alt="logo_circular" class="contenedor-logo-img">
                 <h1 class="contenedor-logo-h1">JustPickIt</h1>
             </div>
+            <!-- <search>
+                <input type="text" id="txt_busqueda" placeholder="Buscar...">
+                <i class="fa-solid fa-magnifying-glass" id="i_lupa"></i>
+            </search> -->
 
+
+            <!-- NAVEGACION TEMPORAL, HAY QUE SACAR BIENVENIDA Y TICKET -->
             <nav class="nav">
                 <ul class="nav-menu">
                     <li class="nav-menu-item">
@@ -39,25 +48,18 @@
                 </ul>
             </nav>
         </header>
-        
     </main>
 
     <section class="principal">
-        <div class="form-container">
-            <form class="form">
-                <span class="input-span">
-                    <label for="email" class="label">Email</label>
-                    <input type="email" name="email" id="email" /></span>
-                <span class="input-span">
-                    <label for="password" class="label">Password</label>
-                    <input type="password" name="password" id="password" /></span>
-                <span class="span"><a href="#">Forgot password?</a></span>
-                <input class="submit" type="submit" value="Log in" />
-                <span class="span">Don't have an account? <a href="#">Sign up</a></span>
-            </form>
+        <div id="zapatillas">
+
         </div>
     </section>
 
 </body>
+<script type="module" src="../service/cargaInicial.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
 
 </html>
