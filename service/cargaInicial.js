@@ -1,9 +1,7 @@
 import { Zapatilla } from "../model/zapatilla.js";
 import { Botin } from "../model/botin.js";
-
-function $(x) {
-    return document.getElementById(x);
-}
+import { Vista } from "../model/vista.js";
+const v = new Vista();
 
 const jsonCalzados = `[
   {"id":1,"name":"Air Max 90","type":"Zapatilla","color":"Blanco/Rojo","sizes":[38,40,42,44],"image":"./resources/img/calzado-running-1.webp","url":"https://nike.com/airmax90","price":120.99,"sneakerType":"Air Max"},
@@ -45,20 +43,19 @@ let c = vector.map((calzado) => {
 console.log(c);
 
 function cargarBotines() {
-    const divBotines = $("botines");
+    
     botines.forEach(x => {
-        divBotines.appendChild(x.createHtmlElement());
+        v.pagBotines.divBotines.appendChild(x.createHtmlElement());
     });
 }
 
 function cargarZapatillas() {
-    const divZapatillas = $("zapatillas");
     zapatillas.forEach(x => {
-        divZapatillas.appendChild(x.createHtmlElement());
+        v.pagZapatillas.divZapatillas.appendChild(x.createHtmlElement());
     });
 }
 
-if ($("botines")) cargarBotines();
-if ($("zapatillas")) cargarZapatillas();
+if (v.pagBotines.divBotines) cargarBotines();
+if (v.pagZapatillas.divZapatillas) cargarZapatillas();
 
 

@@ -72,11 +72,16 @@ header {
     padding: 5px;
     color: white;
     text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 0px;
 }
 
 .nav-menu-link:hover {
     background-color: #eec170;
     transition: 0.5s;
+    
 }
 
 .card{
@@ -85,6 +90,11 @@ header {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border-radius: 9px;
     padding: 10px;
+}
+
+.card h4{
+    color: #585123;
+    font-weight: bold;
 }
 
 .card:hover {
@@ -130,4 +140,36 @@ header {
 
 .card:hover .category-img {
     transform: scale(1.15);
+}
+
+.card-img-cart{
+    width: 32px;
+    height: auto;
+}
+
+.card-a-cart{
+    display: flex;
+    width: 32px;
+    height: auto;
+    position: absolute;
+    top: 5px;
+    right: 65px;
+    right: calc(32px-);
+    text-decoration: none;
+    color: #772f1a;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+}
+
+.card-a-cart:hover{
+    color: #772f1a;
+}
+
+.h2-cat{
+    color: #585123;
+    align-self: center;
+    position: relative;
+    padding: 20px;
+    margin-bottom: 0px;
 }

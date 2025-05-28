@@ -11,11 +11,18 @@ export class Zapatilla extends Calzado {
     createHtmlElement() {
         const div = super.createHtmlElement();
 
-        const pDesign = document.createElement("p");
-        pDesign.textContent = `Tipo de zapatilla: ${this.sneakerType}`;
-        
-        div.insertBefore(pDesign, div.lastChild);
+        // Crear el <li> con el contenido adicional
+        const liExtra = document.createElement("li");
+        liExtra.classList.add("list-group-item");
+        liExtra.textContent = `Tipo de zapatilla: ${this.sneakerType}`;
+
+        // Buscar el <ul> ya creado por el super
+        const ul = div.querySelector("ul.list-group");
+        if (ul) {
+            ul.appendChild(liExtra);  // Agregar como último <li>
+        }
 
         return div;
     }
+
 }

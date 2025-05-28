@@ -30,19 +30,32 @@ export class Calzado{
     img.alt = this.name;
     card.appendChild(img);
 
+    const aCart = document.createElement("a");
+    
+    //logo de añadir al carrito
+    aCart.classList.add("card-a-cart");
+    //Le falta el href, se tendria que hacer en un carrito.js y darle toda la funcionalidad 
+    const imgCart = document.createElement("img");
+    imgCart.src = "../resources/img/logo_add_cart.png";
+    imgCart.alt = "logo_añadir_al_carrito";
+    imgCart.classList.add("card-img-cart");
+    aCart.textContent = "Comprar";
+    aCart.appendChild(imgCart);
+    card.appendChild(aCart);
+
     // Card body con título y descripción
     const cardBody = document.createElement("div");
     cardBody.classList.add("card-body");
 
-    const h5 = document.createElement("h5");
-    h5.classList.add("card-title");
-    h5.textContent = this.name;
+    const h4 = document.createElement("h4");
+    h4.classList.add("card-title");
+    h4.textContent = this.name;
 
     const p = document.createElement("p");
     p.classList.add("card-text");
     p.textContent = `Precio: $${this.price}`;
 
-    cardBody.appendChild(h5);
+    cardBody.appendChild(h4);
     cardBody.appendChild(p);
     card.appendChild(cardBody);
 
