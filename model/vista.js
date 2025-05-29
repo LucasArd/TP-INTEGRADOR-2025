@@ -3,6 +3,7 @@ export class Vista {
     pagProductos;
     pagZapatillas;
     pagBotines;
+    pagCarrito;
     constructor() {
         this.pagBienvenida = {
             btnContinuar: this.$('btn-continuar')
@@ -15,6 +16,9 @@ export class Vista {
         }
         this.pagBotines = {
             divBotines: this.$("botines")
+        }
+        this.pagCarrito ={
+            divCarrito: this.$("carrito")
         }
     }
 

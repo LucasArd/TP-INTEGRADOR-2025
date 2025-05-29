@@ -1,4 +1,6 @@
-export class Calzado{
+import { agregarAlCarrito } from "./carrito.js"; //importo para agregarla a cada card
+
+export class Calzado {
     id;
     name;
     type;
@@ -7,7 +9,7 @@ export class Calzado{
     image;
     url;
     price;
-    constructor(id,name,type,color,sizes,image,url,price){
+    constructor(id, name, type, color, sizes, image, url, price) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -19,80 +21,94 @@ export class Calzado{
     }
 
     createHtmlElement() {
-    const card = document.createElement("div");
-    card.classList.add("card");
-    card.style.width = "18rem";
+        const card = document.createElement("div");
+        card.classList.add("card");
+        card.style.width = "18rem";
 
-    // Imagen
-    const img = document.createElement("img");
-    img.src = this.image;
-    img.classList.add("card-img-top");
-    img.alt = this.name;
-    card.appendChild(img);
+        // Imagen
+        const img = document.createElement("img");
+        img.src = this.image;
+        img.classList.add("card-img-top");
+        img.alt = this.name;
+        card.appendChild(img);
 
-    const aCart = document.createElement("a");
-    
-    //logo de añadir al carrito
-    aCart.classList.add("card-a-cart");
-    //Le falta el href, se tendria que hacer en un carrito.js y darle toda la funcionalidad 
-    const imgCart = document.createElement("img");
-    imgCart.src = "../resources/img/logo_add_cart.png";
-    imgCart.alt = "logo_añadir_al_carrito";
-    imgCart.classList.add("card-img-cart");
-    aCart.textContent = "Comprar";
-    aCart.appendChild(imgCart);
-    card.appendChild(aCart);
+        const aCart = document.createElement("a");
 
-    // Card body con título y descripción
-    const cardBody = document.createElement("div");
-    cardBody.classList.add("card-body");
+        //logo de añadir al carrito
+        aCart.classList.add("card-a-cart");
+        aCart.href = "#"; // quita comportamiento por defecto del href
 
-    const h4 = document.createElement("h4");
-    h4.classList.add("card-title");
-    h4.textContent = this.name;
+        const imgCart = document.createElement("img");
+        imgCart.src = "../resources/img/logo_add_cart.png";
+        imgCart.alt = "logo_añadir_al_carrito";
+        imgCart.classList.add("card-img-cart");
+        aCart.textContent = "Agregar carrito";
+        aCart.appendChild(imgCart);
+        card.appendChild(aCart);
 
-    const p = document.createElement("p");
-    p.classList.add("card-text");
-    p.textContent = `Precio: $${this.price}`;
+        // Evento de click
+        aCart.addEventListener("click", (e) => {
+            e.preventDefault();
+            agregarAlCarrito(this); // this seria la instancia entera del calzado. La agregamos a carrito
 
-    cardBody.appendChild(h4);
-    cardBody.appendChild(p);
-    card.appendChild(cardBody);
+            // Tambien con el click Mostramos modal, modal de bootstrap
+            const modalBody = document.getElementById("modalBody");
+            modalBody.textContent = `Se ha agregado "${this.name}" al carrito.`;
 
-    // Lista de detalles
-    const ul = document.createElement("ul");
-    ul.classList.add("list-group", "list-group-flush");
+            const modal = new bootstrap.Modal(document.getElementById('modalConfirmacion'));
+            modal.show();
+        });
 
-    const liType = document.createElement("li");
-    liType.classList.add("list-group-item");
-    liType.textContent = `Tipo: ${this.type}`;
+        // Card body con título y descripción
+        const cardBody = document.createElement("div");
+        cardBody.classList.add("card-body");
 
-    const liColor = document.createElement("li");
-    liColor.classList.add("list-group-item");
-    liColor.textContent = `Color: ${this.color}`;
+        const h4 = document.createElement("h4");
+        h4.classList.add("card-title");
+        h4.textContent = this.name;
 
-    const liSizes = document.createElement("li");
-    liSizes.classList.add("list-group-item");
-    liSizes.textContent = `Talles: ${this.sizes.join(', ')}`;
+        const p = document.createElement("p");
+        p.classList.add("card-text");
+        p.textContent = `Precio: $${this.price}`;
 
-    ul.appendChild(liType);
-    ul.appendChild(liColor);
-    ul.appendChild(liSizes);
-    card.appendChild(ul);
+        cardBody.appendChild(h4);
+        cardBody.appendChild(p);
+        card.appendChild(cardBody);
 
-    // Card body con enlaces
-    const cardBodyLinks = document.createElement("div");
-    cardBodyLinks.classList.add("card-body");
+        // Lista de detalles
+        const ul = document.createElement("ul");
+        ul.classList.add("list-group", "list-group-flush");
 
-    const link = document.createElement("a");
-    link.href = this.url;
-    link.classList.add("card-link");
-    link.target = "_blank";
-    link.textContent = "Ver producto";
+        const liType = document.createElement("li");
+        liType.classList.add("list-group-item");
+        liType.textContent = `Tipo: ${this.type}`;
 
-    cardBodyLinks.appendChild(link);
-    card.appendChild(cardBodyLinks);
+        const liColor = document.createElement("li");
+        liColor.classList.add("list-group-item");
+        liColor.textContent = `Color: ${this.color}`;
 
-    return card;
-}
+        const liSizes = document.createElement("li");
+        liSizes.classList.add("list-group-item");
+        liSizes.textContent = `Talles: ${this.sizes.join(', ')}`;
+
+        ul.appendChild(liType);
+        ul.appendChild(liColor);
+        ul.appendChild(liSizes);
+        card.appendChild(ul);
+
+        // Card body con enlaces
+        const cardBodyLinks = document.createElement("div");
+        cardBodyLinks.classList.add("card-body");
+
+        const link = document.createElement("a");
+        link.href = this.url;
+        link.classList.add("card-link");
+        link.target = "_blank";
+        link.textContent = "Ver producto";
+
+        cardBodyLinks.appendChild(link);
+        card.appendChild(cardBodyLinks);
+
+        return card;
+    }
 }

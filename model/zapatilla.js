@@ -1,5 +1,6 @@
 import {Calzado} from "./calzado.js";
 
+
 export class Zapatilla extends Calzado {
     sneakerType;
 

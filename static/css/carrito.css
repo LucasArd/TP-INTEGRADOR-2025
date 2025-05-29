@@ -1,0 +1,176 @@
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.nunito {
+    font-family: "Nunito", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: bold;
+    font-style: normal;
+}
+
+.main {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: max-content, 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 10px;
+}
+
+header {
+    grid-area: 1 / 1 / 2 / 3;
+    background-color: #772f1a;
+    padding: 20px;
+    height: 85px;
+    color: #f58549;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+
+.principal {
+    background-color: #eec170;
+    height: 100%;
+}
+
+.contenedor-logo {
+    display: flex;
+    align-items: center;
+}
+
+.contenedor-logo-img {
+    width: 80px;
+    height: auto;
+}
+
+.contenedor-logo-h1 {
+    margin-left: 15px;
+}
+
+#txt_busqueda {
+    border-radius: 25px;
+    width: 150px;
+    background: #eec170;
+    padding-left: 7px;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+}
+
+.nav-menu-item {
+    font-size: 14px;
+    margin: 0 10px;
+    text-transform: uppercase;
+}
+
+.nav-menu-link {
+    padding: 5px;
+    color: white;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 0px;
+}
+
+.nav-menu-link:hover {
+    background-color: #eec170;
+    transition: 0.5s;
+    
+}
+
+.card{
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.445);
+    background-color: whitesmoke;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 9px;
+    padding: 10px;
+}
+
+.card h4{
+    color: #585123;
+    font-weight: bold;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgb(241, 129, 0)
+}
+
+#calzados{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 100px;
+    justify-items: center;
+}
+
+#zapatillas, #botines{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 40px;
+    gap: 40px;
+    justify-items: center;
+}
+
+#calzados h1{
+    padding: 10px;
+    align-self: center;
+}
+
+.category-link {
+    padding: 5px;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+}
+
+.category-link:hover {
+    text-decoration: none;
+    color: rgb(241, 129, 0);
+    transition: 0.75s;
+}
+
+.category-img {
+    transition: transform 0.7s ease;
+}
+
+.card:hover .category-img {
+    transform: scale(1.15);
+}
+
+.card-img-cart{
+    width: 32px;
+    height: auto;
+}
+
+.card-a-cart{
+    display: flex;
+    width: 32px;
+    height: auto;
+    position: absolute;
+    top: 5px;
+    right: 65px;
+    right: calc(32px-);
+    text-decoration: none;
+    color: #772f1a;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+}
+
+.card-a-cart:hover{
+    color: #772f1a;
+}
+
+.h2-cat{
+    color: #585123;
+    align-self: center;
+    position: relative;
+    padding: 20px;
+    margin-bottom: 0px;
+}
