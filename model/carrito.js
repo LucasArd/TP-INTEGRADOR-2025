@@ -1,5 +1,5 @@
-
-// export const carrito = [];
+import {Vista} from "../model/vista.js";
+const v = new Vista();
 
 export const carrito = cargarCarritoDeLocalStorage(); // inicializo carrito a ver si tiene algo
 
@@ -25,11 +25,11 @@ function cargarCarritoDeLocalStorage() { // traigo lo guardado en la sesion del 
 function renderizarCarritoComoLista(carrito) {
     console.log("Intentando renderizar carrito");
     console.log("contenedorCarrito:", document.getElementById("carrito"));
-    const contenedorCarrito = document.getElementById("carrito");
+    // const contenedorCarrito = document.getElementById("carrito");
     
-    contenedorCarrito.innerHTML = ""; // limpiar antes de renderizar
+    v.pagCarrito.divCarrito.innerHTML = ""; // limpiar antes de renderizar
     if (carrito.length === 0) {
-        contenedorCarrito.innerHTML = "<p>El carrito está vacío.</p>";
+        v.pagCarrito.divCarrito.innerHTML = "<p>El carrito está vacío.</p>";
         return;
     }
 
@@ -56,14 +56,18 @@ function renderizarCarritoComoLista(carrito) {
     botonConfirmar.addEventListener("click", () => {
         carrito.length = 0;
         localStorage.removeItem("carrito");
-        contenedorCarrito.innerHTML = "<p>¡Pedido confirmado! El carrito ha sido vaciado.</p>";
+        v.pagCarrito.divCarrito.innerHTML = "<p>¡Pedido confirmado! El carrito ha sido vaciado.</p>";
     });
 
-    contenedorCarrito.appendChild(ul);
-    contenedorCarrito.appendChild(botonConfirmar);
+    v.pagCarrito.divCarrito.appendChild(ul);
+    v.pagCarrito.divCarrito.appendChild(botonConfirmar);
 }
 
 // Revisar porque tira error en consola y no encuentra ID: carrito (??????) funciona igual
-document.addEventListener("DOMContentLoaded", () => {
-    renderizarCarritoComoLista(carrito);
-});
+// document.addEventListener("DOMContentLoaded", () => {
+//     if (v.pagCarrito.divCarrito) {
+//         renderizarCarritoComoLista(carrito);
+//     }
+// });
+
+if (v.pagCarrito.divCarrito) renderizarCarritoComoLista(carrito);

@@ -43,7 +43,6 @@ let c = vector.map((calzado) => {
 console.log(c);
 
 function cargarBotines() {
-    
     botines.forEach(x => {
         v.pagBotines.divBotines.appendChild(x.createHtmlElement());
     });

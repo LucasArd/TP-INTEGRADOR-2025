@@ -1,6 +1,7 @@
 import readline from "readline";
 import { spawn } from "child_process"; //Esto sirve para que tire el comando node (path) automaticamente
 import { AppEjs, AppEstatico } from '../paths/rutasApi.js';
+import {initDB } from "../controllers/controllersApi/AppBDD.js";
 
 //Aca crea la interfaz y le dice que puede leer y mostrar el texto
 const rl = readline.createInterface({
@@ -17,6 +18,7 @@ rl.question("Ingrese el número de la opción: ", (answer) => {
     switch (answer.trim()) {
         case "1":
             scriptPath = AppEstatico;
+            initDB();            
             break;
         case "2":
             scriptPath = AppEjs;
