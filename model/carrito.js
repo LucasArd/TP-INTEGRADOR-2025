@@ -49,7 +49,7 @@ function renderizarCarritoComoLista(carrito) {
 
     // boton confirmar pedido
     const botonConfirmar = document.createElement("button");
-    botonConfirmar.textContent = "Confirmar Comprra";
+    botonConfirmar.textContent = "Confirmar Compra";
     botonConfirmar.classList.add("btn", "btn-success", "mt-3");
 
     // Limpio carrito y storage

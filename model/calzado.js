@@ -89,7 +89,7 @@ export class Calzado {
 
         const liSizes = document.createElement("li");
         liSizes.classList.add("list-group-item");
-        liSizes.textContent = `Talles: ${this.sizes.join(', ')}`;
+        liSizes.textContent = `Talles: ${this.sizes.split(',').join(', ')}`;
 
         ul.appendChild(liType);
         ul.appendChild(liColor);
