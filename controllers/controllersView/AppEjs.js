@@ -12,6 +12,7 @@ const app = express();
 const port = process.env.PORT_ADMIN;
 
 app.use(express.static(path.join(__dirname, '../../static')));
+app.use(express.static(path.join(__dirname, '../../model')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -41,7 +42,7 @@ app.get('/baja',viewBaja)
 app.get('/modificacion',viewMod)
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}\n`);
-    console.log(`Acceder en: http://localhost:3000/`);
+    console.log(`Example app listening on port ${port}`);
+    console.log(`Acceder en: http://localhost:3001/\n`);
 })
 

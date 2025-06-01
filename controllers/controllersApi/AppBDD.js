@@ -1,6 +1,14 @@
 import mysql from 'mysql2/promise';
 
-async function conectarBase() {
+//Creo nueva conexion a BDD, problemas para usar la otra.
+export const conexion = await mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'justpickit'
+});
+
+export async function conectarBase() {
     try {
         const db = await mysql.createConnection({
             host: 'localhost',
@@ -42,16 +50,16 @@ export async function initDB() {
     const db = await conectarBase();
     
     try{
-        eliminarDB(db);
+        await eliminarDB(db);
     }catch(err){console.error(err.message);}
 
     try{
-        crearDB(db);
+        await crearDB(db);
     }catch(err){console.error(err.message);}
 
     try{
         await db.query('USE justpickit;');
-        crearTablas(db);
+        await crearTablas(db);
     }catch(err){console.error(err.message);}
 
     try{

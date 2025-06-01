@@ -63,11 +63,4 @@ function renderizarCarritoComoLista(carrito) {
     v.pagCarrito.divCarrito.appendChild(botonConfirmar);
 }
 
-// Revisar porque tira error en consola y no encuentra ID: carrito (??????) funciona igual
-// document.addEventListener("DOMContentLoaded", () => {
-//     if (v.pagCarrito.divCarrito) {
-//         renderizarCarritoComoLista(carrito);
-//     }
-// });
-
 if (v.pagCarrito.divCarrito) renderizarCarritoComoLista(carrito);

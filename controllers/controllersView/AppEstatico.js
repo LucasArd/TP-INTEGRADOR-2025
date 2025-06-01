@@ -13,6 +13,6 @@ app.use("/model",express.static(modelPath));
 app.use("/service",express.static(servicePath));
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}\n`);
-  console.log(`Acceder en: http://localhost:3000/bienvenida.html`);
+  console.log(`Example app listening on port ${port}`);
+  console.log(`Acceder en: http://localhost:3000/bienvenida.html\n`);
 })
