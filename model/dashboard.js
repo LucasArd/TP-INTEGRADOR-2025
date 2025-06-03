@@ -55,11 +55,13 @@ window.addEventListener('DOMContentLoaded', async () => {
         btn.addEventListener('click', async () => {
             const id = btn.dataset.id;
             console.log(id)
-            const res = await fetch(`http://localhost:3002/api/productos/${id}`, { method: 'DELETE' }); 
-            if (res.ok) {
-                btn.closest('tr').remove();
-            } else {
-                alert('No se pudoo eliminar el producto');
+            if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
+                const res = await fetch(`http://localhost:3002/api/productos/${id}`, { method: 'DELETE' });
+                if (res.ok) {
+                    btn.closest('tr').remove();
+                } else {
+                    alert('No se pudo eliminar el producto');
+                }
             }
         });
     });
