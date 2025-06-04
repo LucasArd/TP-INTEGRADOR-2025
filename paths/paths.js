@@ -12,6 +12,7 @@ const PATHS = {
     controllersView: path.resolve(__dirname, '..', 'controllers', 'controllersView'),
     model: path.resolve(__dirname, '..', 'model'),
     service: path.resolve(__dirname, '..', 'service'),
+    staticService: path.resolve(__dirname, '..', 'service', 'static'),
     static: path.resolve(__dirname, '..', 'static'),
     view: path.resolve(__dirname, '..', 'view'),
     paths: path.resolve(__dirname),

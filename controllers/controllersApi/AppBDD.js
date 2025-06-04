@@ -96,3 +96,17 @@ export async function mostrarProductos() {
     }
 }
 
+export async function setearEstado(idProducto, estado) {
+    const db = await conectarBase();
+    try {
+        const qry = `UPDATE productos SET activo = ? WHERE idProducto = ?`;
+        await db.query(qry, [estado ? 1 : 0, idProducto]);
+    } catch (error) {
+        console.error('Error:', error.message);
+        return [];
+    } finally {
+        await db.end();
+    }
+}
+
+

@@ -1,4 +1,5 @@
-import { mostrarProductos, conectarBase } from './AppBDD.js';
+import { mostrarProductos, conectarBase, setearEstado } from './AppBDD.js';
+
 const db = await conectarBase();
 // GET /api/productos
 export async function ObtenerProductos(app) {
@@ -26,7 +27,7 @@ export async function ObtenerProductoPorId(app) {
       console.error('Error al obtener producto por id:', error);
       res.status(500).json({ error: 'Error al obtener producto' });
     }
-    finally{
+    finally {
       await db.end();
     }
   });
@@ -46,7 +47,7 @@ export async function EliminarProducto(app) {
       console.error('Error al eliminar producto:', error);
       res.status(500).json({ error: 'Error al eliminar producto' });
     }
-    finally{
+    finally {
       await db.end();
     }
   });
@@ -67,7 +68,7 @@ export async function VistaModificar(app) {
       console.error('Error al obtener producto para modificar:', error);
       res.status(500).send('Error del servidor');
     }
-    finally{
+    finally {
       await db.end();
     }
   });
@@ -88,8 +89,24 @@ export async function PostModificar(app) {
       console.error('Error al modificar producto:', error);
       res.status(500).send('Error al modificar producto');
     }
-    finally{
+    finally {
       await db.end();
     }
   });
 }
+
+export async function cambiarEstadoProducto(app) {
+  app.patch('/api/productos/:id/estado', async (req, res) => {
+    const idProducto = req.params.id;
+    const { activo } = req.body;
+
+    try {
+      await setearEstado(idProducto, activo);
+      res.status(200).json({ message: 'Estado actualizado' });
+    } catch (error) {
+      console.error('Error al cambiar estado del producto:', error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+}
+

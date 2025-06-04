@@ -98,7 +98,7 @@ button.btn-modificar {
   border-radius: 4px;
 }
 
-button.btn-eliminar {
+button.btn-estado {
   background-color: #dc3545;
   color: white;
   border: none;
@@ -109,6 +109,6 @@ button.btn-modificar:hover {
   background-color: #0b5ed7;
 }
 
-button.btn-eliminar:hover {
+button.btn-estado:hover {
   background-color: #bb2d3b;
 }

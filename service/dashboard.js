@@ -1,5 +1,3 @@
-import { conectarBase } from "../controllers/controllersApi/AppBDD";
-const db = conectarBase();
 window.addEventListener('DOMContentLoaded', async () => {
     const response = await fetch('http://localhost:3000/api/productos');
     const productos = await response.json();
@@ -44,29 +42,47 @@ window.addEventListener('DOMContentLoaded', async () => {
             <td>${prod.activo}</td>
             <td>
                 <button class="btn-modificar" data-id="${prod.idProducto}">Modificar</button>
-                <button class="btn-eliminar" data-id="${prod.idProducto}">Eliminar</button>
+                <button class="btn-estado" data-id="${prod.idProducto}" data-activo="${prod.activo}">
+                ${prod.activo == 1 ? 'Desactivar' : 'Activar'}
+                </button>
             </td>
         `;
         tbody.appendChild(tr);
     });
 
-    
+
     container.appendChild(table);
     main.appendChild(container);
 
     // Eventos para botones eliminar
-    document.querySelectorAll('.btn-eliminar').forEach(btn => {
+    document.querySelectorAll('.btn-estado').forEach(btn => {
         btn.addEventListener('click', async () => {
             const id = btn.dataset.id;
-            console.log(id)
-            if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
-                // TIENE QUE DESACTIVAR EL PRODUCTO, NO ELIMINARLO
+            const activoActual = btn.dataset.activo === '1';
+            const nuevoEstado = !activoActual;
 
-                const res = await fetch(`http://localhost:3000/api/productos/${id}`, { method: 'DELETE' });
-                if (res.ok) {
-                    btn.closest('tr').remove();
-                } else {
-                    alert('No se pudo eliminar el producto');
+            
+            const url = `http://localhost:3000/api/productos/${id}/estado`;
+            const optionsPATCH = {  
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ activo: nuevoEstado })
+            };
+
+            if (confirm(`¿Estás seguro de que deseas ${nuevoEstado ? 'activar' : 'desactivar'} este producto?`)) {
+                try {
+                    const res = await fetch(url, optionsPATCH);
+
+                    if (res.ok) {
+                        btn.textContent = nuevoEstado ? 'Desactivar' : 'Activar';
+                        btn.dataset.activo = String(nuevoEstado);
+                        location.reload();
+                    } else {
+                        alert('Error al cambiar el estado del producto');
+                    }
+                } catch (error) {
+                    alert('Error de red o servidor');
+                    console.error(error);
                 }
             }
         });
