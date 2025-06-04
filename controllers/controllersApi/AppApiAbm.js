@@ -1,85 +1,95 @@
-import express from 'express';
-import { mostrarProductos, conexion} from './AppBDD.js'; //AGrego conexion
-import dotenv from 'dotenv';
-import cors from 'cors';
-dotenv.config();
-
-const app = express()
-const port = process.env.PORT_API;
-
-app.use(express.json());
-app.use(cors());
-    
-app.get('/api/productos', async (req,res) => {
+import { mostrarProductos, conectarBase } from './AppBDD.js';
+const db = await conectarBase();
+// GET /api/productos
+export async function ObtenerProductos(app) {
+  app.get('/api/productos', async (req, res) => {
     try {
-        const productos = await mostrarProductos();
-        res.status(200).json(productos);
+      const productos = await mostrarProductos();
+      res.status(200).json(productos);
     } catch (error) {
-        res.status(500).json({ error: 'Error al obtener productos' });
+      res.status(500).json({ error: 'Error al obtener productos' });
     }
-});
+  });
+}
 
-
-//Agrego GET de producto porque los traia sin poder filtrarlos por ID
-app.get('/api/productos/:id', async (req, res) => {
+// GET /api/productos/:id
+export async function ObtenerProductoPorId(app) {
+  app.get('/api/productos/:id', async (req, res) => {
     const { id } = req.params;
     try {
-        const [rows] = await conexion.query('SELECT * FROM productos WHERE idProducto = ?', [id]);
-        if (rows.length === 0) {
-            return res.status(404).json({ error: 'Producto no encontrado' });
-        }
-        res.status(200).json(rows[0]);
+      const [rows] = await db.query('SELECT * FROM productos WHERE idProducto = ?', [id]);
+      if (rows.length === 0) {
+        return res.status(404).json({ error: 'Producto no encontrado' });
+      }
+      res.status(200).json(rows[0]);
     } catch (error) {
-        console.error('Error al obtener producto por id:', error);
-        res.status(500).json({ error: 'Error al obtener producto' });
+      console.error('Error al obtener producto por id:', error);
+      res.status(500).json({ error: 'Error al obtener producto' });
     }
-});
+    finally{
+      await db.end();
+    }
+  });
+}
 
-app.delete('/api/productos/:id', async (req, res) => { 
+// DELETE /api/productos/:id
+export async function EliminarProducto(app) {
+  app.delete('/api/productos/:id', async (req, res) => {
     const { id } = req.params;
     try {
-        const [resultado] = await conexion.query('DELETE FROM productos WHERE idProducto = ?', [id]);
-        console.log('Resultado de DELETE:', resultado);
-        if (resultado.affectedRows === 0) {
-            return res.status(404).json({ error: 'Producto no encontrado' });
-        }
-        res.status(200).json({ mensaje: 'Producto eliminado correctamente' });
+      const [resultado] = await db.query('DELETE FROM productos WHERE idProducto = ?', [id]);
+      if (resultado.affectedRows === 0) {
+        return res.status(404).json({ error: 'Producto no encontrado' });
+      }
+      res.status(200).json({ mensaje: 'Producto eliminado correctamente' });
     } catch (error) {
-        console.error('Error al eliminar producto:', error);
-        res.status(500).json({ error: 'Error al eliminar producto' });
+      console.error('Error al eliminar producto:', error);
+      res.status(500).json({ error: 'Error al eliminar producto' });
     }
-});
+    finally{
+      await db.end();
+    }
+  });
+}
 
-app.get('/modificar', async (req, res) => { //Esta ruta es para redirigir desde el botón “Modificar” a una vista donde puedas editar el producto. Ejemplo:
+// GET /modificar
+export async function VistaModificar(app) {
+  app.get('/modificar', async (req, res) => {
     const { id } = req.query;
     try {
-        const [rows] = await conexion.query('SELECT * FROM productos WHERE idProducto = ?', [id]);
-        if (rows.length === 0) {
-            return res.status(404).send('Producto no encontrado');
-        }
-        const producto = rows[0];
-        res.render('modificacion', { producto });
+      const [rows] = await db.query('SELECT * FROM productos WHERE idProducto = ?', [id]);
+      if (rows.length === 0) {
+        return res.status(404).send('Producto no encontrado');
+      }
+      const producto = rows[0];
+      res.render('modificacion', { producto });
     } catch (error) {
-        console.error('Error al obtener producto para modificar:', error);
-        res.status(500).send('Error del servidor');
+      console.error('Error al obtener producto para modificar:', error);
+      res.status(500).send('Error del servidor');
     }
-});
+    finally{
+      await db.end();
+    }
+  });
+}
 
-app.post('/modificar/:id', async (req, res) => { //Ruta para actualizar producto, Ver luego...
+// POST /modificar/:id
+export async function PostModificar(app) {
+  app.post('/modificar/:id', async (req, res) => {
     const { id } = req.params;
     const { marca, modelo, color, talle, precio, stock } = req.body;
     try {
-        await conexion.query(
-            'UPDATE productos SET marca = ?, modelo = ?, color = ?, talle = ?, precio = ?, stock = ? WHERE idProducto = ?',
-            [marca, modelo, color, talle, precio, stock, id]
-        );
-        res.redirect('/');
+      await db.query(
+        'UPDATE productos SET marca = ?, modelo = ?, color = ?, talle = ?, precio = ?, stock = ? WHERE idProducto = ?',
+        [marca, modelo, color, talle, precio, stock, id]
+      );
+      res.redirect('/');
     } catch (error) {
-        console.error('Error al modificar producto:', error);
-        res.status(500).send('Error al modificar producto');
+      console.error('Error al modificar producto:', error);
+      res.status(500).send('Error al modificar producto');
     }
-});
-
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
-});
+    finally{
+      await db.end();
+    }
+  });
+}

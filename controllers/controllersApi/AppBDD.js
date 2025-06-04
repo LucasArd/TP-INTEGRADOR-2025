@@ -1,12 +1,12 @@
 import mysql from 'mysql2/promise';
 
 //Creo nueva conexion a BDD, problemas para usar la otra.
-export const conexion = await mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'justpickit'
-});
+// export const conexion = await mysql.createConnection({
+//   host: 'localhost',
+//   user: 'root',
+//   password: '',
+//   database: 'justpickit'
+// });
 
 export async function conectarBase() {
     try {
@@ -35,7 +35,7 @@ async function eliminarDB(db) {
 }
 
 async function crearTablas(db) {
-    let qry = `CREATE TABLE productos (idProducto bigint(20) unsigned NOT NULL AUTO_INCREMENT,nombre varchar(50) NOT NULL,tipo varchar(50) NOT NULL,talle set('35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50') NOT NULL,color varchar(30) NOT NULL,img varchar(200) NOT NULL,url varchar(200) NOT NULL,precio double(30,2) NOT NULL,tipoBotin varchar(50) DEFAULT NULL,tipoZapatilla varchar(50) DEFAULT NULL,largoTapones varchar(30) DEFAULT NULL,PRIMARY KEY (idProducto)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    let qry = `CREATE TABLE productos (idProducto bigint(20) unsigned NOT NULL AUTO_INCREMENT,nombre varchar(50) NOT NULL,tipo varchar(50) NOT NULL,talle set('35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50') NOT NULL,color varchar(30) NOT NULL,img varchar(200) NOT NULL,url varchar(200) NOT NULL,precio double(30,2) NOT NULL,tipoBotin varchar(50) DEFAULT NULL,tipoZapatilla varchar(50) DEFAULT NULL,largoTapones varchar(30) DEFAULT NULL,activo boolean NOT NULL DEFAULT True,PRIMARY KEY (idProducto)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     CREATE TABLE ticket (idTicket bigint(20) unsigned NOT NULL AUTO_INCREMENT,comprador varchar(50) NOT NULL,precioTotal double NOT NULL,fecha datetime NOT NULL DEFAULT current_timestamp(),PRIMARY KEY (idTicket),UNIQUE KEY idTicket (idTicket)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     CREATE TABLE usuarios (idUsuario bigint(20) unsigned NOT NULL AUTO_INCREMENT,nombre varchar(30) NOT NULL,contraseña varchar(30) NOT NULL,PRIMARY KEY (idUsuario)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     CREATE TABLE ventas (idVenta int(11) NOT NULL AUTO_INCREMENT,idTicket bigint(20) unsigned NOT NULL,idProducto bigint(20) unsigned NOT NULL,cantidad int(11) NOT NULL,precio double(10,2) NOT NULL,PRIMARY KEY (idVenta),FOREIGN KEY (idTicket) REFERENCES ticket(idTicket) ON DELETE CASCADE ON UPDATE CASCADE,FOREIGN KEY (idProducto) REFERENCES productos(idProducto) ON DELETE CASCADE ON UPDATE CASCADE) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

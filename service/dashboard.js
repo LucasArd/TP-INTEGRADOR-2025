@@ -1,5 +1,7 @@
+import { conectarBase } from "../controllers/controllersApi/AppBDD";
+const db = conectarBase();
 window.addEventListener('DOMContentLoaded', async () => {
-    const response = await fetch('http://localhost:3002/api/productos');
+    const response = await fetch('http://localhost:3000/api/productos');
     const productos = await response.json();
 
     const main = document.querySelector('main');
@@ -21,6 +23,7 @@ window.addEventListener('DOMContentLoaded', async () => {
             <th>Color</th>
             <th>Imagen</th>
             <th>Precio</th>
+            <th>Estado</th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -38,6 +41,7 @@ window.addEventListener('DOMContentLoaded', async () => {
             <td>${prod.color}</td>
             <td><img src="${prod.img}" alt="${prod.nombre}" style="width:60px; height:auto;"></td>
             <td>$${prod.precio.toLocaleString()}</td>
+            <td>${prod.activo}</td>
             <td>
                 <button class="btn-modificar" data-id="${prod.idProducto}">Modificar</button>
                 <button class="btn-eliminar" data-id="${prod.idProducto}">Eliminar</button>
@@ -56,7 +60,9 @@ window.addEventListener('DOMContentLoaded', async () => {
             const id = btn.dataset.id;
             console.log(id)
             if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
-                const res = await fetch(`http://localhost:3002/api/productos/${id}`, { method: 'DELETE' });
+                // TIENE QUE DESACTIVAR EL PRODUCTO, NO ELIMINARLO
+
+                const res = await fetch(`http://localhost:3000/api/productos/${id}`, { method: 'DELETE' });
                 if (res.ok) {
                     btn.closest('tr').remove();
                 } else {
@@ -70,7 +76,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     document.querySelectorAll('.btn-modificar').forEach(btn => {
         btn.addEventListener('click', () => {
             const id = btn.dataset.id;
-            window.location.href = `http://localhost:3001/modificacion?id=${id}`;
+            window.location.href = `http://localhost:3000/modificacion?id=${id}`;
         });
     });
 });

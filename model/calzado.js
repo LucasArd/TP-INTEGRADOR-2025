@@ -1,4 +1,4 @@
-import { agregarAlCarrito } from "./carrito.js"; //importo para agregarla a cada card
+import { agregarAlCarrito } from "../service/carrito.js"; //importo para agregarla a cada card
 
 export class Calzado {
     id;
