@@ -1,13 +1,5 @@
 import mysql from 'mysql2/promise';
 
-//Creo nueva conexion a BDD, problemas para usar la otra.
-// export const conexion = await mysql.createConnection({
-//   host: 'localhost',
-//   user: 'root',
-//   password: '',
-//   database: 'justpickit'
-// });
-
 export async function conectarBase() {
     try {
         const db = await mysql.createConnection({

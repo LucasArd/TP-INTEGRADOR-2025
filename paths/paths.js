@@ -60,7 +60,7 @@ const PATHS = {
     altaView: path.resolve(__dirname, '..', 'view', 'alta.ejs'),
     dashboardView: path.resolve(__dirname, '..', 'view', 'dashboard.ejs'),
     loginView: path.resolve(__dirname, '..', 'view', 'login.ejs'),
-    modificarView: path.resolve(__dirname, '..', 'view', 'modificar.ejs'),
+    modificarView: path.resolve(__dirname, '..', 'view', 'modificacion.ejs'),
 };
 
 export default PATHS;

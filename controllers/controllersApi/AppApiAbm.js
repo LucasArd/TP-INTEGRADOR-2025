@@ -1,6 +1,7 @@
 import { mostrarProductos, conectarBase, setearEstado } from './AppBDD.js';
 
 const db = await conectarBase();
+
 // GET /api/productos
 export async function ObtenerProductos(app) {
   app.get('/api/productos', async (req, res) => {
@@ -53,10 +54,27 @@ export async function EliminarProducto(app) {
   });
 }
 
+export async function cambiarEstadoProducto(app) {
+  app.patch('/api/productos/:id/estado', async (req, res) => {
+    const idProducto = req.params.id;
+    const { activo } = req.body;
+    try {
+      await setearEstado(idProducto, activo);
+      res.status(200).json({ message: 'Estado actualizado' });
+    } catch (error) {
+      console.error('Error al cambiar estado del producto:', error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+}
+
+
 // GET /modificar
 export async function VistaModificar(app) {
   app.get('/modificar', async (req, res) => {
+    const db = await conectarBase();
     const { id } = req.query;
+
     try {
       const [rows] = await db.query('SELECT * FROM productos WHERE idProducto = ?', [id]);
       if (rows.length === 0) {
@@ -67,8 +85,7 @@ export async function VistaModificar(app) {
     } catch (error) {
       console.error('Error al obtener producto para modificar:', error);
       res.status(500).send('Error del servidor');
-    }
-    finally {
+    } finally {
       await db.end();
     }
   });
@@ -76,37 +93,25 @@ export async function VistaModificar(app) {
 
 // POST /modificar/:id
 export async function PostModificar(app) {
-  app.post('/modificar/:id', async (req, res) => {
+  app.post('/modificacion/:id', async (req, res) => {
+    const db = await conectarBase();
     const { id } = req.params;
-    const { marca, modelo, color, talle, precio, stock } = req.body;
+    const { nombre, tipo, color, talle, precio, tipoBotin, largoTapones } = req.body;
+
     try {
       await db.query(
-        'UPDATE productos SET marca = ?, modelo = ?, color = ?, talle = ?, precio = ?, stock = ? WHERE idProducto = ?',
-        [marca, modelo, color, talle, precio, stock, id]
+        `UPDATE productos SET nombre=?, tipo=?, color=?, talle=?, precio=?, tipoBotin=?, largoTapones=? WHERE idProducto=?`,
+        [nombre, tipo, color, talle, precio, tipoBotin || null, largoTapones || null, id]
       );
       res.redirect('/');
     } catch (error) {
       console.error('Error al modificar producto:', error);
       res.status(500).send('Error al modificar producto');
-    }
-    finally {
+    } finally {
       await db.end();
     }
   });
 }
 
-export async function cambiarEstadoProducto(app) {
-  app.patch('/api/productos/:id/estado', async (req, res) => {
-    const idProducto = req.params.id;
-    const { activo } = req.body;
 
-    try {
-      await setearEstado(idProducto, activo);
-      res.status(200).json({ message: 'Estado actualizado' });
-    } catch (error) {
-      console.error('Error al cambiar estado del producto:', error);
-      res.status(500).json({ error: error.message });
-    }
-  });
-}
 

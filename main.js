@@ -8,6 +8,7 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT;
 
+// Permite que Express entienda formularios (application/x-www-form-urlencoded) y JSON en las solicitudes. Muy útil para POST, PUT, etc.
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 

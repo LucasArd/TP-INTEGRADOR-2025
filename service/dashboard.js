@@ -92,7 +92,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     document.querySelectorAll('.btn-modificar').forEach(btn => {
         btn.addEventListener('click', () => {
             const id = btn.dataset.id;
-            window.location.href = `http://localhost:3000/modificacion?id=${id}`;
+            window.location.href = `http://localhost:3000/modificacion/${id}`;
         });
     });
 });

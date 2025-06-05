@@ -21,7 +21,7 @@ export class Router {
         this.app.get('/', dashboard);
         this.app.get('/alta',viewAlta)
         this.app.get('/baja',viewBaja)
-        this.app.get('/modificacion',viewMod)
+        this.app.get('/modificacion/:idProducto',viewMod)
     }
 
     cargarRutasStatic(){
