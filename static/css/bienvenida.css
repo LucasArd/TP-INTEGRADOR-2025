@@ -78,3 +78,8 @@ main {
   /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to bottom, #eec170, #772f1a);
 }
+
+.error{
+  background-color: red;
+  border: 10px red;
+}

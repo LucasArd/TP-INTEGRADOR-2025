@@ -1,4 +1,3 @@
-
 body {
     margin: 0;
     padding: 0;
@@ -33,8 +32,10 @@ header {
 
 
 .principal {
+    min-height: 100vh;
     background-color: #eec170;
-    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .contenedor-logo {
@@ -49,13 +50,6 @@ header {
 
 .contenedor-logo-h1 {
     margin-left: 15px;
-}
-
-#txt_busqueda {
-    border-radius: 25px;
-    width: 150px;
-    background: #eec170;
-    padding-left: 7px;
 }
 
 .nav-menu {
@@ -82,95 +76,84 @@ header {
 .nav-menu-link:hover {
     background-color: #eec170;
     transition: 0.5s;
+}
+
+.div-ticket {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.363);
+    padding: 15px 30px;
+    gap: 20px;
+    align-self: baseline;
+}
+
+
+.div-botones-ticket{
+    margin-left: 80px;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    gap: 20px;
     
 }
 
-.card{
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.445);
-    background-color: whitesmoke;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border-radius: 9px;
-    padding: 10px;
-}
-
-.card h4{
-    color: #585123;
-    font-weight: bold;
-}
-
-.card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 12px rgb(241, 129, 0)
-}
-
-#calzados{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    padding: 100px;
-    justify-items: center;
-}
-
-#zapatillas, #botines{
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    padding: 40px;
-    gap: 40px;
-    justify-items: center;
-}
-
-#calzados h1{
-    padding: 10px;
-    align-self: center;
-}
-
-.category-link {
-    padding: 5px;
-    color: rgb(0, 0, 0);
-    text-decoration: none;
-}
-
-.category-link:hover {
-    text-decoration: none;
-    color: rgb(241, 129, 0);
-    transition: 0.75s;
-}
-
-.category-img {
-    transition: transform 0.7s ease;
-}
-
-.card:hover .category-img {
-    transform: scale(1.15);
-}
-
-.card-img-cart{
-    width: 32px;
-    height: auto;
-}
-
-.card-a-cart{
+.div-producto-ticket{
     display: flex;
-    width: 32px;
-    height: auto;
-    position: absolute;
-    top: 5px;
-    right: 65px;
-    right: calc(32px-);
-    text-decoration: none;
-    color: #772f1a;
+    align-content: center;
+}
+
+.btn-sumar-ticket,.btn-restar-ticket {
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    border: none;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    background-color: #f9f9f9;
+}
+
+.btn-sumar-ticket {
+    background-image: url("../resources/img/plus-solid.svg");
+}
+
+.btn-restar-ticket {
+    background-image: url("../resources/img/minus-solid.svg");
+}
+
+.btn-sumar-ticket:hover,.btn-restar-ticket:hover {
+    transform: scale(1.1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.li-ticket {
+    list-style: none;
+    width: 20vw;
+    padding: 5px 20px;
+    color: #3d3737;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 5px;
-    font-size: 14px;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
 }
 
-.card-a-cart:hover{
-    color: #772f1a;
+.li-ticket:hover {
+    background-color: #f9f9f9;
 }
 
-.h2-cat{
-    color: #585123;
-    align-self: center;
-    position: relative;
-    padding: 20px;
-    margin-bottom: 0px;
+.carrito {
+    max-width: max-content;
+    margin: 40px auto;
+    padding: 25px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: sans-serif;
 }
+

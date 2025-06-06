@@ -1,12 +1,18 @@
 import { Vista } from "../model/vista.js";
-
 const v = new Vista();
 
 export const carrito = cargarCarritoDeLocalStorage(); // inicializo carrito a ver si tiene algo
 
-
 export function agregarAlCarrito(calzado) {
-    carrito.push(calzado);
+    const productoExistente = carrito.find(item => item.id === calzado.id);
+
+    if (productoExistente) {
+        productoExistente.cantidad += 1;
+    } else {
+        calzado.cantidad = 1;
+        carrito.push(calzado);
+    }
+
     console.log("Producto agregado al carrito:", calzado);
     console.log(carrito)
     guardarCarritoEnLocalStorage(); // cada vez que se agregue un producto actualizo el carrito en localstorage
@@ -30,12 +36,15 @@ function cargarNombreDeClienteLocalStorage() {
 
 function renderizarCarritoComoLista(carrito) {
     console.log("Intentando renderizar carrito");
-    console.log("contenedorCarrito:", document.getElementById("carrito"));
-    // const contenedorCarrito = document.getElementById("carrito");
-
-    v.pagCarrito.divCarrito.innerHTML = ""; // limpiar antes de renderizar
+    console.log("contenedorCarrito:", v.$("carrito"));
+    v.pagCarrito.divCarrito.innerHTML = "";
+    
+    const divCarritoContenedor = document.createElement("div");
+    divCarritoContenedor.classList.add("carrito"); // esta clase te la paso en CSS
+    
     if (carrito.length === 0) {
-        v.pagCarrito.divCarrito.innerHTML = "<p>El carrito está vacío.</p>";
+        divCarritoContenedor.innerHTML = "<p>El carrito está vacío.</p>";
+        v.pagCarrito.divCarrito.appendChild(divCarritoContenedor);
         return;
     }
 
@@ -43,24 +52,56 @@ function renderizarCarritoComoLista(carrito) {
     ul.classList.add("list-group");
 
     carrito.forEach((producto) => {
+        const div = document.createElement("div");
+        div.classList.add("div-ticket");
+
         const li = document.createElement("li");
-        li.classList.add("list-group-item");
+        li.classList.add("list-group-item", "li-ticket", "nunito");
         li.innerHTML = `
             ${producto.name}<br>
             Precio: $${producto.price} <br>
-            Cantidad: ${producto.cantidad || 1}
+            Cantidad: ${producto.cantidad}
         `;
-        ul.appendChild(li);
-    });
+        const divBotones = document.createElement("div");
+        divBotones.classList.add("div-botones-ticket");
 
-    // boton confirmar pedido
+        const botonSumar = document.createElement("button");
+        botonSumar.classList.add("btn-sumar-ticket");
+        const botonRestar = document.createElement("button");
+        botonRestar.classList.add("btn-restar-ticket");
+        divBotones.appendChild(botonSumar);
+        divBotones.appendChild(botonRestar);
+        
+        botonSumar.addEventListener("click", async(e) =>{
+            producto.cantidad += 1;
+            guardarCarritoEnLocalStorage();
+            renderizarCarritoComoLista(carrito);
+        });
+    
+        botonRestar.addEventListener("click", async(e) =>{
+            if (producto.cantidad > 1) {
+                producto.cantidad -= 1;
+            } else {
+                const index = carrito.indexOf(producto);
+                if (index !== -1) carrito.splice(index, 1);
+            }
+            guardarCarritoEnLocalStorage();
+            renderizarCarritoComoLista(carrito);
+        });
+
+        div.appendChild(li);
+        div.appendChild(divBotones);
+
+        ul.appendChild(div);
+    });
+    
     const botonConfirmar = document.createElement("button");
     botonConfirmar.textContent = "Confirmar Compra";
     botonConfirmar.classList.add("btn", "btn-success", "mt-3");
 
     botonConfirmar.addEventListener("click", async () => {
         const comprador = cargarNombreDeClienteLocalStorage();
-        const precioTotal = 20; // O tu lógica de cálculo
+        const precioTotal = 20;
         // La fecha no hace falta mandarla, se genera en backend
 
         const response = await fetch('/generar-ticket', {
@@ -80,11 +121,15 @@ function renderizarCarritoComoLista(carrito) {
         // Vaciar carrito
         carrito.length = 0;
         localStorage.removeItem("carrito");
-        v.pagCarrito.divCarrito.innerHTML = "<p>¡Pedido confirmado! El carrito ha sido vaciado.</p>";
+        v.pagCarrito.divCarrito.innerHTML = `
+        <p>¡Pedido confirmado! El carrito ha sido vaciado.</p>
+        <button type="button" class="btn btn-success mt-3" id="btnTicket">Ir al ticket</button>`;
     });
+    
+    divCarritoContenedor.appendChild(ul);
+    divCarritoContenedor.appendChild(botonConfirmar);
 
-    v.pagCarrito.divCarrito.appendChild(ul);
-    v.pagCarrito.divCarrito.appendChild(botonConfirmar);
+    v.pagCarrito.divCarrito.appendChild(divCarritoContenedor);
 }
 
 if (v.pagCarrito.divCarrito) renderizarCarritoComoLista(carrito);

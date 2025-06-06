@@ -6,6 +6,8 @@ export class Vista {
     pagCarrito;
     constructor() {
         this.pagBienvenida = {
+            frmBienvenida: this.$('frmBienvenida'),
+            txtUsuario: this.$('basic-url'),
             btnContinuar: this.$('btn-continuar')
         },
         this.pagProductos = {

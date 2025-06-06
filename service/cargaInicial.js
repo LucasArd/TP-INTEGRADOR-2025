@@ -32,10 +32,12 @@ async function crearCalzados() {
     let c = vector.map((calzado) => {
     if (calzado.tipo === "Zapatilla") {
         let z = new Zapatilla(calzado.idProducto, calzado.nombre, calzado.tipo, calzado.color, calzado.talle, calzado.img, calzado.url, calzado.precio, calzado.tipoZapatilla);
+        z.activo = calzado.activo;
         zapatillas.push(z);
         return z;
     } else {
         let b = new Botin(calzado.idProducto, calzado.nombre, calzado.tipo, calzado.color, calzado.talle, calzado.img, calzado.url, calzado.precio, calzado.tipoBotin, calzado.largoTapones);
+        b.activo = calzado.activo;
         botines.push(b);
         return b;
     }
@@ -50,13 +52,17 @@ console.log(c);
 
 function cargarBotines() {
     botines.forEach(x => {
-        v.pagBotines.divBotines.appendChild(x.createHtmlElement());
+        if (x.activo) {
+            v.pagBotines.divBotines.appendChild(x.createHtmlElement());
+        }    
     });
 }
 
 function cargarZapatillas() {
     zapatillas.forEach(x => {
-        v.pagZapatillas.divZapatillas.appendChild(x.createHtmlElement());
+        if (x.activo) {
+            v.pagZapatillas.divZapatillas.appendChild(x.createHtmlElement());
+        }
     });
 }
 

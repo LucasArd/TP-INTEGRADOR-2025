@@ -22,7 +22,9 @@
     <main class="main">
         <header class="nunito">
             <div class="contenedor-logo">
-                <img src="../resources/img/imagen_logo_circular.webp" alt="logo_circular" class="contenedor-logo-img">
+                <a href="bienvenida.html">
+                    <img src="./resources/img/imagen_logo_circular.webp" alt="logo_circular" class="contenedor-logo-img">
+                </a>
                 <h1 class="contenedor-logo-h1">JustPickIt</h1>
             </div>
             <nav class="nav">
@@ -49,21 +51,21 @@
     
     <!-- Modal -->
     <div class="modal fade" id="modalConfirmacion" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalLabel">Producto agregado</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
-      <div class="modal-body" id="modalBody">
-        <!-- El contenido dinámico se carga desde JS -->
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
-      </div>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">Producto agregado</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    <!-- El contenido dinámico se carga desde JS -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 
 </body>
 <script type="module" src="../service/cargaInicial.js"></script>
