@@ -1,6 +1,6 @@
 import PATHS from "../paths/paths.js";
 import express from 'express'
-import { ObtenerProductos, ObtenerProductoPorId, PostModificar, VistaModificar, EliminarProducto, cambiarEstadoProducto } from "../controllers/controllersApi/AppApiAbm.js";
+import { ObtenerProductos, ObtenerProductoPorId, PostModificar, VistaModificar, EliminarProducto, cambiarEstadoProducto, PostGenerarTicket } from "../controllers/controllersApi/AppApiAbm.js";
 import {dashboard,viewAlta,viewBaja,viewMod} from "../controllers/controllersView/AppEjs.js";
 
 export class Router {
@@ -15,6 +15,7 @@ export class Router {
         VistaModificar(this.app);
         PostModificar(this.app);
         cambiarEstadoProducto(this.app);
+        PostGenerarTicket(this.app);
     }
 
     cargarRutasEjs() {        

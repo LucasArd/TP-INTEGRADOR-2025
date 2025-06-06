@@ -23,9 +23,7 @@ export async function viewBaja(req,res){
 //     res.status(200).send(html);
 // }
 
-
-
-export async function viewMod(req, res) {
+export async function viewMod(req, res) { 
     const idProducto = parseInt(req.params.idProducto);
     const response = await fetch('http://localhost:3000/api/productos');
     const data = await response.json();

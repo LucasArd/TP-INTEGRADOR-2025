@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./resources/img/favicon.png" type="image/x-ico">
+    <link rel="stylesheet" href="../css/ticket.css">
+    <title>Ticket de Compra</title>
+</head>
+
+<body>
+    <div class="ticket">
+        <h1> Ticket de Compra</h1>
+
+        <div class="dato"><strong>ID Ticket:</strong>
+            <%= ticket.idTicket %>
+        </div>
+        <div class="dato"><strong>Cliente:</strong>
+            <%= ticket.comprador %>
+        </div>
+        <div class="dato"><strong>Fecha:</strong>
+            <%= ticket.fecha %>
+        </div>
+        <div class="dato"><strong>Total:</strong> $<%= ticket.precioTotal %>
+        </div>
+
+        <p class="gracias">¡Gracias por tu compra!</p>
+    </div>
+</body>
+
+</html>

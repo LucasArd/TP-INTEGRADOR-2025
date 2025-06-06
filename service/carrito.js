@@ -1,7 +1,9 @@
-import {Vista} from "../model/vista.js";
+import { Vista } from "../model/vista.js";
+
 const v = new Vista();
 
 export const carrito = cargarCarritoDeLocalStorage(); // inicializo carrito a ver si tiene algo
+
 
 export function agregarAlCarrito(calzado) {
     carrito.push(calzado);
@@ -20,13 +22,17 @@ function cargarCarritoDeLocalStorage() { // traigo lo guardado en la sesion del 
     return data ? JSON.parse(data) : [];
 }
 
+function cargarNombreDeClienteLocalStorage() {
+    return localStorage.getItem("nombreCliente") || "Comprador de las sombras";
+}
+
 // ---------------------------------------- Lista, (posible tabla) con productos agregados --------------------------
 
 function renderizarCarritoComoLista(carrito) {
     console.log("Intentando renderizar carrito");
     console.log("contenedorCarrito:", document.getElementById("carrito"));
     // const contenedorCarrito = document.getElementById("carrito");
-    
+
     v.pagCarrito.divCarrito.innerHTML = ""; // limpiar antes de renderizar
     if (carrito.length === 0) {
         v.pagCarrito.divCarrito.innerHTML = "<p>El carrito está vacío.</p>";
@@ -52,8 +58,26 @@ function renderizarCarritoComoLista(carrito) {
     botonConfirmar.textContent = "Confirmar Compra";
     botonConfirmar.classList.add("btn", "btn-success", "mt-3");
 
-    // Limpio carrito y storage
-    botonConfirmar.addEventListener("click", () => {
+    botonConfirmar.addEventListener("click", async () => {
+        const comprador = cargarNombreDeClienteLocalStorage();
+        const precioTotal = 20; // O tu lógica de cálculo
+        // La fecha no hace falta mandarla, se genera en backend
+
+        const response = await fetch('/generar-ticket', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ comprador, precioTotal }),
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            window.open(`/ticket/${result.idTicket}`, '_blank');
+        } else {
+            alert('Error al generar ticket');
+        }
+
+        // Vaciar carrito
         carrito.length = 0;
         localStorage.removeItem("carrito");
         v.pagCarrito.divCarrito.innerHTML = "<p>¡Pedido confirmado! El carrito ha sido vaciado.</p>";
