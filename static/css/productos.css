@@ -1,7 +1,61 @@
-body {
-    margin: 0;
-    padding: 0;
+:root{
+    --base-principal:#eec170;
+    --base-secundario: #772f1a;
+    --secundario: #f2a65a;
+    --titulo: #f58549;
+    --texto: #585123;
+    --texto-secundario: #ffffff;
+    --card-principal: whitesmoke;
+    --card-sombra: #f18100;
 }
+.modoClaro{
+    --base-principal: white;
+    --base-secundario: #d9dbdb;
+    --secundario: #0071ff;
+    --titulo: #232738;
+    --texto: #111528;
+    --texto-secundario: #3a435d;
+    --card-principal: whitesmoke;
+    --card-sombra: #474746;
+}
+.modoOscuro{
+    --base-principal: #070b1d;
+    --base-secundario: #101425;
+    --secundario: #0071ff;
+    --titulo: #a4a5b8;
+    --texto: #ffffff;
+    --texto-secundario: #585d6b;
+    --card-principal: #282733;
+    --card-sombra: #9e9e9d;
+}
+#boton-theme{
+    height: 40px;
+    width: 40px;
+    padding: 0;
+    border-radius: 50%;
+    background-color: var(--base-secundario);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#boton-theme svg {
+    fill: var(--base-principal);
+    display: none;
+}
+
+.modoClaro #boton-theme #icono-claro {
+    display: block;
+}
+
+.modoOscuro #boton-theme #icono-oscuro {
+    display: block;
+}
+
+.modoJPI #boton-theme #icono-JPI {
+    display: block;
+}
+
+
 
 .nunito {
     font-family: "Nunito", sans-serif;
@@ -20,10 +74,10 @@ body {
 
 header {
     grid-area: 1 / 1 / 2 / 3;
-    background-color: #772f1a;
+    background-color: var(--base-secundario);
     padding: 20px;
     height: 85px;
-    color: #f58549;
+    color: var(--titulo);
     align-items: center;
     display: flex;
     flex-direction: row;
@@ -32,7 +86,7 @@ header {
 
 
 .principal {
-    background-color: #eec170;
+    background-color: var(--base-principal);
     height: 100%;
 }
 
@@ -53,7 +107,7 @@ header {
 #txt_busqueda {
     border-radius: 25px;
     width: 150px;
-    background: #eec170;
+    background: var(--base-principal);
     padding-left: 7px;
 }
 
@@ -70,7 +124,7 @@ header {
 
 .nav-menu-link {
     padding: 5px;
-    color: white;
+    color: var(--texto-secundario);
     text-decoration: none;
     display: flex;
     flex-direction: column;
@@ -79,27 +133,27 @@ header {
 }
 
 .nav-menu-link:hover {
-    background-color: #eec170;
+    background-color: var(--base-principal);
     transition: 0.5s;
     
 }
 
 .card{
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.445);
-    background-color: whitesmoke;
+    background-color: var(--card-principal);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border-radius: 9px;
     padding: 10px;
 }
 
 .card h4{
-    color: #585123;
+    color: var(--texto);
     font-weight: bold;
 }
 
 .card:hover {
     transform: scale(1.05);
-    box-shadow: 0 6px 12px rgb(241, 129, 0)
+    box-shadow: 0 6px 12px var(--card-sombra)
 }
 
 #calzados{
@@ -130,7 +184,7 @@ header {
 
 .category-link:hover {
     text-decoration: none;
-    color: rgb(241, 129, 0);
+    color: #f18100;
     transition: 0.75s;
 }
 
@@ -156,18 +210,18 @@ header {
     right: 65px;
     right: calc(32px-);
     text-decoration: none;
-    color: #772f1a;
+    color: var(--texto);
     align-items: center;
     gap: 5px;
     font-size: 14px;
 }
 
 .card-a-cart:hover{
-    color: #772f1a;
+    color: var(--card-sombra);
 }
 
 .h2-cat{
-    color: #585123;
+    color: var(--texto);
     align-self: center;
     position: relative;
     padding: 20px;

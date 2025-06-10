@@ -1,0 +1,135 @@
+/* TEMAS */
+:root{
+    --base-principal:#eec170;
+    --base-secundario: #772f1a;
+    --secundario: #f2a65a;
+    --titulo: #f58549;
+    --texto: #585123;
+    --texto-secundario: #ffffff;
+    --card-principal: whitesmoke;
+    --card-sombra: #f18100;
+}
+.modoClaro{
+    --base-principal: white;
+    --base-secundario: #d9dbdb;
+    --secundario: #0071ff;
+    --titulo: #232738;
+    --texto: #111528;
+    --texto-secundario: #3a435d;
+    --card-principal: whitesmoke;
+    --card-sombra: #474746;
+}
+.modoOscuro{
+    --base-principal: #070b1d;
+    --base-secundario: #101425;
+    --secundario: #0071ff;
+    --titulo: #a4a5b8;
+    --texto: #ffffff;
+    --texto-secundario: #585d6b;
+    --card-principal: #282733;
+    --card-sombra: #9e9e9d;
+}
+#boton-theme{
+    height: 40px;
+    width: 40px;
+    padding: 0;
+    border-radius: 50%;
+    background-color: var(--base-secundario);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#boton-theme svg {
+    fill: var(--base-principal);
+    display: none;
+}
+
+.modoClaro #boton-theme #icono-claro {
+    display: block;
+}
+
+.modoOscuro #boton-theme #icono-oscuro {
+    display: block;
+}
+
+.modoJPI #boton-theme #icono-JPI {
+    display: block;
+}
+
+/* FUENTES */
+.nunito {
+  font-family: "Nunito", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: bold;
+  font-style: normal;
+}
+
+/* GLOBAL */
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* BIENVENIDA.html */
+#html-bienvenida {
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+#body-bienvenida {
+  background: var(--texto);
+  background: -webkit-linear-gradient(to top, #eec170, #772f1a);
+  background: linear-gradient(to top, #eec170, #772f1a);
+}
+
+#main-bienvenida {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.contenedor-logo {
+  width: 300px;
+  height: 500px;
+  margin-bottom: 5rem;
+}
+
+.img-circular {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
+.contenedor-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10rem;
+}
+
+.form-bienvenida {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.raise:hover,
+.raise:focus {
+  box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
+  transform: translateY(-0.25em);
+}
+
+.raise {
+  border-radius: 6px;
+  background: #585123;
+  background: -webkit-linear-gradient(to bottom, #eec170, #772f1a);
+  background: linear-gradient(to bottom, #eec170, #772f1a);
+}
+
+/*  */
