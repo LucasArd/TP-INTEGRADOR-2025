@@ -101,4 +101,37 @@ export async function setearEstado(idProducto, estado) {
     }
 }
 
+export async function altaProducto(producto) {
+    try {
+        const db = await conectarBase();
 
+        const qry = `
+        INSERT INTO productos 
+            (nombre, tipo, talle, color, img, url, precio, tipoBotin, tipoZapatilla, largoTapones, activo)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+        `;
+
+        const valores = [
+            producto.nombre,
+            producto.tipo,
+            producto.talle,
+            producto.color,
+            producto.img,
+            producto.url,
+            producto.precio,
+            producto.tipoBotin,
+            producto.tipoZapatilla,
+            producto.largoTapones,
+            producto.activo ?? true
+        ];
+
+        const [resultado] = await db.query(qry, valores);
+
+        console.log(`Producto insertado con ID: ${resultado.insertId}`);
+        return resultado.insertId;
+
+    } catch (err) {
+        console.error('Error al insertar producto:', err.message);
+        throw err;
+    }
+}

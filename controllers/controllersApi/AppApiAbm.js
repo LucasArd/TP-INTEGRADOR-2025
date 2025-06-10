@@ -1,4 +1,4 @@
-import { mostrarProductos, conectarBase, setearEstado } from './AppBDD.js';
+import { mostrarProductos, conectarBase, setearEstado, altaProducto } from './AppBDD.js';
 
 import ejs from 'ejs';
 import puppeteer from 'puppeteer';
@@ -168,6 +168,36 @@ export function PostGenerarTicket(app) {
   });
 }
 
+// Alta Producto
+export async function darAltaProducto(app) {
+  app.post('/alta', (req, res) => {
+    const datos = req.body;
+
+    // Procesar talles si vienen separados por comas
+    let talleArray = datos.talle?.split(',').map(t => t.trim()).filter(t => t !== '');
+    let talle = talleArray.join(',');  // "guardo talle como String para la BDD (esta guardado como SET, necesita strings)"
+
+    // Armar el objeto de producto
+    const nuevoProducto = {
+      nombre: datos.nombre,
+      tipo: datos.tipo,
+      color: datos.color,
+      precio: parseFloat(datos.precio),
+      talle,
+      img: datos.img || '',  // opcional
+      url: datos.url || '',  // opcional
+      tipoBotin: datos.tipo === 'Botin' ? datos.tipoBotin : '',
+      tipoZapatilla: datos.tipo === 'Zapatilla' ? datos.tipoZapatilla : '',
+      largoTapones: datos.tipo === 'Botin' ? datos.largoTapones : '',
+      activo: true
+    };
+
+    altaProducto(nuevoProducto)
+      //.then(() => res.redirect('/'))  // No se puede redireccionar si estoy usando fetch (res.status(200).json para mostrar modal)
+      .then(() => res.status(200).json({ mensaje: 'Producto agregado con éxito' }))
+      .catch(err => res.status(500).send('Error al agregar producto: ' + err));
+  })
+};
 
 
 
