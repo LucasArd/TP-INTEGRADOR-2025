@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <link rel="stylesheet" href="../css/style.css">
     <title>Alta Producto - JustPickIt</title>
 </head>
+
 <body>
     <header class="nunito header-nav">
         <div class="contenedor-logo-nav">
@@ -39,75 +41,107 @@
         </nav>
     </header>
 
-<main class="container mt-5 principal">
-    <% if (abm === 'A') { %> 
-    <form method="POST" action="/alta" class="bg-light p-4 rounded shadow">
-        <h2 class="mb-4">Alta de Producto</h2>
-        
-        <div class="mb-3">
-            <label for="txtName" class="form-label">Nombre</label>
-            <input type="text" class="form-control" id="txtName" name="nombre" required>
-        </div>
+    <main class="container mt-5 principal">
+        <% if (abm==='A' ) { %>
+            <form method="POST" action="/alta" class="bg-light p-4 rounded shadow" id="formAltaProducto">
+                <h2 class="mb-4">Alta de Producto</h2>
 
-        <div class="mb-3">
-            <label for="selType" class="form-label">Tipo</label>
-            <select class="form-select" id="selType" name="tipo" required>
-                <option value="" disabled selected>Seleccionar...</option>
-                <option value="Zapatilla">Zapatilla</option>
-                <option value="Botin">Botin</option>
-            </select>
-        </div>
+                <div class="mb-3">
+                    <label for="txtName" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="txtName" name="nombre" required>
+                </div>
 
-        <div class="mb-3">
-            <label for="txtColor" class="form-label">Color</label>
-            <input type="text" class="form-control" id="txtColor" name="color" required>
-        </div>
+                <div class="mb-3">
+                    <label for="selType" class="form-label">Tipo</label>
+                    <select class="form-select" id="selType" name="tipo" required>
+                        <option value="" disabled selected>Seleccionar...</option>
+                        <option value="Zapatilla">Zapatilla</option>
+                        <option value="Botin">Botin</option>
+                    </select>
+                </div>
 
-        <div class="mb-3">
-            <label for="txtSize" class="form-label">Talles disponibles (separados por coma)</label>
-            <input type="text" class="form-control" id="txtSize" name="talles">
-        </div>
+                <div class="mb-3">
+                    <label for="txtColor" class="form-label">Color</label>
+                    <input type="text" class="form-control" id="txtColor" name="color" required>
+                </div>
 
-        <div class="mb-3">
-            <label for="txtPrice" class="form-label">Precio</label>
-            <input type="number" class="form-control" id="txtPrice" name="precio" step="0.01" required>
-        </div>
+                <div class="mb-3">
+                    <label for="txtSize" class="form-label">Talles disponibles (separados por coma)</label>
+                    <input type="text" class="form-control" id="txtSize" name="talle">
+                </div>
 
-        <!-- Campos exclusivos para BOTINES -->
-        <div class="mb-3">
-            <label for="selBotinType" class="form-label">Tipo de Botín</label>
-            <select class="form-select" id="selBotinType" name="tipoBotin">
-                <option value="" disabled selected>Seleccionar...</option>
-                <option value="Cesped">Césped</option>
-                <option value="Piso">Piso</option>
-            </select>
-        </div>
+                <div class="mb-3">
+                    <label for="txtPrice" class="form-label">Precio</label>
+                    <input type="number" class="form-control" id="txtPrice" name="precio" step="0.01" required>
+                </div>
 
-        <div class="mb-3">
-            <label for="txtSpike" class="form-label">Tamaño de los Tapones</label>
-            <input type="text" class="form-control" id="txtSpike" name="tamañoTapones">
-        </div>
+                <!-- Campos exclusivos para BOTINES -->
+                <div class="mb-3">
+                    <label for="selBotinType" class="form-label">Tipo de Botín</label>
+                    <select class="form-select" id="selBotinType" name="tipoBotin">
+                        <option value="" disabled selected>Seleccionar...</option>
+                        <option value="Cesped">Césped</option>
+                        <option value="Piso">Piso</option>
+                    </select>
+                </div>
 
-        <!-- Campos exclusivos para ZAPATILLAS -->
-        <div class="mb-3">
-            <label for="txtSneakerType" class="form-label">Tipo de Zapatilla</label>
-            <input type="text" class="form-control" id="txtSneakerType" name="tipoZapatilla">
-        </div>
+                <div class="mb-3">
+                    <label for="txtSpike" class="form-label">Tamaño de los Tapones</label>
+                    <input type="text" class="form-control" id="txtSpike" name="tamañoTapones">
+                </div>
 
-        <div class="mb-3">
-            <label for="txtUrl" class="form-label">Link de referencia</label>
-            <input type="url" class="form-control" id="txtUrl" name="url" placeholder="https://nike.com/zapatillaEjemplo">
-        </div>
+                <!-- Campos exclusivos para ZAPATILLAS -->
+                <div class="mb-3">
+                    <label for="txtSneakerType" class="form-label">Tipo de Zapatilla</label>
+                    <input type="text" class="form-control" id="txtSneakerType" name="tipoZapatilla">
+                </div>
 
-        <div class="d-grid"> <!-- EL BOTON DE ALTA TODAVIA NO HACE NADA -->
-            <button type="submit" class="btn btn-primary">Dar de Alta</button>
-        </div>
-    </form>
-    <% } %> 
-</main>
+                <div class="mb-3">
+                    <label for="txtUrl" class="form-label">Link de referencia</label>
+                    <input type="url" class="form-control" id="txtUrl" name="url"
+                        placeholder="https://nike.com/zapatillaEjemplo">
+                </div>
+
+                <div class="d-grid"> <!-- EL BOTON DE ALTA TODAVIA NO HACE NADA -->
+                    <button type="submit" class="btn btn-primary" >Dar de Alta</button>
+                </div>
+            </form>
+            <!-- MODAL DE ÉXITO -->
+             <div class="modal fade" id="modalExito" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header bg-success text-white">
+                            <h5 class="modal-title">¡Éxito!</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            El producto se dio de alta correctamente.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MODAL DE ERROR -->
+            <div class="modal fade" id="modalError" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header bg-danger text-white">
+                            <h5 class="modal-title">Error</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            Hubo un problema al dar de alta el producto. Intenta nuevamente.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+            
+    </main>
 
 <script type="module" src="http://localhost:3000/service/alta.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 </html>
