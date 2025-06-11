@@ -2,6 +2,7 @@ import { Zapatilla } from "../model/zapatilla.js";
 import { Botin } from "../model/botin.js";
 import { Vista } from "../model/vista.js";
 const v = new Vista();
+
 const url = 'http://localhost:3000/api/productos'
 const optionsGET = {
     method: "GET",

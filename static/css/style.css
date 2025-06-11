@@ -1,11 +1,11 @@
-/* TEMAS */
+/* TEMAS -------------------------------------------------------------------------------------------------------*/
 :root{
     --base-principal:#eec170;
     --base-secundario: #772f1a;
     --secundario: #f2a65a;
     --titulo: #f58549;
     --texto: #585123;
-    --texto-secundario: #ffffff;
+    --texto-secundario: #111528;
     --card-principal: whitesmoke;
     --card-sombra: #f18100;
 }
@@ -25,13 +25,13 @@
     --secundario: #0071ff;
     --titulo: #a4a5b8;
     --texto: #ffffff;
-    --texto-secundario: #585d6b;
+    --texto-secundario: whitesmoke;
     --card-principal: #282733;
     --card-sombra: #9e9e9d;
 }
 #boton-theme{
-    height: 40px;
-    width: 40px;
+    height: 35px;
+    width: 35px;
     padding: 0;
     border-radius: 50%;
     background-color: var(--base-secundario);
@@ -40,23 +40,24 @@
     align-items: center;
 }
 #boton-theme svg {
-    fill: var(--base-principal);
+    fill: var(--texto-secundario);
     display: none;
 }
 
-.modoClaro #boton-theme #icono-claro {
+.modoClaro #boton-theme #modo-claro {
     display: block;
 }
 
-.modoOscuro #boton-theme #icono-oscuro {
+.modoOscuro #boton-theme #modo-oscuro {
     display: block;
 }
 
-.modoJPI #boton-theme #icono-JPI {
+.modoJPI #boton-theme #modo-JPI {
     display: block;
 }
 
-/* FUENTES */
+
+/* FUENTES -----------------------------------------------------------------------------------------------------*/
 .nunito {
   font-family: "Nunito", sans-serif;
   font-optical-sizing: auto;
@@ -64,13 +65,179 @@
   font-style: normal;
 }
 
-/* GLOBAL */
+/* GLOBAL ------------------------------------------------------------------------------------------------------*/
 body {
     margin: 0;
     padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--base-principal);
+    color: var(--texto);
 }
 
-/* BIENVENIDA.html */
+.main {
+    display: grid;
+    grid-template-areas:
+        "header"
+        "content";
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    min-height: 100vh;
+}
+
+.principal {
+    grid-area: content;
+    padding: 20px;
+    background-color: var(--base-principal);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    box-sizing: border-box;
+}
+@media screen and (max-width: 767px) {
+    .main {
+        grid-template-areas:
+            "header"
+            "content";
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+    }
+
+    .principal {
+        padding: 10px;
+        min-height: auto;
+    }
+}
+
+/* BARRA DE NAVEGACION  ----------------------------------------------------------------------------------------*/
+.header-nav {
+    grid-area: header;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--base-secundario);
+    color: var(--titulo);
+    padding: 0 20px;
+    height: 85px;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.contenedor-logo-nav {
+    display: flex;
+    align-items: center;
+}
+.contenedor-logo-img-nav {
+    width: 70px;
+    height: auto;
+}
+.contenedor-logo-h1-nav {
+    margin-left: 15px;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+.nav-menu-item {
+    font-size: 14px;
+    margin: 0 10px;
+    text-transform: uppercase;
+}
+.nav-menu-link {
+    text-decoration: none;
+    color: var(--texto-secundario);
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    
+}
+
+.logo-carrito{
+    fill: var(--texto-secundario);
+}
+
+.nav-menu-link:hover {
+    background-color: var(--base-principal);
+    transition: 0.5s;  
+}
+
+.btn-nav-desplegable{
+    color: var(--texto-secundario);
+    background: 0;
+    border: 0;
+    font-size: 20px;
+    padding: 0 20px;
+    line-height: 60px;
+    width: 0;
+    display: none;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 767px) {
+    .nav-menu.show {
+        display: flex;
+    }
+    .header-nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        height: auto;
+        padding: 10px 15px;
+    }
+
+    .contenedor-logo-nav {
+        width: 100%;
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    .nav-menu {
+        flex-direction: column;
+        list-style: none;
+        align-items: flex-start;
+        padding-top: 60px;
+        margin: 0;
+        background-color: var(--base-secundario);
+        box-shadow: 0 1px 2px var(--card-sombra);
+        position: fixed;
+        top: 0;
+        right: -250px;
+        width: 200px;
+        height: max-content;
+        z-index: 10;
+        overflow-y: auto;
+        transition: right 0.3s ease;
+    }
+
+    .nav-menu-item {
+        text-align: center;
+        padding: 10px 0;
+    }
+
+    .btn-nav-desplegable {
+        display: block;
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        z-index: 11;
+    }
+    .nav-menu-link:hover {
+        background-color: none;
+        transition: 0.5s;  
+    }
+
+    .nav-menu-visible{
+        right: 0;
+    }
+}
+
+
+/* BIENVENIDA.html ---------------------------------------------------------------------------------------------*/
 #html-bienvenida {
   line-height: 1.15;
   -webkit-text-size-adjust: 100%;
@@ -81,8 +248,8 @@ body {
 
 #body-bienvenida {
   background: var(--texto);
-  background: -webkit-linear-gradient(to top, #eec170, #772f1a);
-  background: linear-gradient(to top, #eec170, #772f1a);
+  background: -webkit-linear-gradient(to top, var(--base-principal), var(--base-secundario));
+  background: linear-gradient(to top, var(--base-principal), var(--base-secundario));
 }
 
 #main-bienvenida {
@@ -127,9 +294,287 @@ body {
 
 .raise {
   border-radius: 6px;
-  background: #585123;
-  background: -webkit-linear-gradient(to bottom, #eec170, #772f1a);
-  background: linear-gradient(to bottom, #eec170, #772f1a);
+  background: var(--texto);
+  background: -webkit-linear-gradient(to bottom, var(--base-principal), var(--base-secundario));
+  background: linear-gradient(to bottom, var(--base-principal), var(--base-secundario));
 }
 
-/*  */
+.btn-outline-dark{
+    position: fixed;
+    right: 0;
+    top: 0;
+    margin: 20px;
+}
+
+@media screen and (max-width: 767px) {
+    .btn-outline-dark{
+        font-size: 12px;
+    }
+
+    .contenedor-logo {
+        width: 200px;
+        margin-bottom: 2rem;
+    }
+}
+
+/* PRODUCTOS.html ----------------------------------------------------------------------------------------------*/
+.card{
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.445);
+    background-color: var(--card-principal);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 9px;
+    padding: 10px;
+}
+
+.card-text{
+    color: var(--texto);
+}
+
+.list-group-item{
+    background-color: var(--card-principal);
+    color: var(--texto-secundario);
+}
+
+.card h4{
+    color: var(--texto);
+    font-weight: bold;
+}
+.card-img-cart{
+    width: 32px;
+    height: auto;
+}
+.card-a-cart{
+    display: flex;
+    width: 32px;
+    height: auto;
+    position: absolute;
+    top: 5px;
+    right: 65px;
+    right: calc(32px-);
+    text-decoration: none;
+    color: var(--texto-secundario);
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+}
+.card-a-cart:hover{
+    color: var(--card-sombra);
+}
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px var(--card-sombra)
+}
+.card:hover .category-img {
+    transform: scale(1.15);
+}
+
+#calzados{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 100px;
+    justify-items: center;
+}
+#calzados h1{
+    padding: 10px;
+    align-self: center;
+}
+
+#zapatillas, #botines{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 15px;
+    gap: 40px;
+    justify-items: center;
+}
+
+.category-link {
+    padding: 5px;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+}
+.category-link:hover {
+    text-decoration: none;
+    color: var(--card-sombra);
+    transition: 0.75s;
+}
+.category-img {
+    transition: transform 0.7s ease;
+}
+.h2-cat{
+    color: var(--texto);
+    align-self: center;
+    position: relative;
+    padding: 20px;
+    margin-bottom: 0px;
+}
+
+@media screen and (max-width: 767px) {
+    #zapatillas, #botines {
+        grid-template-columns: 1fr;
+        padding: 20px;
+        gap: 20px;
+    }
+
+    #calzados {
+        grid-template-columns: 1fr;
+        padding: 20px;
+        gap: 20px;
+        justify-items: center;
+    }
+}
+
+/* CARRITO.html ------------------------------------------------------------------------------------------------*/
+.div-producto-cart {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.363);
+    padding: 15px 30px;
+    gap: 20px;
+    align-self: baseline;
+}
+
+.div-botones-producto-cart{
+    margin-left: 80px;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    gap: 20px;
+}
+
+.div-producto-producto-cart{
+    display: flex;
+    align-content: center;
+}
+
+.btn-sumar-producto-cart,.btn-restar-producto-cart {
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    border: none;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    background-color: whitesmoke;
+}
+
+.btn-sumar-producto-cart {
+    background-image: url("../resources/img/plus-solid.svg");
+}
+
+.btn-restar-producto-cart {
+    background-image: url("../resources/img/minus-solid.svg");
+}
+
+.btn-sumar-producto-cart:hover,.btn-restar-producto-cart:hover {
+    transform: scale(1.1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.li-producto-cart {
+    list-style: none;
+    width: 20vw;
+    padding: 5px 20px;
+    color: var(--texto);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+}
+
+.li-producto-cart:hover {
+    background-color: #f9f9f9;
+}
+
+.carrito {
+    max-width: max-content;
+    margin: 40px auto;
+    padding: 25px;
+    background-color: var(--card-principal);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: sans-serif;
+}
+
+@media screen and (max-width: 767px) {
+    .div-producto-cart {
+        padding: 20px 30px;
+        gap: 20px;
+    }
+
+    .li-producto-cart {
+        list-style: none;
+        width: 20vh;
+        font-size: x-small;
+        padding: 5px;
+    }
+
+    .div-botones-producto-cart{
+        margin-left: 0px;
+    }
+
+    .btn-sumar-producto-cart,.btn-restar-producto-cart {
+        width: 10px;
+        height: 10px;
+    }
+
+    .li-producto-cart:hover {
+        background-color: #f9f9f9;
+    }
+
+    .carrito {
+        max-width: max-content;
+        margin: 0 auto;
+        padding: 15px;
+    }
+}
+
+/* DASHBOARD.ejs -----------------------------------------------------------------------------------------------*/
+table img {
+  max-width: 80px;
+  height: auto;
+  border-radius: 8px;
+}
+
+.btn-modificar, .btn-estado {
+    border: none;
+    width: max-content;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 767px) {
+    /* HACER LA TABLA MAS ADAPTATIVA Y RESPONSIVE */
+    .tabla-dashboard{
+        width: 0;
+        overflow-x: scroll;
+        overflow-y: auto;
+    }
+}
+/* TICKET.ejs --------------------------------------------------------------------------------------------------*/
+.ticket {
+  border: 2px dashed #444;
+  padding: 20px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.dato {
+  margin-bottom: 10px;
+}
+
+.dato strong {
+  display: inline-block;
+  width: 130px;
+}
+
+.gracias {
+  margin-top: 30px;
+  text-align: center;
+}
+

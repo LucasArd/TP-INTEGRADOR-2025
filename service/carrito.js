@@ -53,22 +53,22 @@ function renderizarCarritoComoLista(carrito) {
 
     carrito.forEach((producto) => {
         const div = document.createElement("div");
-        div.classList.add("div-ticket");
+        div.classList.add("div-producto-cart");
 
         const li = document.createElement("li");
-        li.classList.add("list-group-item", "li-ticket", "nunito");
+        li.classList.add("list-group-item", "li-producto-cart", "nunito");
         li.innerHTML = `
             ${producto.name}<br>
             Precio: $${producto.price} <br>
             Cantidad: ${producto.cantidad}
         `;
         const divBotones = document.createElement("div");
-        divBotones.classList.add("div-botones-ticket");
+        divBotones.classList.add("div-botones-producto-cart");
 
         const botonSumar = document.createElement("button");
-        botonSumar.classList.add("btn-sumar-ticket");
+        botonSumar.classList.add("btn-sumar-producto-cart");
         const botonRestar = document.createElement("button");
-        botonRestar.classList.add("btn-restar-ticket");
+        botonRestar.classList.add("btn-restar-producto-cart");
         divBotones.appendChild(botonSumar);
         divBotones.appendChild(botonRestar);
         

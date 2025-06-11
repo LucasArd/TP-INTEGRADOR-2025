@@ -1,3 +1,5 @@
+import { Vista } from "../model/vista.js";
+const v = new Vista();
 document.addEventListener("DOMContentLoaded", () => {
     const tipoSelect = document.getElementById("selType");
     const camposBotin = ["selBotinType", "txtSpike"];
