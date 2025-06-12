@@ -1,8 +1,6 @@
 import ejs from 'ejs';
 import PATHS from '../../paths/paths.js';
 
-
-
 export async function dashboard(req, res) {
     let html = await ejs.renderFile(PATHS.dashboardView);
     res.status(200).send(html);
@@ -18,10 +16,10 @@ export async function viewBaja(req,res){
     res.status(200).send(html);
 }
 
-// export async function viewMod(req,res){
-//     let html = await ejs.renderFile(PATHS.modificarView, { abm:'M' });
-//     res.status(200).send(html);
-// }
+export async function viewLogin(req,res){
+    let html = await ejs.renderFile(PATHS.loginView, { abm:'L' });
+    res.status(200).send(html);
+}
 
 export async function viewMod(req, res) { 
     const idProducto = parseInt(req.params.idProducto);

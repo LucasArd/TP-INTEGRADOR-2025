@@ -1,5 +1,6 @@
 import { Vista } from "../model/vista.js";
 const v = new Vista();
+v.init();
 
 v.pagBienvenida.frmBienvenida.addEventListener("submit", async (e) => {
   e.preventDefault();

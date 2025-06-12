@@ -179,6 +179,11 @@ body {
     cursor: pointer;
 }
 
+.div-theme{
+    position: fixed;
+    margin: 20px;
+}
+
 @media screen and (max-width: 767px) {
     .nav-menu.show {
         display: flex;
@@ -411,13 +416,13 @@ body {
 @media screen and (max-width: 767px) {
     #zapatillas, #botines {
         grid-template-columns: 1fr;
-        padding: 20px;
+        padding: 0px;
         gap: 20px;
     }
 
     #calzados {
         grid-template-columns: 1fr;
-        padding: 20px;
+        padding: 0px;
         gap: 20px;
         justify-items: center;
     }
@@ -576,5 +581,89 @@ table img {
 .gracias {
   margin-top: 30px;
   text-align: center;
+}
+
+/* LOGIN.ejs ---------------------------------------------------------------------------------------------------*/
+.div-login{
+    display: block;
+    align-self: center;
+    justify-items: center;
+    background-color: var(--card-principal);
+    width: max-content;
+    padding: 50px;
+    border: 2px solid var(--texto-secundario);
+    box-shadow: 0 4px 12px var(--card-sombra);
+}
+
+.form-login{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 15px;
+}
+
+.div-email, .div-pass {
+    display: flex;
+    align-items: center;
+    align-self: center;
+    justify-content: baseline;
+    width: 100%;
+    max-width: 300px;
+    gap: 5px;
+}
+
+#txtPass, #txtEmail{
+    height: 35px;
+    font-size: 14px;
+}
+
+.botones-vis-pass{
+    display: flex;
+    width: 35px;
+    height: 35px;
+    align-items: center;
+    justify-content: center;
+}
+
+.vis-pass-on, .vis-pass-off{
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+}
+
+.boton-login{
+    background-color: var(--texto);
+    color: var(--card-principal);
+    margin-top: 45px;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.boton-login:hover {
+    background-color: var(--secundario);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.boton-login:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.a-acceso-rapido{
+    padding: 0;
+    margin: 0;
+    font-size: 12px;
 }
 

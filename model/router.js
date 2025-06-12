@@ -1,7 +1,7 @@
 import PATHS from "../paths/paths.js";
 import express from 'express'
 import { ObtenerProductos, ObtenerProductoPorId, PostModificar,darAltaProducto, VistaModificar, EliminarProducto, cambiarEstadoProducto, PostGenerarTicket } from "../controllers/controllersApi/AppApiAbm.js";
-import {dashboard,viewAlta,viewBaja,viewMod} from "../controllers/controllersView/AppEjs.js";
+import {dashboard,viewAlta,viewBaja,viewLogin,viewMod} from "../controllers/controllersView/AppEjs.js";
 
 export class Router {
     constructor(app) {
@@ -20,10 +20,11 @@ export class Router {
     }
 
     cargarRutasEjs() {        
-        this.app.get('/', dashboard);
-        this.app.get('/alta',viewAlta)
-        this.app.get('/baja',viewBaja)
-        this.app.get('/modificacion/:idProducto',viewMod)
+        this.app.get('/',viewLogin);
+        this.app.get('/dashboard',dashboard);
+        this.app.get('/alta',viewAlta);
+        this.app.get('/baja',viewBaja);
+        this.app.get('/modificacion/:idProducto',viewMod);
     }
 
     cargarRutasStatic(){

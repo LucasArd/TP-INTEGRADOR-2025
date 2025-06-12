@@ -1,5 +1,6 @@
 import { Vista } from "../model/vista.js";
 const v = new Vista();
+v.init();
 
 export const carrito = cargarCarritoDeLocalStorage(); // inicializo carrito a ver si tiene algo
 
@@ -132,4 +133,4 @@ function renderizarCarritoComoLista(carrito) {
     v.pagCarrito.divCarrito.appendChild(divCarritoContenedor);
 }
 
-if (v.pagCarrito.divCarrito) renderizarCarritoComoLista(carrito);
+if (v.pagCarrito?.divCarrito) renderizarCarritoComoLista(carrito);
