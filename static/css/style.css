@@ -562,6 +562,7 @@ table img {
     }
 }
 /* TICKET.ejs --------------------------------------------------------------------------------------------------*/
+
 .ticket {
   border: 2px dashed #444;
   padding: 20px;
@@ -581,6 +582,26 @@ table img {
 .gracias {
   margin-top: 30px;
   text-align: center;
+}
+
+.boton-descarga {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.boton-descarga button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  background-color: #772f1a;
+  color: white;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.boton-descarga button:hover {
+  background-color: #f18100;
 }
 
 /* LOGIN.ejs ---------------------------------------------------------------------------------------------------*/

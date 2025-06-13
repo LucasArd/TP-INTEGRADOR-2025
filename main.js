@@ -3,6 +3,8 @@ import dotenv from 'dotenv';
 import { initDB } from './controllers/controllersApi/AppBDD.js';
 import { Router } from './model/router.js';
 
+
+
 dotenv.config();
 
 const app = express();
@@ -15,6 +17,7 @@ app.use(express.json());
 const router = new Router(app);
 initDB();
 router.iniciar();
+
 
 app.listen(port, () => {
     console.log(`Servidor escuchando en http://localhost:${port}/`);

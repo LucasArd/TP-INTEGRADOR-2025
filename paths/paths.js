@@ -61,6 +61,7 @@ const PATHS = {
     dashboardView: path.resolve(__dirname, '..', 'view', 'dashboard.ejs'),
     loginView: path.resolve(__dirname, '..', 'view', 'login.ejs'),
     modificarView: path.resolve(__dirname, '..', 'view', 'modificacion.ejs'),
+    ticketView: path.resolve(__dirname, "..", 'view', 'ticket.ejs')
 };
 
 export default PATHS;

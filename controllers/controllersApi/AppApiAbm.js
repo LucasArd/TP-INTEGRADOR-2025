@@ -72,6 +72,7 @@ export async function cambiarEstadoProducto(app) {
 }
 
 
+
 // GET /modificar
 export async function VistaModificar(app) {
   app.get('/modificar', async (req, res) => {
@@ -115,57 +116,75 @@ export async function PostModificar(app) {
     }
   });
 }
-
-
-export function PostGenerarTicket(app) {
-  app.post('/generar-ticket', async (req, res) => {
-    const db = await conectarBase();
-    const { comprador, precioTotal } = req.body;
-    const fecha = new Date().toISOString().slice(0, 19).replace('T', ' ');
-
-    try {
-      const [result] = await db.query(
-        `INSERT INTO ticket (comprador, precioTotal, fecha) VALUES (?, ?, ?)`,
-        [comprador, precioTotal, fecha]
-      );
-      const idTicket = result.insertId;
-      res.json({ success: true, idTicket });
-    } catch (err) {
-      console.error('Error posstt generando ticket:', err);
-      res.json({ success: false });
-    } finally {
-      await db.end();
-    }
-  });
-
-  app.get('/ticket/:id', async (req, res) => {
+export async function buscadorTicket(app) {
+  app.get('/ticket-html/:id', async (req, res) => {
     const db = await conectarBase();
     const { id } = req.params;
-
+    
     try {
       const [rows] = await db.query('SELECT * FROM ticket WHERE idTicket = ?', [id]);
       const ticket = rows[0];
 
       if (!ticket) return res.status(404).send('Ticket no encontrado');
 
-      const html = await ejs.renderFile('view/ticket.ejs', { ticket });
-
-      const browser = await puppeteer.launch();
-      const page = await browser.newPage();
-      await page.setContent(html);
-      const pdf = await page.pdf({ format: 'A4' });
-
-      await browser.close();
-
-      res.contentType('application/pdf');
-      res.send(pdf);
+      res.render('ticket', { ticket, mostrarBoton: true });
     } catch (err) {
-      console.error('Error generando PDF:', err);
-      res.status(500).send('Error generando ticket');
+      console.error('Error mostrando vista HTML del ticket:', err);
+      res.status(500).send('Error cargando ticket');
     } finally {
       await db.end();
     }
-  });
+  })
+};
+
+export async function generarTicket(req, res) {
+  const db = await conectarBase();
+  const { comprador, precioTotal } = req.body;
+  const fecha = new Date().toISOString().slice(0, 19).replace('T', ' ');
+
+  try {
+    const [result] = await db.query(
+      `INSERT INTO ticket (comprador, precioTotal, fecha) VALUES (?, ?, ?)`,
+      [comprador, precioTotal, fecha]
+    );
+    const idTicket = result.insertId;
+    res.json({ success: true, idTicket });
+  } catch (err) {
+    console.error('Error generando ticket:', err);
+    res.json({ success: false });
+  } finally {
+    await db.end();
+  }
+}
+
+
+export async function generarPDF(req, res) {
+  const db = await conectarBase();
+  const { id } = req.params;
+
+  try {
+    const [rows] = await db.query('SELECT * FROM ticket WHERE idTicket = ?', [id]);
+    const ticket = rows[0];
+
+    if (!ticket) return res.status(404).send('Ticket no encontrado');
+
+    const html = await ejs.renderFile('view/ticket.ejs', { ticket, mostrarBoton: false });
+
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.setContent(html);
+    const pdf = await page.pdf({ format: 'A4' });
+
+    await browser.close();
+
+    res.contentType('application/pdf');
+    res.send(pdf);
+  } catch (err) {
+    console.error('Error generando PDF:', err);
+    res.status(500).send('Error generando ticket');
+  } finally {
+    await db.end();
+  }
 }
 
 // Alta Producto
