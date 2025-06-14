@@ -5,6 +5,7 @@ export class Vista {
     pagZapatillas = null;
     pagBotines = null;
     pagCarrito = null;
+    pagLogin = null;
     pagAlta = null;
     header = null;
 
@@ -30,6 +31,7 @@ export class Vista {
         this.initPagBotines();
         this.initPagCarrito();
         this.initPagAlta();
+        this.initPagLogin();
 
         this.initHeader();
 
@@ -88,6 +90,21 @@ export class Vista {
         }
     }
 
+    initPagLogin(){
+        const btn = this.$('btnLogin');
+        if (!btn) return;
+        this.pagLogin = {
+            frmLogin: this.$('frmLogin'),
+            btnLogin: btn,
+            txtEmail: this.$('txtEmail'),
+            txtPass: this.$('txtPass'),
+            btnPassOn: this.$('btnPassOn'),
+            btnPassOff: this.$('btnPassOff'),
+            aAccesoRapido: this.$('aAccesoRapido')
+        };
+        console.log("AAAAAAAA")
+    }
+
     initHeader() {
         this.header = {
             imgLogoNav: this.$('contenedor-logo-img-nav'),
@@ -96,6 +113,7 @@ export class Vista {
             navMenu: this.$('navMenu')
         };
     }
+
 
     $(x) {
         return document.getElementById(x);

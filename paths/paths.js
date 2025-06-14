@@ -10,6 +10,7 @@ const PATHS = {
     controllers: path.resolve(__dirname, '..', 'controllers'),
     controllersApi: path.resolve(__dirname, '..', 'controllers', 'controllersApi'),
     controllersView: path.resolve(__dirname, '..', 'controllers', 'controllersView'),
+    controllersLogin: path.resolve(__dirname, '..', 'controllers', 'controllersLogin'),
     model: path.resolve(__dirname, '..', 'model'),
     service: path.resolve(__dirname, '..', 'service'),
     staticService: path.resolve(__dirname, '..', 'service', 'static'),

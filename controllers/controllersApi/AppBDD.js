@@ -29,7 +29,7 @@ async function eliminarDB(db) {
 async function crearTablas(db) {
     let qry = `CREATE TABLE productos (idProducto bigint(20) unsigned NOT NULL AUTO_INCREMENT,nombre varchar(50) NOT NULL,tipo varchar(50) NOT NULL,talle set('35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50') NOT NULL,color varchar(30) NOT NULL,img varchar(200) NOT NULL,url varchar(200) NOT NULL,precio double(30,2) NOT NULL,tipoBotin varchar(50) DEFAULT NULL,tipoZapatilla varchar(50) DEFAULT NULL,largoTapones varchar(30) DEFAULT NULL,activo boolean NOT NULL DEFAULT True,PRIMARY KEY (idProducto)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     CREATE TABLE ticket (idTicket bigint(20) unsigned NOT NULL AUTO_INCREMENT,comprador varchar(50) NOT NULL,precioTotal double NOT NULL,fecha datetime NOT NULL DEFAULT current_timestamp(),PRIMARY KEY (idTicket),UNIQUE KEY idTicket (idTicket)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-    CREATE TABLE usuarios (idUsuario bigint(20) unsigned NOT NULL AUTO_INCREMENT,nombre varchar(30) NOT NULL,contraseña varchar(30) NOT NULL,PRIMARY KEY (idUsuario)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    CREATE TABLE usuarios (idUsuario bigint(20) unsigned NOT NULL AUTO_INCREMENT,mail varchar(30) NOT NULL,contrasena varchar(30) NOT NULL,PRIMARY KEY (idUsuario)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     CREATE TABLE ventas (idVenta int(11) NOT NULL AUTO_INCREMENT,idTicket bigint(20) unsigned NOT NULL,idProducto bigint(20) unsigned NOT NULL,cantidad int(11) NOT NULL,precio double(10,2) NOT NULL,PRIMARY KEY (idVenta),FOREIGN KEY (idTicket) REFERENCES ticket(idTicket) ON DELETE CASCADE ON UPDATE CASCADE,FOREIGN KEY (idProducto) REFERENCES productos(idProducto) ON DELETE CASCADE ON UPDATE CASCADE) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     `;
     let resultado = await db.query(qry);
@@ -65,7 +65,15 @@ export async function initDB() {
             let resultado = await db.execute(x);
         }
         console.log("Producto insertado correctamente");
-    }catch(err){console.error('Error(3):', err.message);
+    }catch(err){console.error('Error(3):', err.message);}
+
+    try{
+        let usuarios = [`INSERT INTO usuarios (mail, contrasena) VALUES ('admin@justpickit.com', 'admin');`, `INSERT INTO usuarios (mail, contrasena) VALUES ('user@justpickit.com', 'user');`]
+        for (const x of usuarios) {
+            let resultado = await db.execute(x);
+        }
+        console.log("Usuarios insertados correctamente");
+    }catch(err){console.error(err.message);
 
     }finally{
         await db.end();
@@ -77,6 +85,21 @@ export async function mostrarProductos() {
     const db = await conectarBase();
     try {
         const qry = 'select * from productos';
+        const [rows] = await db.execute(qry);
+        
+        return rows;
+    } catch (error) {
+        console.error('Error:', error.message);
+        return [];
+    }finally{
+        await db.end();
+    }
+}
+
+export async function mostrarUsuarios() {
+    const db = await conectarBase();
+    try {
+        const qry = 'select * from usuarios';
         const [rows] = await db.execute(qry);
         
         return rows;

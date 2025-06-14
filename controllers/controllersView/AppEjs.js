@@ -20,7 +20,7 @@ export async function viewBaja(req,res){
 }
 
 export async function viewLogin(req,res){
-    let html = await ejs.renderFile(PATHS.loginView, { abm:'L' });
+    let html = await ejs.renderFile(PATHS.loginView);
     res.status(200).send(html);
 }
 
@@ -42,7 +42,6 @@ export async function viewMod(req, res) {
 export async function ticketView(req, res) {
     const idTicket = req.params.id;
     const db = await conectarBase();
-
     try {
         const [rows] = await db.query('SELECT * FROM ticket WHERE idTicket = ?', [idTicket]);
         const ticket = rows[0];

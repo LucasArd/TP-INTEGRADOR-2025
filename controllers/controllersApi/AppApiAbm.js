@@ -1,9 +1,11 @@
-import { mostrarProductos, conectarBase, setearEstado, altaProducto } from './AppBDD.js';
+import { mostrarProductos, conectarBase, setearEstado, altaProducto, mostrarUsuarios} from './AppBDD.js';
 
 import ejs from 'ejs';
 import puppeteer from 'puppeteer';
+import { esperarTecla, generarJWT, verificarJWT } from '../controllersLogin/AppJWT.js';
 
 const db = await conectarBase();
+
 
 // GET /api/productos
 export async function ObtenerProductos(app) {
@@ -56,6 +58,40 @@ export async function EliminarProducto(app) {
     }
   });
 }
+
+export async function iniciarSesion(app) {
+  app.post('/api/login', async (req, res) => {
+    const { email, pass } = req.body;
+    const usuarios = await mostrarUsuarios();
+
+    for (const user of usuarios) {
+      if (email === user.mail && pass === user.contrasena) {
+        const token = await generarJWT({ email, pass });
+        
+        res.cookie('token', token, {
+          httpOnly: true,
+          secure: false, // true si usás HTTPS
+          sameSite: 'Lax',
+          maxAge: 60 * 60 * 1000 // 1 hora
+        })
+
+        return res.status(200).json({ message: 'Login exitoso' });
+      }
+    }
+    res.status(401).json({ message: 'Email o contraseña incorrectos' });
+  });
+}
+
+export async function cerrarSesion(app) {
+    app.post('/api/logout', (req, res) => {
+    res.clearCookie('token');
+    res.status(200).json({ message: 'Sesión cerrada' });
+  });
+}
+
+
+
+
 
 export async function cambiarEstadoProducto(app) {
   app.patch('/api/productos/:id/estado', async (req, res) => {
@@ -116,6 +152,7 @@ export async function PostModificar(app) {
     }
   });
 }
+
 export async function buscadorTicket(app) {
   app.get('/ticket-html/:id', async (req, res) => {
     const db = await conectarBase();

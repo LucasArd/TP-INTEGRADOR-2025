@@ -605,13 +605,20 @@ table img {
 }
 
 /* LOGIN.ejs ---------------------------------------------------------------------------------------------------*/
+.main-login{
+    display: flex;
+    min-height: 100vh;
+}
+
 .div-login{
-    display: block;
-    align-self: center;
-    justify-items: center;
-    background-color: var(--card-principal);
+    margin: 0 auto;
     width: max-content;
     padding: 50px;
+    align-self: center;
+    justify-self: center;
+    justify-items: center;
+    border-radius: 16px;
+    background-color: var(--card-principal);
     border: 2px solid var(--texto-secundario);
     box-shadow: 0 4px 12px var(--card-sombra);
 }
@@ -637,7 +644,20 @@ table img {
 #txtPass, #txtEmail{
     height: 35px;
     font-size: 14px;
+    padding: 0 10px;
+    border: 2px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border 0.3s, box-shadow 0.3s;
+    background-color: #fff;
+    color: #111827;
 }
+
+#txtPass:focus, #txtEmail:focus {
+    border-color: var(--texto);
+    outline: none;
+}
+
 
 .botones-vis-pass{
     display: flex;
@@ -683,8 +703,9 @@ table img {
 }
 
 .a-acceso-rapido{
-    padding: 0;
-    margin: 0;
     font-size: 12px;
+    text-decoration: none;
+    color: var(--texto-secundario);
+    padding: 5px;
+    border-radius: 6px;
 }
-

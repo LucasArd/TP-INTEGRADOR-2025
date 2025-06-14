@@ -4,7 +4,7 @@ import { Vista } from "../model/vista.js";
 const v = new Vista();
 v.init();
 
-const url = 'http://localhost:3000/api/productos'
+const url = '/api/productos'
 const optionsGET = {
     method: "GET",
     headers: {}
