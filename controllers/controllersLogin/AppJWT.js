@@ -29,3 +29,21 @@ export function esperarTecla() {
         });
     });
 }
+
+export async function authMiddleware(req, res, next) {
+    const token = req.cookies.token;
+
+    if (!token) {
+        return res.redirect('/');
+    }
+
+    const payload = await verificarJWT(token);
+    if (!payload) {
+        res.clearCookie('token');
+        return res.redirect('/');
+    }
+
+    req.user = payload;
+    next();
+}
+

@@ -27,12 +27,20 @@
         </div>
 
         <p class="gracias">¡Gracias por tu compra!</p>
-
-        <% if (typeof mostrarBoton !== 'undefined' && mostrarBoton) { %>
-            <form action="/ticket/<%= ticket.idTicket %>" method="get" class="boton-descarga">
-                <button type="submit">Descargar Ticket en PDF</button>
-            </form>
-        <% } %>
+        <div class="botones-ticket">
+            <% if (typeof mostrarBoton !== 'undefined' && mostrarBoton) { %>
+                <form action="/ticket/<%= ticket.idTicket %>" method="get" class="boton-descarga" target="_blank">
+                    <button type="submit">Descargar Ticket en PDF</button>
+                </form>
+            <% } %>
+            
+            <% if (typeof mostrarBoton !== 'undefined' && mostrarBoton) { %>
+                <form action="/bienvenida.html" method="get" class="boton-finalizar" target="_self">
+                    <button type="submit" onclick="localStorage.clear();">Finalizar</button>
+                </form>
+            <% } %>
+        </div>
     </div>
+    
 </body>
 </html>

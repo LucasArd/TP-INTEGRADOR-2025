@@ -7,7 +7,7 @@ import { conectarBase } from '../controllersApi/AppBDD.js';
 export async function dashboard(req, res) {
     let html = await ejs.renderFile(PATHS.dashboardView);
     res.status(200).send(html);
-}
+}  
 
 export async function viewAlta(req,res){
     let html = await ejs.renderFile(PATHS.altaView, { abm:'A' });

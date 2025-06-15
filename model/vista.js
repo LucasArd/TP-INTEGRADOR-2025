@@ -95,6 +95,7 @@ export class Vista {
         if (!btn) return;
         this.pagLogin = {
             frmLogin: this.$('frmLogin'),
+            btnClient: this.$('btnClient'),
             btnLogin: btn,
             txtEmail: this.$('txtEmail'),
             txtPass: this.$('txtPass'),

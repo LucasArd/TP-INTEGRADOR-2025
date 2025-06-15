@@ -2,7 +2,7 @@ import { mostrarProductos, conectarBase, setearEstado, altaProducto, mostrarUsua
 
 import ejs from 'ejs';
 import puppeteer from 'puppeteer';
-import { esperarTecla, generarJWT, verificarJWT } from '../controllersLogin/AppJWT.js';
+import { generarJWT } from '../controllersLogin/AppJWT.js';
 
 const db = await conectarBase();
 
@@ -83,7 +83,7 @@ export async function iniciarSesion(app) {
 }
 
 export async function cerrarSesion(app) {
-    app.post('/api/logout', (req, res) => {
+  app.post('/api/logout', (req, res) => {
     res.clearCookie('token');
     res.status(200).json({ message: 'Sesión cerrada' });
   });
@@ -152,27 +152,6 @@ export async function PostModificar(app) {
     }
   });
 }
-
-export async function buscadorTicket(app) {
-  app.get('/ticket-html/:id', async (req, res) => {
-    const db = await conectarBase();
-    const { id } = req.params;
-    
-    try {
-      const [rows] = await db.query('SELECT * FROM ticket WHERE idTicket = ?', [id]);
-      const ticket = rows[0];
-
-      if (!ticket) return res.status(404).send('Ticket no encontrado');
-
-      res.render('ticket', { ticket, mostrarBoton: true });
-    } catch (err) {
-      console.error('Error mostrando vista HTML del ticket:', err);
-      res.status(500).send('Error cargando ticket');
-    } finally {
-      await db.end();
-    }
-  })
-};
 
 export async function generarTicket(req, res) {
   const db = await conectarBase();

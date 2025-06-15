@@ -584,12 +584,18 @@ table img {
   text-align: center;
 }
 
-.boton-descarga {
+.botones-ticket{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.boton-descarga, .boton-finalizar {
   margin-top: 30px;
   text-align: center;
 }
 
-.boton-descarga button {
+.boton-descarga button, .boton-finalizar button {
   padding: 10px 20px;
   font-size: 1rem;
   cursor: pointer;
@@ -600,7 +606,7 @@ table img {
   transition: background-color 0.3s ease;
 }
 
-.boton-descarga button:hover {
+.boton-descarga button:hover, .boton-finalizar button:hover {
   background-color: #f18100;
 }
 

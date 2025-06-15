@@ -26,7 +26,6 @@ const router = new Router(app);
 initDB();
 router.iniciar();
 
-
 app.listen(port, () => {
     console.log(`Servidor escuchando en http://localhost:${port}/`);
 });

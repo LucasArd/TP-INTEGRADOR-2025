@@ -4,9 +4,14 @@ v.init();
 
 v.pagLogin.aAccesoRapido.addEventListener("click", async(e) =>{
     //Ver esto
-    e.preventDefault()
+    e.preventDefault();
     v.pagLogin.txtEmail.value = 'admin@justpickit.com';
     v.pagLogin.txtPass.value = 'admin';
+});
+
+v.pagLogin.btnClient.addEventListener("click", async(e) =>{
+    e.preventDefault()
+    window.location.href = '/bienvenida.html'
 });
 
 v.pagLogin.frmLogin.addEventListener("submit", async(e) =>{
@@ -24,13 +29,13 @@ v.pagLogin.frmLogin.addEventListener("submit", async(e) =>{
         credentials: 'include' //Esto es para que la cookie viaje
     }
 
-        try {
-            const response = await fetch(url, optionsPOST);
-
+    try {
+        const response = await fetch(url, optionsPOST);
+        
         if (response.ok) {
             window.location.href = "/dashboard"
-
         } else {
+            const result = await response.json();
             alert(result.message || 'Credenciales incorrectas');
         }
     } catch (error) {

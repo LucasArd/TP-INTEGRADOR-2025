@@ -60,7 +60,7 @@ function renderizarCarritoComoLista(carrito) {
         li.classList.add("list-group-item", "li-producto-cart", "nunito");
         li.innerHTML = `
             ${producto.name}<br>
-            Precio: $${producto.price} <br>
+            Precio: $${producto.price * producto.cantidad} <br>
             Cantidad: ${producto.cantidad}
         `;
         const divBotones = document.createElement("div");
@@ -102,7 +102,8 @@ function renderizarCarritoComoLista(carrito) {
 
     botonConfirmar.addEventListener("click", async () => {
     const comprador = cargarNombreDeClienteLocalStorage();
-    const precioTotal = 20;
+    const precioTotal = carrito.reduce((total, producto) => total + producto.price * producto.cantidad, 0);;
+    
 
     const res = await fetch('/generar-ticket', {
         method: 'POST',
@@ -123,10 +124,11 @@ function renderizarCarritoComoLista(carrito) {
             <button type="button" class="btn btn-success mt-3" id="btnTicket">Ir al ticket</button>`;
 
         // Agregar event listener para btnTicket que redirige al ticket
-        const btnTicket = document.getElementById("btnTicket");
+        const btnTicket = v.$("btnTicket");
         btnTicket.addEventListener("click", () => {
             window.location.href = `/ticket-html/${data.idTicket}`;
         });
+
     } else {
         alert("Error al generar el ticket.");
     }
