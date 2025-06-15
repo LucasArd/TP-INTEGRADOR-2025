@@ -553,14 +553,14 @@ table img {
     cursor: pointer;
 }
 
-@media screen and (max-width: 767px) {
-    /* HACER LA TABLA MAS ADAPTATIVA Y RESPONSIVE */
+/* @media screen and (max-width: 767px) {
+    
     .tabla-dashboard{
         width: 0;
         overflow-x: scroll;
         overflow-y: auto;
     }
-}
+} */
 /* TICKET.ejs --------------------------------------------------------------------------------------------------*/
 
 .ticket {
