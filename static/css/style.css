@@ -12,7 +12,7 @@
 .modoClaro{
     --base-principal: white;
     --base-secundario: #d9dbdb;
-    --secundario: #0071ff;
+    --secundario: #aaa9a9;
     --titulo: #232738;
     --texto: #111528;
     --texto-secundario: #3a435d;
@@ -20,10 +20,10 @@
     --card-sombra: #474746;
 }
 .modoOscuro{
-    --base-principal: #070b1d;
-    --base-secundario: #101425;
-    --secundario: #0071ff;
-    --titulo: #a4a5b8;
+    --base-principal: #11141d;
+    --base-secundario: #0d0f18;
+    --secundario: #0c1014;
+    --titulo: #c6c6cc;
     --texto: #ffffff;
     --texto-secundario: whitesmoke;
     --card-principal: #282733;
@@ -241,6 +241,45 @@ body {
     }
 }
 
+/* FOOTER ------------------------------------------------------------------------------------------------------*/
+.footer{
+    background-color: var(--secundario);
+}
+
+.contenido-footer{
+    border-top: #222222 solid 1px;
+    margin: 20px 100px 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.img-logo-mannaka{
+    width: 40px;
+    height: auto;
+}
+
+.empresa-footer{
+    display: flex;
+    align-items: center;
+}
+
+.parti-footer{
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    align-items: baseline;
+    gap: 2px;
+}
+
+.parti-link-footer{
+    text-decoration: none;
+    font-weight: 400;
+}
+
+.parti-logo-footer{
+    position: absolute;
+    right: 250px;
+}
 
 /* BIENVENIDA.html ---------------------------------------------------------------------------------------------*/
 #html-bienvenida {
@@ -715,3 +754,4 @@ table img {
     padding: 5px;
     border-radius: 6px;
 }
+
