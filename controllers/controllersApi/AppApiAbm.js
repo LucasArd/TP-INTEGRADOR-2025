@@ -1,8 +1,7 @@
 import { mostrarProductos, conectarBase, setearEstado, altaProducto, mostrarUsuarios} from './AppBDD.js';
-
-import ejs from 'ejs';
 import puppeteer from 'puppeteer';
 import { generarJWT } from '../controllersLogin/AppJWT.js';
+import { obtenerHtmlTicket } from '../controllersView/AppEjs.js';
 
 const db = await conectarBase();
 
@@ -89,10 +88,6 @@ export async function cerrarSesion(app) {
   });
 }
 
-
-
-
-
 export async function cambiarEstadoProducto(app) {
   app.patch('/api/productos/:id/estado', async (req, res) => {
     const idProducto = req.params.id;
@@ -106,8 +101,6 @@ export async function cambiarEstadoProducto(app) {
     }
   });
 }
-
-
 
 // GET /modificar
 export async function VistaModificar(app) {
@@ -155,15 +148,23 @@ export async function PostModificar(app) {
 
 export async function generarTicket(req, res) {
   const db = await conectarBase();
-  const { comprador, precioTotal } = req.body;
+  const { comprador, precioTotal, productos } = req.body;
   const fecha = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
   try {
-    const [result] = await db.query(
+    let [result] = await db.query(
       `INSERT INTO ticket (comprador, precioTotal, fecha) VALUES (?, ?, ?)`,
       [comprador, precioTotal, fecha]
     );
     const idTicket = result.insertId;
+
+    for (const p of productos) {
+      await db.query(
+        `INSERT INTO ventas (idTicket, idProducto, cantidad, precio) VALUES (?, ?, ?, ?)`,
+        [idTicket, p.idProducto, p.cantidad, p.precio]
+      )
+    }
+
     res.json({ success: true, idTicket });
   } catch (err) {
     console.error('Error generando ticket:', err);
@@ -173,18 +174,11 @@ export async function generarTicket(req, res) {
   }
 }
 
-
 export async function generarPDF(req, res) {
-  const db = await conectarBase();
-  const { id } = req.params;
+  const idTicket = req.params.id;
 
   try {
-    const [rows] = await db.query('SELECT * FROM ticket WHERE idTicket = ?', [id]);
-    const ticket = rows[0];
-
-    if (!ticket) return res.status(404).send('Ticket no encontrado');
-
-    const html = await ejs.renderFile('view/ticket.ejs', { ticket, mostrarBoton: false });
+    const html = await obtenerHtmlTicket(idTicket, false);
 
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
@@ -197,10 +191,7 @@ export async function generarPDF(req, res) {
     res.send(pdf);
   } catch (err) {
     console.error('Error generando PDF:', err);
-    res.status(500).send('Error generando ticket');
-  } finally {
-    await db.end();
-  }
+    res.status(500).send('Error generando ticket');}
 }
 
 // Alta Producto

@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <div class="ticket">
+    <div class="ticket nunito">
         <h1> Ticket de Compra</h1>
 
         <div class="dato"><strong>ID Ticket:</strong>
@@ -23,7 +23,17 @@
         <div class="dato"><strong>Fecha:</strong>
             <%= ticket.fecha %>
         </div>
-        <div class="dato"><strong>Total:</strong> $<%= ticket.precioTotal %>
+        <div class="dato"><strong>Productos:</strong>
+            <ul class="ul-prod-ticket">
+                <% productos.forEach(p => { %>
+                    <li class="li-prod-ticket">
+                        <span class="prod-nombre"><%= p.nombre %></span>
+                        <span class="prod-detalle">$<%= p.precio %> x <%= p.cantidad %> = <span class="prod-subtotal">$<%= p.subtotal %></span></span>
+                    </li>
+                <% }) %>
+            </ul>
+        </div>
+        <div class="dato-total"><strong>Total:</strong> $<%= ticket.precioTotal %>
         </div>
 
         <p class="gracias">¡Gracias por tu compra!</p>
@@ -41,6 +51,5 @@
             <% } %>
         </div>
     </div>
-    
 </body>
 </html>

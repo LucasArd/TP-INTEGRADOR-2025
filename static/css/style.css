@@ -338,6 +338,7 @@ body {
 
 .raise {
   border-radius: 6px;
+  color: var(--texto-secundario);
   background: var(--texto);
   background: -webkit-linear-gradient(to bottom, var(--base-principal), var(--base-secundario));
   background: linear-gradient(to bottom, var(--base-principal), var(--base-secundario));
@@ -600,22 +601,40 @@ table img {
         overflow-y: auto;
     }
 } */
-/* TICKET.ejs --------------------------------------------------------------------------------------------------*/
 
+/* TICKET.ejs --------------------------------------------------------------------------------------------------*/
 .ticket {
-  border: 2px dashed #444;
-  padding: 20px;
-  max-width: 500px;
-  margin: 0 auto;
+    max-width: 500px;
+    margin: 50px auto;
+    background: #fff;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.ticket h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 26px;
 }
 
 .dato {
-  margin-bottom: 10px;
+    margin-bottom: 15px;    
+    font-size: 14px;
+    font-weight: 400;
+    color: #000000;
+}
+
+.dato-total{
+    justify-self: flex-end;
+    font-weight: 500;
+    color: #000000;
 }
 
 .dato strong {
-  display: inline-block;
-  width: 130px;
+    font-weight: 800;
 }
 
 .gracias {
@@ -648,6 +667,39 @@ table img {
 .boton-descarga button:hover, .boton-finalizar button:hover {
   background-color: #f18100;
 }
+
+.ul-prod-ticket {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 10px;
+    border-top: 1px solid #ddd;
+}
+
+.li-prod-ticket {
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+    font-size: 15px;
+    color: #222;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.prod-nombre {
+    font-weight: 700;
+    color: var(--texto);
+}
+
+.prod-detalle {
+    font-weight: 600;
+    color: #555;
+}
+
+.prod-subtotal {
+    font-weight: 700;
+    color: var(--texto-secundario);
+}
+
 
 /* LOGIN.ejs ---------------------------------------------------------------------------------------------------*/
 .main-login{

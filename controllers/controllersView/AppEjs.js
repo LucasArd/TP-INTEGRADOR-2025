@@ -39,22 +39,32 @@ export async function viewMod(req, res) {
     res.status(200).send(html);
 }
 
-export async function ticketView(req, res) {
-    const idTicket = req.params.id;
+export async function obtenerHtmlTicket(idTicket, mostrarBoton) {
     const db = await conectarBase();
     try {
         const [rows] = await db.query('SELECT * FROM ticket WHERE idTicket = ?', [idTicket]);
         const ticket = rows[0];
 
-        if (!ticket) return res.status(404).send('Ticket no encontrado');
+        if (!ticket) throw new Error('Ticket no encontrado');
 
-        const html = await ejs.renderFile(PATHS.ticketView, { ticket, mostrarBoton: true });
-        res.status(200).send(html);
+        const [productos] = await db.query(`
+            SELECT p.nombre, p.precio, v.cantidad, (v.cantidad * v.precio) AS subtotal
+            FROM ventas v JOIN productos p ON v.idProducto = p.idProducto
+            WHERE v.idTicket = ?`, [idTicket]);
 
-    } catch (error) {
-        console.error('Error obteniendo ticket:', error);
-        res.status(500).send('Error cargando ticket');
+        const html = await ejs.renderFile(PATHS.ticketView, { ticket, productos, mostrarBoton});
+        return html;
     } finally {
         await db.end();
     }
+}
+
+export async function ticketView(req, res) {
+    const idTicket = req.params.id;
+    try {
+        const html = await obtenerHtmlTicket(idTicket, true); //Va true o false, para elegir si muestro o no los botones
+        res.status(200).send(html);
+    } catch (error) {
+        console.error('Error obteniendo ticket:', error);
+        res.status(500).send('Error cargando ticket');}
 }
