@@ -4,8 +4,10 @@ v.init();
 
 window.addEventListener('DOMContentLoaded', async () => {
     const main = document.getElementById("main");
-    const response = await fetch("http://localhost:3000/api/productos");
-    const productos = await response.json();
+    const response = await fetch("http://localhost:3000/api/productos/todos");
+    
+    const respuesta = await response.json(); 
+    const productos = respuesta.productos;
 
     function renderProductos(productos) {
         main.innerHTML = '';

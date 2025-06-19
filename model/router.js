@@ -1,6 +1,6 @@
 import PATHS from "../paths/paths.js";
 import express from 'express'
-import { ObtenerProductos, ObtenerProductoPorId, PostModificar,darAltaProducto, VistaModificar, EliminarProducto, cambiarEstadoProducto, iniciarSesion, generarPDF, generarTicket} from "../controllers/controllersApi/AppApiAbm.js";
+import {obtenerProductosSinPaginado, ObtenerProductosPaginados, ObtenerProductoPorId, PostModificar,darAltaProducto, VistaModificar, EliminarProducto, cambiarEstadoProducto, iniciarSesion, generarPDF, generarTicket} from "../controllers/controllersApi/AppApiAbm.js";
 import {dashboard,ticketView,viewAlta,viewBaja,viewLogin,viewMod} from "../controllers/controllersView/AppEjs.js";
 import { authMiddleware } from "../controllers/controllersLogin/AppJWT.js";
 
@@ -10,7 +10,10 @@ export class Router {
     }
 
     cargarRutasApiAbm() {
-        ObtenerProductos(this.app);
+        //Prueba
+        obtenerProductosSinPaginado(this.app);
+        ObtenerProductosPaginados(this.app);
+
         ObtenerProductoPorId(this.app);
         EliminarProducto(this.app);
         VistaModificar(this.app);

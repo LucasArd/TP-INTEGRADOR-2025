@@ -1,18 +1,34 @@
-import { mostrarProductos, conectarBase, setearEstado, altaProducto, mostrarUsuarios} from './AppBDD.js';
+import { conectarBase, setearEstado, altaProducto, mostrarUsuarios, mostrarProductosPaginado} from './AppBDD.js';
 import puppeteer from 'puppeteer';
 import { generarJWT } from '../controllersLogin/AppJWT.js';
 import { obtenerHtmlTicket } from '../controllersView/AppEjs.js';
 
 const db = await conectarBase();
 
+//PRUEBA TODOS
+export async function obtenerProductosSinPaginado(app) {
+  app.get('/api/productos/todos', async (req, res) => {
+    try {
+      const [rows] = await db.query('SELECT * FROM productos');
+      res.status(200).json({ productos: rows });
+    } catch (error) {
+      console.error('Error al obtener todos los productos:', error);
+      res.status(500).json({ error: 'Error al obtener todos los productos' });
+    }
+  });
+}
 
 // GET /api/productos
-export async function ObtenerProductos(app) {
+export async function ObtenerProductosPaginados(app) {
   app.get('/api/productos', async (req, res) => {
+    const pagina = parseInt(req.query.pagina) || 1;
+    const limite = parseInt(req.query.limite) || 4;
+
     try {
-      const productos = await mostrarProductos();
-      res.status(200).json(productos);
+      const resultado = await mostrarProductosPaginado(pagina, limite);
+      res.status(200).json(resultado);
     } catch (error) {
+      console.error('Error al obtener productos paginados:', error);
       res.status(500).json({ error: 'Error al obtener productos' });
     }
   });

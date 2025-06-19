@@ -158,3 +158,28 @@ export async function altaProducto(producto) {
         throw err;
     }
 }
+
+export async function mostrarProductosPaginado(pagina = 1, limite = 4) {
+    const db = await conectarBase();
+    const offset = (pagina - 1) * limite;
+
+    try {
+        const qry = 'SELECT * FROM productos WHERE activo = 1 LIMIT ? OFFSET ?';
+        const [rows] = await db.execute(qry, [limite, offset]);
+
+        const [[{ total }]] = await db.execute('SELECT COUNT(*) AS total FROM productos WHERE activo = 1');
+
+        return {
+            productos: rows,
+            total,
+            totalPaginas: Math.ceil(total / limite),
+            paginaActual: pagina
+        };
+
+    } catch (error) {
+        console.error('Error:', error.message);
+        return { productos: [], total: 0, totalPaginas: 0, paginaActual: pagina };
+    } finally {
+        await db.end();
+    }
+}
