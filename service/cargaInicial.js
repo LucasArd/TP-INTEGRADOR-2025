@@ -107,7 +107,7 @@ function renderPaginadorZapatillas(totalItems) {
         btn.addEventListener("click", () => {
             currentPageZapatilla = i;
             cargarZapatillas();
-        });
+        }); 
 
         cont.appendChild(btn);
     }
@@ -185,7 +185,7 @@ document.getElementById('nextBotines')?.addEventListener('click', () => {
     }
 });
 
-// Inicialización principal
+// Inicialización principal, si no hacemos esto no carga la apgina
 (async () => {
     await crearCalzados();
 

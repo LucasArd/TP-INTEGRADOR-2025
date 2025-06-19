@@ -430,7 +430,10 @@ body {
     padding: 15px;
     gap: 40px;
     justify-items: center;
+    /* botones paginacion por medio de clases de bootstrap */
 }
+
+
 
 .category-link {
     padding: 5px;
