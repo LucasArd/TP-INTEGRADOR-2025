@@ -26,10 +26,11 @@ export async function viewLogin(req,res){
 
 export async function viewMod(req, res) { 
     const idProducto = parseInt(req.params.idProducto);
-    const response = await fetch('http://localhost:3000/api/productos');
+    const response = await fetch('http://localhost:3000/api/productos/todos');
     const data = await response.json();
+    console.log(data)
     
-    const producto = data.find(p => p.idProducto === idProducto);
+    const producto = data.productos.find(p => p.idProducto === idProducto);
 
     if (!producto) {
         return res.status(404).send('Producto no encontrado');
