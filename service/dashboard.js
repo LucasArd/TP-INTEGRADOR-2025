@@ -4,9 +4,9 @@ v.init();
 
 window.addEventListener('DOMContentLoaded', async () => {
     const main = document.getElementById("main");
-    const response = await fetch("http://localhost:3000/api/productos/todos");
-    
-    const respuesta = await response.json(); 
+    const response = await fetch("http://localhost:3000/api/productos?pagina=1&limite=4");
+
+    const respuesta = await response.json();
     const productos = respuesta.productos;
 
     function renderProductos(productos) {
@@ -132,7 +132,55 @@ window.addEventListener('DOMContentLoaded', async () => {
         main.appendChild(container);
     }
 
-    renderProductos(productos);
+    async function cargarProductos(pagina = 1) {
+        const response = await fetch(`http://localhost:3000/api/productos?pagina=${pagina}&limite=4`);
+        const data = await response.json();
+        renderProductos(data.productos);
+        renderPaginacion(data.paginaActual, data.totalPaginas);
+    }
+
+    function renderPaginacion(paginaActual, totalPaginas) {
+        const pagContainer = document.getElementById("paginacion") || document.createElement("div");
+        pagContainer.id = "paginacion";
+        pagContainer.classList.add("d-flex", "justify-content-center", "mt-3", "gap-2");
+
+        pagContainer.innerHTML = "";
+
+        // Botón anterior
+        if (paginaActual > 1) {
+            const btnPrev = document.createElement("button");
+            btnPrev.textContent = "Anterior";
+            btnPrev.classList.add("btn", "btn-outline-primary");
+            btnPrev.onclick = () => cargarProductos(paginaActual - 1);
+            pagContainer.appendChild(btnPrev);
+        }
+
+        // Botones numéricos
+        for (let i = 1; i <= totalPaginas; i++) {
+            const btn = document.createElement("button");
+            btn.textContent = i;
+            btn.classList.add("btn", i === paginaActual ? "btn-primary" : "btn-outline-primary");
+            btn.onclick = () => cargarProductos(i);
+            pagContainer.appendChild(btn);
+        }
+
+        // Botón siguiente
+        if (paginaActual < totalPaginas) {
+            const btnNext = document.createElement("button");
+            btnNext.textContent = "Siguiente";
+            btnNext.classList.add("btn", "btn-outline-primary");
+            btnNext.onclick = () => cargarProductos(paginaActual + 1);
+            pagContainer.appendChild(btnNext);
+        }
+
+        document.getElementById("main").appendChild(pagContainer);
+    }
+
+
+
+    await cargarProductos(); // arranca desde la página 1
+
+
 
     // Escuchar cambios de tamaño de pantalla y volver a renderizar
     window.addEventListener("resize", () => {
