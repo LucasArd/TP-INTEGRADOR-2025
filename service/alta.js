@@ -1,5 +1,5 @@
 import { Vista } from "../model/vista.js";
-import { validarString, validarPrecio, validarTalle, validarTamanioTapones } from "./cargaInicial.js";
+import { validarString, validarPrecio, validarTalle, validarTamanioTapones } from "./validaciones.js";
 
 const v = new Vista();
 v.init();

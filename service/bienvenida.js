@@ -1,5 +1,5 @@
 import { Vista } from "../model/vista.js";
-import { validarNombreUsuario } from "./cargaInicial.js";
+import { validarNombreUsuario } from "./validaciones.js";
 
 const v = new Vista();
 v.init();
