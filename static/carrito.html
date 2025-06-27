@@ -80,6 +80,26 @@
     </div>
 </footer>
 
+<!-- Modal Confirmación -->
+<div class="modal fade" id="modalConfirmacion" tabindex="-1" aria-labelledby="modalConfirmacionLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content nunito">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalConfirmacionLabel">¿Confirmar compra?</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        ¿Estás seguro de que querés confirmar esta compra? No podrás deshacer esta acción.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-success" id="btnConfirmarModal">Sí, confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script type="module" src="../service/carrito.js"></script>
 </body>
-    <script type="module" src="../service/carrito.js"></script>
+    
 </html>

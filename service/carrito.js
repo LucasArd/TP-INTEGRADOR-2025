@@ -41,7 +41,7 @@ function renderizarCarritoComoLista(carritoLS) {
     v.pagCarrito.divCarrito.innerHTML = "";
 
     const divCarritoContenedor = document.createElement("div");
-    divCarritoContenedor.classList.add("carrito"); // esta clase te la paso en CSS
+    divCarritoContenedor.classList.add("carrito");
 
     if (carritoLS.length === 0) {
         divCarritoContenedor.innerHTML = "<p>El carrito está vacío.</p>";
@@ -63,23 +63,28 @@ function renderizarCarritoComoLista(carritoLS) {
             Precio: $${producto.price * producto.cantidad} <br>
             Cantidad: ${producto.cantidad}
         `;
+
         const divBotones = document.createElement("div");
         divBotones.classList.add("div-botones-producto-cart");
 
         const botonSumar = document.createElement("button");
         botonSumar.classList.add("btn-sumar-producto-cart");
+        botonSumar.textContent = "+";
+
         const botonRestar = document.createElement("button");
         botonRestar.classList.add("btn-restar-producto-cart");
+        botonRestar.textContent = "-";
+
         divBotones.appendChild(botonSumar);
         divBotones.appendChild(botonRestar);
 
-        botonSumar.addEventListener("click", async (e) => {
+        botonSumar.addEventListener("click", () => {
             producto.cantidad += 1;
             guardarCarritoEnLocalStorage();
             renderizarCarritoComoLista(carritoLS);
         });
 
-        botonRestar.addEventListener("click", async (e) => {
+        botonRestar.addEventListener("click", () => {
             if (producto.cantidad > 1) {
                 producto.cantidad -= 1;
             } else {
@@ -92,58 +97,73 @@ function renderizarCarritoComoLista(carritoLS) {
 
         div.appendChild(li);
         div.appendChild(divBotones);
-
         ul.appendChild(div);
     });
 
+    // --------------------- Botón Confirmar ---------------------
     const botonConfirmar = document.createElement("button");
     botonConfirmar.textContent = "Confirmar Compra";
     botonConfirmar.classList.add("btn", "btn-success", "mt-3");
 
-    botonConfirmar.addEventListener("click", async () => {
-    const comprador = cargarNombreDeClienteLocalStorage();
-    const precioTotal = carritoLS.reduce((total, producto) => total + producto.price * producto.cantidad, 0);;
-    const productos = new Array();
-    carritoLS.forEach(producto => {
-        productos.push({
-            idProducto: producto.id,
-            cantidad: producto.cantidad,
-            precio: producto.price
-        });
+    botonConfirmar.addEventListener("click", () => {
+        const modal = new bootstrap.Modal(document.getElementById('modalConfirmacion'));
+        modal.show();
+
+        window.__confirmarDatos = {
+            comprador: cargarNombreDeClienteLocalStorage(),
+            productos: carritoLS.map(producto => ({
+                idProducto: producto.id,
+                cantidad: producto.cantidad,
+                precio: producto.price
+            })),
+            precioTotal: carritoLS.reduce((total, producto) => total + producto.price * producto.cantidad, 0)
+        };
     });
 
-    console.log(productos)
-
-    const res = await fetch('/generar-ticket', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ comprador, precioTotal, productos })
-    });
-
-    const data = await res.json();
-
-    if (data.success) {
-        carritoLS.length = 0;
-        localStorage.removeItem("carrito");
-        v.pagCarrito.divCarrito.innerHTML = `
-            <p>¡Pedido confirmado! El carrito ha sido vaciado.</p>
-            <button type="button" class="btn btn-success mt-3" id="btnTicket">Ir al ticket</button>`;
-
-        const btnTicket = v.$("btnTicket");
-        btnTicket.addEventListener("click", () => {
-            window.location.href = `/ticket-html/${data.idTicket}`;
-        });
-
-    } else {
-        alert("Error al generar el ticket.");
-    }
-});
-divCarritoContenedor.appendChild(ul);
-divCarritoContenedor.appendChild(botonConfirmar);
-
-v.pagCarrito.divCarrito.appendChild(divCarritoContenedor);
+    divCarritoContenedor.appendChild(ul);
+    divCarritoContenedor.appendChild(botonConfirmar);
+    v.pagCarrito.divCarrito.appendChild(divCarritoContenedor);
 }
+document.addEventListener("DOMContentLoaded", () => {
+    const btnConfirmarModal = document.getElementById("btnConfirmarModal");
 
-if (v.pagCarrito?.divCarrito) renderizarCarritoComoLista(carritoLS);
+    btnConfirmarModal?.addEventListener("click", async () => {
+        const modalConfirmacion = bootstrap.Modal.getInstance(document.getElementById('modalConfirmacion'));
+        modalConfirmacion.hide();
+
+        const { comprador, productos, precioTotal } = window.__confirmarDatos || {};
+
+        try {
+            const res = await fetch('/generar-ticket', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ comprador, precioTotal, productos })
+            });
+
+            const data = await res.json();
+
+            if (data.success) {
+                carritoLS.length = 0;
+                localStorage.removeItem("carrito");
+
+                v.pagCarrito.divCarrito.innerHTML = `
+                    <p>¡Pedido confirmado! El carrito ha sido vaciado.</p>
+                    <button type="button" class="btn btn-success mt-3" id="btnTicket">Ir al ticket</button>`;
+
+                const btnTicket = v.$("btnTicket");
+                btnTicket.addEventListener("click", () => {
+                    window.location.href = `/ticket-html/${data.idTicket}`;
+                });
+            } else {
+                alert("Error al generar el ticket.");
+            }
+        } catch (err) {
+            console.error("Error al confirmar compra:", err);
+            alert("Error de conexión al servidor.");
+        }
+    });
+});
+
+if (v.pagCarrito?.divCarrito) {
+    renderizarCarritoComoLista(carritoLS);
+}

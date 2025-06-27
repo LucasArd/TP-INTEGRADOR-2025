@@ -25,31 +25,40 @@
         </div>
         <div class="dato"><strong>Productos:</strong>
             <ul class="ul-prod-ticket">
-                <% productos.forEach(p => { %>
+                <% productos.forEach(p=> { %>
                     <li class="li-prod-ticket">
-                        <span class="prod-nombre"><%= p.nombre %></span>
-                        <span class="prod-detalle">$<%= p.precio %> x <%= p.cantidad %> = <span class="prod-subtotal">$<%= p.subtotal %></span></span>
+                        <span class="prod-nombre">
+                            <%= p.nombre %>
+                        </span>
+                        <span class="prod-detalle">$<%= p.precio %> x <%= p.cantidad %> = <span class="prod-subtotal">$
+                                        <%= p.subtotal %></span></span>
+
                     </li>
-                <% }) %>
+                    <% }) %>
             </ul>
         </div>
         <div class="dato-total"><strong>Total:</strong> $<%= ticket.precioTotal %>
         </div>
 
         <p class="gracias">¡Gracias por tu compra!</p>
+        <div style="text-align:center; margin-top: 20px;">
+            <img src="/resources/img/mannaka_logo.png" alt="logo de Mannaka Tech" style="width: 120px; height: auto;" />
+            <p style="font-size: 12px; color: #555;">© 2025 Mannaka Tech, Inc</p>
+        </div>
         <div class="botones-ticket">
-            <% if (typeof mostrarBoton !== 'undefined' && mostrarBoton) { %>
+            <% if (typeof mostrarBoton !=='undefined' && mostrarBoton) { %>
                 <form action="/ticket/<%= ticket.idTicket %>" method="get" class="boton-descarga" target="_blank">
                     <button type="submit">Descargar Ticket en PDF</button>
                 </form>
-            <% } %>
-            
-            <% if (typeof mostrarBoton !== 'undefined' && mostrarBoton) { %>
-                <form action="/bienvenida.html" method="get" class="boton-finalizar" target="_self">
-                    <button type="submit" onclick="localStorage.clear();">Finalizar</button>
-                </form>
-            <% } %>
+                <% } %>
+
+                    <% if (typeof mostrarBoton !=='undefined' && mostrarBoton) { %>
+                        <form action="/bienvenida.html" method="get" class="boton-finalizar" target="_self">
+                            <button type="submit" onclick="localStorage.clear();">Finalizar</button>
+                        </form>
+                        <% } %>
         </div>
     </div>
 </body>
+
 </html>
