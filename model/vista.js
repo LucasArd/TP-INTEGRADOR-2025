@@ -103,7 +103,6 @@ export class Vista {
             btnPassOff: this.$('btnPassOff'),
             aAccesoRapido: this.$('aAccesoRapido')
         };
-        console.log("AAAAAAAA")
     }
 
     initHeader() {
@@ -158,16 +157,16 @@ export class Vista {
     setearLogo() {
         const temaActual = localStorage.getItem('theme') || 'modoJPI';
 
-        let logoSrc = './resources/img/imagen_logo_circular.png';
+        let logoSrc = '/resources/img/imagen_logo_circular.png';
         switch (temaActual) {
             case 'modoClaro':
-                logoSrc = './resources/img/imagen_logo_sinfondo.webp';
+                logoSrc = '/resources/img/imagen_logo_sinfondo.webp';
                 break;
             case 'modoOscuro':
-                logoSrc = './resources/img/logo_tema_oscuro.png';
+                logoSrc = '/resources/img/logo_tema_oscuro.png';
                 break;
             case 'modoJPI':
-                logoSrc = './resources/img/imagen_logo_circular.webp';
+                logoSrc = '/resources/img/imagen_logo_circular.webp';
                 break;
         }
 

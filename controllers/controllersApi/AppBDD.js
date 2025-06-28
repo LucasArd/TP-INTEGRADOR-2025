@@ -11,7 +11,7 @@ export async function conectarBase() {
         });
 
         return db;
-    } catch (err) {console.error('Error:', err.message);}
+    } catch (error) {console.error('Error:', error.message);}
 }
 
 async function crearDB(db){
@@ -43,16 +43,16 @@ export async function initDB() {
     
     try{
         await eliminarDB(db);
-    }catch(err){console.error(err.message);}
+    }catch(error){console.error(error.message);}
 
     try{
         await crearDB(db);
-    }catch(err){console.error(err.message);}
+    }catch(error){console.error(error.message);}
 
     try{
         await db.query('USE justpickit;');
         await crearTablas(db);
-    }catch(err){console.error(err.message);}
+    }catch(error){console.error(error.message);}
 
     try{
         let zapatillas = [`INSERT INTO productos (nombre, tipo, talle, color, img, url, precio, tipoBotin, tipoZapatilla, largoTapones) VALUES ('Nike Air Zoom Pegasus','Zapatilla','40,41,42','Negro','https://nikearprod.vtexassets.com/arquivos/ids/1310510-800-800?width=800&height=800&aspect=true','https://nike.com/productos/air-zoom-pegasus',15999.00,NULL,'Running',NULL);`,`INSERT INTO productos (nombre, tipo, talle, color, img, url, precio, tipoBotin, tipoZapatilla, largoTapones) VALUES ('Nike React Infinity Run','Zapatilla','38,39,40','Azul','https://nikearprod.vtexassets.com/arquivos/ids/1310510-800-800?width=800&height=800&aspect=true','https://nike.com/productos/react-infinity-run',17999.00,NULL,'Running',NULL);`,`INSERT INTO productos (nombre, tipo, talle, color, img, url, precio, tipoBotin, tipoZapatilla, largoTapones) VALUES ('Nike ZoomX Vaporfly','Zapatilla','41,42,43','Blanco','https://nikearprod.vtexassets.com/arquivos/ids/1310510-800-800?width=800&height=800&aspect=true','https://nike.com/productos/zoomx-vaporfly',26999.00,NULL,'Running',NULL);`,`INSERT INTO productos (nombre, tipo, talle, color, img, url, precio, tipoBotin, tipoZapatilla, largoTapones) VALUES ('Nike Free RN 5.0','Zapatilla','39,40,41','Gris','https://nikearprod.vtexassets.com/arquivos/ids/1310510-800-800?width=800&height=800&aspect=true','https://nike.com/productos/free-rn-5',13999.00,NULL,'Running',NULL);`,`INSERT INTO productos (nombre, tipo, talle, color, img, url, precio, tipoBotin, tipoZapatilla, largoTapones) VALUES ('Nike Air Max 270','Zapatilla','40,42,44','Rojo','https://nikearprod.vtexassets.com/arquivos/ids/1310510-800-800?width=800&height=800&aspect=true','https://nike.com/productos/air-max-270',19999.00,NULL,'Running',NULL);`,`INSERT INTO productos (nombre, tipo, talle, color, img, url, precio, tipoBotin, tipoZapatilla, largoTapones) VALUES ('Nike Zoom Pegasus Turbo','Zapatilla','38,39,40','Negro','https://nikearprod.vtexassets.com/arquivos/ids/1310510-800-800?width=800&height=800&aspect=true','https://nike.com/productos/zoom-pegasus-turbo',18999.00,NULL,'Running',NULL);`,`INSERT INTO productos (nombre, tipo, talle, color, img, url, precio, tipoBotin, tipoZapatilla, largoTapones) VALUES ('Nike Air Zoom Structure','Zapatilla','41,42,43','Azul','https://nikearprod.vtexassets.com/arquivos/ids/1310510-800-800?width=800&height=800&aspect=true','https://nike.com/productos/air-zoom-structure',15999.00,NULL,'Running',NULL);`,`INSERT INTO productos (nombre, tipo, talle, color, img, url, precio, tipoBotin, tipoZapatilla, largoTapones) VALUES ('Nike React Miler','Zapatilla','42,43,44','Blanco','https://nikearprod.vtexassets.com/arquivos/ids/1310510-800-800?width=800&height=800&aspect=true','https://nike.com/productos/react-miler',17999.00,NULL,'Running',NULL);`];
@@ -153,9 +153,9 @@ export async function altaProducto(producto) {
         console.log(`Producto insertado con ID: ${resultado.insertId}`);
         return resultado.insertId;
 
-    } catch (err) {
-        console.error('Error al insertar producto:', err.message);
-        throw err;
+    } catch (error) {
+        console.error('Error al insertar producto:', error.message);
+        throw error;
     }
 }
 

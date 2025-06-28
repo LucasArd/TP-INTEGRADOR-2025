@@ -1,6 +1,6 @@
 import PATHS from "../paths/paths.js";
 import express from 'express'
-import {obtenerProductosSinPaginado, ObtenerProductosPaginados, ObtenerProductoPorId, PostModificar,darAltaProducto, VistaModificar, EliminarProducto, cambiarEstadoProducto, iniciarSesion, generarPDF, generarTicket} from "../controllers/controllersApi/AppApiAbm.js";
+import {obtenerProductosSinPaginado, ObtenerProductosPaginados, ObtenerProductoPorId, PostModificar,darAltaProducto, EliminarProducto, cambiarEstadoProducto, iniciarSesion, generarPDF, generarTicket} from "../controllers/controllersApi/AppApiAbm.js";
 import {dashboard,ticketView,viewAlta,viewBaja,viewLogin,viewMod} from "../controllers/controllersView/AppEjs.js";
 import { authMiddleware } from "../controllers/controllersLogin/AppJWT.js";
 
@@ -16,7 +16,7 @@ export class Router {
 
         ObtenerProductoPorId(this.app);
         EliminarProducto(this.app);
-        VistaModificar(this.app);
+        // VistaModificar(this.app);
         PostModificar(this.app);
         cambiarEstadoProducto(this.app);
         iniciarSesion(this.app);
@@ -40,6 +40,7 @@ export class Router {
         this.app.use(express.static(PATHS.static));
         this.app.use('/model', express.static(PATHS.model));
         this.app.use('/service', express.static(PATHS.service));
+        this.app.use('/uploads', express.static(PATHS.uploads));
     }
 
     iniciar() {

@@ -1,9 +1,21 @@
 import { conectarBase, setearEstado, altaProducto, mostrarUsuarios, mostrarProductosPaginado} from './AppBDD.js';
 import puppeteer from 'puppeteer';
+import multer from 'multer';
 import { generarJWT } from '../controllersLogin/AppJWT.js';
 import { obtenerHtmlTicket } from '../controllersView/AppEjs.js';
 
 const db = await conectarBase();
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads');
+    },
+    filename: (req, file, cb) => {
+        const uniqueName = Date.now() + '-' + file.originalname;
+        cb(null, uniqueName);
+    }
+});
+const upload = multer({ storage });
 
 //PRUEBA TODOS
 export async function obtenerProductosSinPaginado(app) {
@@ -97,12 +109,12 @@ export async function iniciarSesion(app) {
   });
 }
 
-export async function cerrarSesion(app) {
-  app.post('/api/logout', (req, res) => {
-    res.clearCookie('token');
-    res.status(200).json({ message: 'Sesión cerrada' });
-  });
-}
+// export async function cerrarSesion(app) {
+//   app.post('/api/logout', (req, res) => {
+//     res.clearCookie('token');
+//     res.status(200).json({ message: 'Sesión cerrada' });
+//   });
+// }
 
 export async function cambiarEstadoProducto(app) {
   app.patch('/api/productos/:id/estado', async (req, res) => {
@@ -119,40 +131,44 @@ export async function cambiarEstadoProducto(app) {
 }
 
 // GET /modificar
-export async function VistaModificar(app) {
-  app.get('/modificar', async (req, res) => {
-    const db = await conectarBase();
-    const { id } = req.query;
+// export async function VistaModificar(app) {
+//   app.get('/modificar', async (req, res) => {
+//     const db = await conectarBase();
+//     const { id } = req.query;
 
-    try {
-      const [rows] = await db.query('SELECT * FROM productos WHERE idProducto = ?', [id]);
-      if (rows.length === 0) {
-        return res.status(404).send('Producto no encontrado');
-      }
-      const producto = rows[0];
-      res.render('modificacion', { producto });
-    } catch (error) {
-      console.error('Error al obtener producto para modificar:', error);
-      res.status(500).send('Error del servidor');
-    } finally {
-      await db.end();
-    }
-  });
-}
+//     try {
+//       const [rows] = await db.query('SELECT * FROM productos WHERE idProducto = ?', [id]);
+//       if (rows.length === 0) {
+//         return res.status(404).send('Producto no encontrado');
+//       }
+//       const producto = rows[0];
+//       res.render('modificacion', { producto });
+//     } catch (error) {
+//       console.error('Error al obtener producto para modificar:', error);
+//       res.status(500).send('Error del servidor');
+//     } finally {
+//       await db.end();
+//     }
+//   });
+// }
 
 // POST /modificar/:id
 export async function PostModificar(app) {
-  app.post('/modificacion/:id', async (req, res) => {
+  app.post('/modificacion/:id', upload.single('imagen'), async (req, res) => {
     const db = await conectarBase();
     const { id } = req.params;
-    const { nombre, tipo, color, talle, precio, tipoBotin, largoTapones } = req.body;
+    const { nombre, precio } = req.body;
+
+    const nuevaImg = req.file ? req.file.filename : req.body.imagenActual; 
 
     try {
       await db.query(
-        `UPDATE productos SET nombre=?, tipo=?, color=?, talle=?, precio=?, tipoBotin=?, largoTapones=? WHERE idProducto=?`,
-        [nombre, tipo, color, talle, precio, tipoBotin || null, largoTapones || null, id]
+        `UPDATE productos SET nombre = ?, img = ?, precio = ? WHERE idProducto = ?`,
+        [nombre, nuevaImg, precio, id]
       );
-      res.redirect('/');
+
+      console.log(req.body)
+      res.redirect('/dashboard');
     } catch (error) {
       console.error('Error al modificar producto:', error);
       res.status(500).send('Error al modificar producto');
@@ -182,8 +198,8 @@ export async function generarTicket(req, res) {
     }
 
     res.json({ success: true, idTicket });
-  } catch (err) {
-    console.error('Error generando ticket:', err);
+  } catch (error) {
+    console.error('Error generando ticket:', error);
     res.json({ success: false });
   } finally {
     await db.end();
@@ -205,41 +221,46 @@ export async function generarPDF(req, res) {
 
     res.contentType('application/pdf');
     res.send(pdf);
-  } catch (err) {
-    console.error('Error generando PDF:', err);
+  } catch (error) {
+    console.error('Error generando PDF:', error);
     res.status(500).send('Error generando ticket');}
 }
 
 // Alta Producto
 export async function darAltaProducto(app) {
-  app.post('/alta', (req, res) => {
-    const datos = req.body;
+  app.post('/alta', upload.single('imagen'), async (req, res) => {
+    try {
+      const datos = req.body;
 
-    // Procesar talles si vienen separados por comas
-    let talleArray = datos.talle?.split(',').map(t => t.trim()).filter(t => t !== '');
-    let talle = talleArray.join(',');  // "guardo talle como String para la BDD (esta guardado como SET, necesita strings)"
+      const talleArray = datos.talle?.split(',').map(t => t.trim()).filter(t => t !== '');
+      const talle = talleArray.join(',');
 
-    // Armar el objeto de producto
-    const nuevoProducto = {
-      nombre: datos.nombre,
-      tipo: datos.tipo,
-      color: datos.color,
-      precio: parseFloat(datos.precio),
-      talle,
-      img: datos.img || '',  // opcional
-      url: datos.url || '',  // opcional
-      tipoBotin: datos.tipo === 'Botin' ? datos.tipoBotin : '',
-      tipoZapatilla: datos.tipo === 'Zapatilla' ? datos.tipoZapatilla : '',
-      largoTapones: datos.tipo === 'Botin' ? datos.largoTapones : '',
-      activo: true
-    };
+      const rutaImg = req.file ? req.file.filename : '';
 
-    altaProducto(nuevoProducto)
-      //.then(() => res.redirect('/'))  // No se puede redireccionar si estoy usando fetch (res.status(200).json para mostrar modal)
-      .then(() => res.status(200).json({ mensaje: 'Producto agregado con éxito' }))
-      .catch(err => res.status(500).send('Error al agregar producto: ' + err));
-  })
-};
+      const nuevoProducto = {
+        nombre: datos.nombre,
+        tipo: datos.tipo,
+        color: datos.color,
+        precio: parseFloat(datos.precio),
+        talle,
+        img: rutaImg,
+        url: datos.url || '',
+        tipoBotin: datos.tipo === 'Botin' ? datos.tipoBotin : '',
+        tipoZapatilla: datos.tipo === 'Zapatilla' ? datos.tipoZapatilla : '',
+        largoTapones: datos.tipo === 'Botin' ? datos.largoTapones : '',
+        activo: 1
+      };
+
+      await altaProducto(nuevoProducto);
+      res.status(200).json({ mensaje: 'Producto agregado con éxito' });
+
+    } catch (error) {
+      console.error('Error al agregar producto:', error);
+      res.status(500).send('Error al agregar producto: ' + error.message);
+    }
+  });
+}
+
 
 
 
