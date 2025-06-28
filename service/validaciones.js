@@ -34,30 +34,44 @@ export function validarTalle(tallesInput) {
     throw new Error("Debe ingresar al menos un talle.");
   }
 
-  const talles = tallesInput
-    .split(",")
-    .map(t => parseInt(t.trim()))
-    .filter(t => !isNaN(t));
+  if (!/^\s*\d{2}(\s*,\s*\d{2})*\s*$/.test(tallesInput)) {
+    throw new Error("Los talles deben ingresarse como números separados por comas, por ejemplo: 36,37,38.");
+  }
+
+  const talles = tallesInput.split(',').map(t => t.trim());
 
   if (talles.length === 0) {
-    throw new Error("Ningún talle válido fue ingresado.");
+    throw new Error("Ningún talle fue ingresado.");
   }
 
-  const fueraDeRango = talles.find(t => t < 30 || t > 50);
-  if (fueraDeRango !== undefined) {
-    throw new Error("Todos los talles deben estar entre 30 y 50.");
+  for (let t of talles) {
+    const numero = parseInt(t);
+    if (isNaN(numero)) {
+      throw new Error(`"${t}" no es un número válido.`);
+    }
+    if (numero < 30 || numero > 50) {
+      throw new Error(`El talle ${numero} está fuera del rango permitido (30-50).`);
+    }
   }
 
-  const duplicados = talles.some((t, i) => talles.indexOf(t) !== i);
+  const numeros = talles.map(t => parseInt(t));
+  const duplicados = numeros.some((t, i) => numeros.indexOf(t) !== i);
   if (duplicados) {
     throw new Error("No debe haber talles repetidos.");
   }
 
-  return talles;
+  return numeros;
 }
 
 export function validarTamanioTapones(valor) {
-  if (!valor) return true; // Permitir vacío si no es obligatorio
+  if (!valor || typeof valor !== "string") {
+    throw new Error("El tamaño de los tapones es obligatorio.");
+  }
+
   const valoresValidos = ["largo", "mediano", "corto"];
-  return valoresValidos.includes(valor.toLowerCase());
+  if (!valoresValidos.includes(valor.toLowerCase())) {
+    throw new Error("El tamaño de los tapones debe ser 'largo', 'mediano' o 'corto'.");
+  }
+
+  return true;
 }
