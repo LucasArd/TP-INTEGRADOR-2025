@@ -2,18 +2,20 @@ import { Vista } from "../model/vista.js";
 const v = new Vista();
 v.init();
 
+let paginaActual = 1;
+
 window.addEventListener('DOMContentLoaded', async () => {
     const main = document.getElementById("main");
     const response = await fetch("/api/productos?pagina=1&limite=4");
-    
-    const respuesta = await response.json(); 
+
+    const respuesta = await response.json();
     const productos = respuesta.productos;
 
     function buscarUrlImagen(imgPath) {
-        if (!imgPath){
+        if (!imgPath) {
             return '/resources/img/calzado-default.webp';
         }
-        if (imgPath.startsWith('http') || imgPath.startsWith('/resources/')){
+        if (imgPath.startsWith('http') || imgPath.startsWith('/resources/')) {
             return imgPath;
         }
         return `/uploads/${imgPath}`;
@@ -67,10 +69,10 @@ window.addEventListener('DOMContentLoaded', async () => {
 
                     <button class="btn-estado" data-id="${prod.idProducto}" data-activo="${prod.activo}">
                     ${prod.activo == 1 ?
-                                ` <svg xmlns="http://www.w3.org/2000/svg" height="80px" viewBox="0 -960 960 960" width="80px" fill="#78A75A"><path d="M280-240q-100 0-170-70T40-480q0-100 70-170t170-70h400q100 0 170 70t70 170q0 100-70 170t-170 70H280Zm0-80h400q66 0 113-47t47-113q0-66-47-113t-113-47H280q-66 0-113 47t-47 113q0 66 47 113t113 47Zm400-40q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35ZM480-480Z"/></svg>`
-                                :
-                                `<svg xmlns="http://www.w3.org/2000/svg" height="80px" viewBox="0 -960 960 960" width="80px" fill="#EA3323"><path d="M280-240q-100 0-170-70T40-480q0-100 70-170t170-70h400q100 0 170 70t70 170q0 100-70 170t-170 70H280Zm0-80h400q66 0 113-47t47-113q0-66-47-113t-113-47H280q-66 0-113 47t-47 113q0 66 47 113t113 47Zm0-40q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35Zm200-120Z"/></svg>`
-                            }
+                        ` <svg xmlns="http://www.w3.org/2000/svg" height="80px" viewBox="0 -960 960 960" width="80px" fill="#78A75A"><path d="M280-240q-100 0-170-70T40-480q0-100 70-170t170-70h400q100 0 170 70t70 170q0 100-70 170t-170 70H280Zm0-80h400q66 0 113-47t47-113q0-66-47-113t-113-47H280q-66 0-113 47t-47 113q0 66 47 113t113 47Zm400-40q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35ZM480-480Z"/></svg>`
+                        :
+                        `<svg xmlns="http://www.w3.org/2000/svg" height="80px" viewBox="0 -960 960 960" width="80px" fill="#EA3323"><path d="M280-240q-100 0-170-70T40-480q0-100 70-170t170-70h400q100 0 170 70t70 170q0 100-70 170t-170 70H280Zm0-80h400q66 0 113-47t47-113q0-66-47-113t-113-47H280q-66 0-113 47t-47 113q0 66 47 113t113 47Zm0-40q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35Zm200-120Z"/></svg>`
+                    }
                     </button>
                 </div>`;
 
@@ -139,9 +141,53 @@ window.addEventListener('DOMContentLoaded', async () => {
         }
 
         main.appendChild(container);
+
+        // Eventos para botones eliminar
+        document.querySelectorAll('.btn-estado').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const id = btn.dataset.id;
+                const activoActual = btn.dataset.activo === '1';
+                const nuevoEstado = !activoActual;
+
+                const url = `http://localhost:3000/api/productos/${id}/estado`;
+                const optionsPATCH = {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ activo: nuevoEstado })
+                };
+
+                if (confirm(`¿Estás seguro de que deseas ${nuevoEstado ? 'activar' : 'desactivar'} este producto?`)) {
+                    try {
+                        const res = await fetch(url, optionsPATCH);
+
+                        if (res.ok) {
+                            btn.dataset.activo = nuevoEstado ? '1' : '0';
+                            btn.innerHTML = nuevoEstado
+                                ? `<svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="#78A75A"><path d="M280-240q-100 0-170-70T40-480q0-100 70-170t170-70h400q100 0 170 70t70 170q0 100-70 170t-170 70H280Zm0-80h400q66 0 113-47t47-113q0-66-47-113t-113-47H280q-66 0-113 47t-47 113q0 66 47 113t113 47Zm400-40q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35ZM480-480Z"/></svg>`
+                                : `<svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="#EA3323"><path d="M280-240q-100 0-170-70T40-480q0-100 70-170t170-70h400q100 0 170 70t70 170q0 100-70 170t-170 70H280Zm0-80h400q66 0 113-47t47-113q0-66-47-113t-113-47H280q-66 0-113 47t-47 113q0 66 47 113t113 47Zm0-40q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35Zm200-120Z"/></svg>`;
+                        } else {
+                            alert('Error al cambiar el estado del producto');
+                        }
+                    } catch (error) {
+                        alert('Error de red o servidor');
+                        console.error(error);
+                    }
+                }
+            });
+        });
+
+        // Eventos para botones modificar (ajusta la ruta si hace falta)
+        document.querySelectorAll('.btn-modificar').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = btn.dataset.id;
+                window.location.href = `http://localhost:3000/modificacion/${id}`;
+            });
+        });
     }
 
+
     async function cargarProductos(pagina = 1) {
+        paginaActual = pagina; // ⬅️ guardamos en la variable global
         const response = await fetch(`http://localhost:3000/api/productos?pagina=${pagina}&limite=4`);
         const data = await response.json();
         renderProductos(data.productos);
@@ -187,8 +233,10 @@ window.addEventListener('DOMContentLoaded', async () => {
             }
             pagContainer.appendChild(btnNext);
         }
-        
+
         document.getElementById("main").appendChild(pagContainer);
+
+
     }
 
 
@@ -203,45 +251,5 @@ window.addEventListener('DOMContentLoaded', async () => {
     });
 
 
-    // Eventos para botones eliminar
-    document.querySelectorAll('.btn-estado').forEach(btn => {
-        btn.addEventListener('click', async () => {
-            const id = btn.dataset.id;
-            const activoActual = btn.dataset.activo === '1';
-            const nuevoEstado = !activoActual;
 
-
-            const url = `http://localhost:3000/api/productos/${id}/estado`;
-            const optionsPATCH = {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ activo: nuevoEstado })
-            };
-
-            if (confirm(`¿Estás seguro de que deseas ${nuevoEstado ? 'activar' : 'desactivar'} este producto?`)) {
-                try {
-                    const res = await fetch(url, optionsPATCH);
-
-                    if (res.ok) {
-                        btn.textContent = nuevoEstado ? 'Desactivar' : 'Activar';
-                        btn.dataset.activo = String(nuevoEstado);
-                        location.reload();
-                    } else {
-                        alert('Error al cambiar el estado del producto');
-                    }
-                } catch (error) {
-                    alert('Error de red o servidor');
-                    console.error(error);
-                }
-            }
-        });
-    });
-
-    // Eventos para botones modificar (ajusta la ruta si hace falta)
-    document.querySelectorAll('.btn-modificar').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const id = btn.dataset.id;
-            window.location.href = `http://localhost:3000/modificacion/${id}`;
-        });
-    });
 });
