@@ -1,4 +1,4 @@
-import { conectarBase, setearEstado, altaProducto, mostrarUsuarios, mostrarProductosPaginado} from './AppBDD.js';
+import { conectarBase, setearEstado, altaProducto, mostrarUsuarios, mostrarProductosPaginado, obtenerVentasConDetalle} from './AppBDD.js';
 import puppeteer from 'puppeteer';
 import multer from 'multer';
 import { generarJWT } from '../controllersLogin/AppJWT.js';
@@ -261,7 +261,16 @@ export async function darAltaProducto(app) {
   });
 }
 
-
-
-
+// ventas
+export async function obtenerVentas(app) {
+  app.get("/api/ventas", async (req, res) => {
+    try {
+        const ventas = await obtenerVentasConDetalle();
+        res.json(ventas);
+    } catch (error) {
+        console.error("Error al obtener ventas:", error);
+        res.status(500).json({ error: "Error interno del servidor" });
+    }
+});
+}
 

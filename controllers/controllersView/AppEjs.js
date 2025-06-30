@@ -69,3 +69,8 @@ export async function ticketView(req, res) {
         console.error('Error obteniendo ticket:', error);
         res.status(500).send('Error cargando ticket');}
 }
+
+export async function viewVentas(req, res) {
+    let html = await ejs.renderFile(PATHS.ventasView);
+    res.status(200).send(html);
+}

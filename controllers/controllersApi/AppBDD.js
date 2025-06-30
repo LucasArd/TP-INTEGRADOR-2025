@@ -183,3 +183,18 @@ export async function mostrarProductosPaginado(pagina = 1, limite = 4) {
         await db.end();
     }
 }
+
+// VENTAS
+export async function obtenerVentasConDetalle() {
+    const connection = await conectarBase();
+    const [rows] = await connection.execute(`
+        SELECT v.idVenta, v.idTicket, v.idProducto, v.cantidad, v.precio, 
+               t.comprador, t.fecha, p.nombre AS nombreProducto
+        FROM ventas v
+        JOIN ticket t ON v.idTicket = t.idTicket
+        JOIN productos p ON v.idProducto = p.idProducto
+        ORDER BY v.idVenta DESC
+    `);
+    await connection.end();
+    return rows;
+}

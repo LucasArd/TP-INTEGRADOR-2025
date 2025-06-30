@@ -33,10 +33,12 @@ export class Vista {
         this.initPagAlta();
         this.initPagLogin();
 
+
         this.initHeader();
 
         this.initTheme();
         this.setearLogo();
+        this.initPagVentas();
 
         if (this.header?.btnNavDesplegable) {
             this.abrirNavegacionResp();
@@ -90,7 +92,7 @@ export class Vista {
         }
     }
 
-    initPagLogin(){
+    initPagLogin() {
         const btn = this.$('btnLogin');
         if (!btn) return;
         this.pagLogin = {
@@ -200,6 +202,13 @@ export class Vista {
 
         this.header.btnNavDesplegable.dataset.listenerAgregado = "true";
         console.log("Init navegación");
+    }
+
+    initPagVentas() {
+        const contenedor = this.$("contenedor-ventas");
+        if (contenedor) {
+            this.pagVentas = { contenedor };
+        }
     }
 
 }

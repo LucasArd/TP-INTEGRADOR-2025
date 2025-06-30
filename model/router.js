@@ -1,7 +1,7 @@
 import PATHS from "../paths/paths.js";
 import express from 'express'
-import {obtenerProductosSinPaginado, ObtenerProductosPaginados, ObtenerProductoPorId, PostModificar,darAltaProducto, EliminarProducto, cambiarEstadoProducto, iniciarSesion, generarPDF, generarTicket} from "../controllers/controllersApi/AppApiAbm.js";
-import {dashboard,ticketView,viewAlta,viewBaja,viewLogin,viewMod} from "../controllers/controllersView/AppEjs.js";
+import {obtenerProductosSinPaginado, ObtenerProductosPaginados, ObtenerProductoPorId, PostModificar,darAltaProducto, EliminarProducto, cambiarEstadoProducto, iniciarSesion, generarPDF, generarTicket, obtenerVentas} from "../controllers/controllersApi/AppApiAbm.js";
+import {dashboard,ticketView,viewAlta,viewBaja,viewLogin,viewMod, viewVentas} from "../controllers/controllersView/AppEjs.js";
 import { authMiddleware } from "../controllers/controllersLogin/AppJWT.js";
 
 export class Router {
@@ -22,6 +22,8 @@ export class Router {
         iniciarSesion(this.app);
         
         darAltaProducto(this.app);
+
+        obtenerVentas(this.app);
     }
 
     cargarRutasEjs() {        
@@ -30,6 +32,8 @@ export class Router {
         this.app.get('/alta', authMiddleware, viewAlta);
         this.app.get('/baja', authMiddleware, viewBaja);
         this.app.get('/modificacion/:idProducto', authMiddleware, viewMod);
+
+        this.app.get('/ventas', authMiddleware, viewVentas);
 
         this.app.get('/ticket-html/:id', ticketView);
         this.app.get('/ticket/:id', generarPDF);
