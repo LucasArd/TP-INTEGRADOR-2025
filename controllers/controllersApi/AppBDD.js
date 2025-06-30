@@ -164,7 +164,7 @@ export async function mostrarProductosPaginado(pagina = 1, limite = 4) {
     const offset = (pagina - 1) * limite;
 
     try {
-        const qry = 'SELECT * FROM productos WHERE activo = 1 LIMIT ? OFFSET ?';
+        const qry = 'SELECT * FROM productos LIMIT ? OFFSET ?';
         const [rows] = await db.execute(qry, [limite, offset]);
 
         const [[{ total }]] = await db.execute('SELECT COUNT(*) AS total FROM productos WHERE activo = 1');

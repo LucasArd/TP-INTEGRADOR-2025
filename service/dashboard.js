@@ -3,6 +3,8 @@ const v = new Vista();
 v.init();
 
 let paginaActual = 1;
+let productosGlobal = [];
+let totalPaginasGlobal = 1;
 
 window.addEventListener('DOMContentLoaded', async () => {
     const main = document.getElementById("main");
@@ -21,7 +23,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         return `/uploads/${imgPath}`;
     }
 
-    function renderProductos(productos) {
+    function renderProductos(productos, totalPaginas) {
         main.innerHTML = '';
         const esPantallaChica = window.innerWidth < 768;
 
@@ -62,16 +64,16 @@ window.addEventListener('DOMContentLoaded', async () => {
 
                 <div style="display: flex; justify-content: center; gap: 20px; margin-top: 10px;">
                     <button class="btn-modificar" data-id="${prod.idProducto}">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="80px" viewBox="0 -960 960 960" width="80px" fill="#F19E39">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="#F19E39">
                             <path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/>
                         </svg>
                     </button>
 
                     <button class="btn-estado" data-id="${prod.idProducto}" data-activo="${prod.activo}">
                     ${prod.activo == 1 ?
-                        ` <svg xmlns="http://www.w3.org/2000/svg" height="80px" viewBox="0 -960 960 960" width="80px" fill="#78A75A"><path d="M280-240q-100 0-170-70T40-480q0-100 70-170t170-70h400q100 0 170 70t70 170q0 100-70 170t-170 70H280Zm0-80h400q66 0 113-47t47-113q0-66-47-113t-113-47H280q-66 0-113 47t-47 113q0 66 47 113t113 47Zm400-40q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35ZM480-480Z"/></svg>`
+                        ` <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="#78A75A"><path d="M280-240q-100 0-170-70T40-480q0-100 70-170t170-70h400q100 0 170 70t70 170q0 100-70 170t-170 70H280Zm0-80h400q66 0 113-47t47-113q0-66-47-113t-113-47H280q-66 0-113 47t-47 113q0 66 47 113t113 47Zm400-40q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35ZM480-480Z"/></svg>`
                         :
-                        `<svg xmlns="http://www.w3.org/2000/svg" height="80px" viewBox="0 -960 960 960" width="80px" fill="#EA3323"><path d="M280-240q-100 0-170-70T40-480q0-100 70-170t170-70h400q100 0 170 70t70 170q0 100-70 170t-170 70H280Zm0-80h400q66 0 113-47t47-113q0-66-47-113t-113-47H280q-66 0-113 47t-47 113q0 66 47 113t113 47Zm0-40q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35Zm200-120Z"/></svg>`
+                        `<svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="#EA3323"><path d="M280-240q-100 0-170-70T40-480q0-100 70-170t170-70h400q100 0 170 70t70 170q0 100-70 170t-170 70H280Zm0-80h400q66 0 113-47t47-113q0-66-47-113t-113-47H280q-66 0-113 47t-47 113q0 66 47 113t113 47Zm0-40q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35Zm200-120Z"/></svg>`
                     }
                     </button>
                 </div>`;
@@ -138,9 +140,11 @@ window.addEventListener('DOMContentLoaded', async () => {
 
             tableWrapper.appendChild(table);
             container.appendChild(tableWrapper);
+            renderPaginacion(paginaActual, totalPaginas);
         }
 
         main.appendChild(container);
+        renderPaginacion(paginaActual, totalPaginas);
 
         // Eventos para botones eliminar
         document.querySelectorAll('.btn-estado').forEach(btn => {
@@ -187,11 +191,13 @@ window.addEventListener('DOMContentLoaded', async () => {
 
 
     async function cargarProductos(pagina = 1) {
-        paginaActual = pagina; // ⬅️ guardamos en la variable global
+        paginaActual = pagina;
         const response = await fetch(`http://localhost:3000/api/productos?pagina=${pagina}&limite=4`);
         const data = await response.json();
-        renderProductos(data.productos);
-        renderPaginacion(data.paginaActual, data.totalPaginas);
+        productosGlobal = data.productos;
+        totalPaginasGlobal = data.totalPaginas;
+
+        renderProductos(productosGlobal, totalPaginasGlobal);
     }
 
     function renderPaginacion(paginaActual, totalPaginas) {
@@ -239,17 +245,21 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     }
 
-
-
     await cargarProductos(); // arranca desde la página 1
 
-
-
     // Escuchar cambios de tamaño de pantalla y volver a renderizar
+    let anchoAnterior = window.innerWidth;
+
     window.addEventListener("resize", () => {
-        renderProductos(productos);
+        const anchoActual = window.innerWidth;
+        const antesEraChico = anchoAnterior < 768;
+        const ahoraEsChico = anchoActual < 768;
+
+        if (antesEraChico !== ahoraEsChico) {
+            renderProductos(productosGlobal, totalPaginasGlobal);
+        }
+
+        anchoAnterior = anchoActual;
     });
-
-
 
 });
