@@ -1,22 +1,23 @@
 // main.js
-import express from 'express';
-import dotenv from 'dotenv';
-import cookieParser from 'cookie-parser';
-import cors from 'cors';
+import express from "express";
+import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
+import cors from "cors";
 
-import { initDB } from './controllers/controllersApi/AppBDD.js';
-import { Router } from './model/router.js';
+import { initDB } from "./controllers/controllersApi/AppBDD.js";
+import { Router } from "./model/router.js";
 
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT;
 
-//para permitir cookies
-app.use(cors({
-    origin: 'http://localhost:3000',
-    credentials: true
-}));
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -27,5 +28,5 @@ initDB();
 router.iniciar();
 
 app.listen(port, () => {
-    console.log(`Servidor escuchando en http://localhost:${port}/`);
+  console.log(`Servidor escuchando en http://localhost:${port}/`);
 });

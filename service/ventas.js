@@ -5,19 +5,19 @@ v.init();
 
 (async () => {
   try {
-    const res = await fetch('/api/ventas');
+    const res = await fetch("/api/ventas");
     const ventas = await res.json();
 
-    // Buscamos el tbody con id 'ventas-body' dentro del contenedor de ventas
-    const tbody = document.querySelector('#ventas-body');
+    const tbody = document.querySelector("#ventas-body");
     if (!tbody) return;
 
-    tbody.innerHTML = ventas.map(venta => {
-      const fechaFormateada = new Date(venta.fecha).toLocaleString();
-      const precioUnitario = Number(venta.precio).toFixed(2);
-      const subtotal = (venta.precio * venta.cantidad).toFixed(2);
+    tbody.innerHTML = ventas
+      .map((venta) => {
+        const fechaFormateada = new Date(venta.fecha).toLocaleString();
+        const precioUnitario = Number(venta.precio).toFixed(2);
+        const subtotal = (venta.precio * venta.cantidad).toFixed(2);
 
-      return `
+        return `
         <tr>
           <td>${venta.idVenta}</td>
           <td>${venta.idTicket}</td>
@@ -29,11 +29,11 @@ v.init();
           <td>$${subtotal}</td>
         </tr>
       `;
-    }).join('');
-
+      })
+      .join("");
   } catch (error) {
-    console.error('Error cargando ventas:', error);
-    const tbody = document.querySelector('#ventas-body');
+    console.error("Error cargando ventas:", error);
+    const tbody = document.querySelector("#ventas-body");
     if (tbody) {
       tbody.innerHTML = `<tr><td colspan="8" class="text-center text-danger">Error cargando ventas</td></tr>`;
     }

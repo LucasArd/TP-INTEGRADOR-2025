@@ -1,4 +1,3 @@
-
 export function validarNombreUsuario(nombre) {
   const nombreLimpio = nombre.trim();
 
@@ -7,12 +6,18 @@ export function validarNombreUsuario(nombre) {
   }
 
   if (nombreLimpio.length > 20) {
-    return { valido: false, mensaje: "El nombre no debe superar los 20 caracteres" };
+    return {
+      valido: false,
+      mensaje: "El nombre no debe superar los 20 caracteres",
+    };
   }
 
   const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
   if (!regex.test(nombreLimpio)) {
-    return { valido: false, mensaje: "El nombre solo debe contener letras y espacios" };
+    return {
+      valido: false,
+      mensaje: "El nombre solo debe contener letras y espacios",
+    };
   }
 
   return { valido: true, nombre: nombreLimpio };
@@ -35,10 +40,12 @@ export function validarTalle(tallesInput) {
   }
 
   if (!/^\s*\d{2}(\s*,\s*\d{2})*\s*$/.test(tallesInput)) {
-    throw new Error("Los talles deben ingresarse como números separados por comas, por ejemplo: 36,37,38.");
+    throw new Error(
+      "Los talles deben ingresarse como números separados por comas, por ejemplo: 36,37,38."
+    );
   }
 
-  const talles = tallesInput.split(',').map(t => t.trim());
+  const talles = tallesInput.split(",").map((t) => t.trim());
 
   if (talles.length === 0) {
     throw new Error("Ningún talle fue ingresado.");
@@ -50,11 +57,13 @@ export function validarTalle(tallesInput) {
       throw new Error(`"${t}" no es un número válido.`);
     }
     if (numero < 30 || numero > 50) {
-      throw new Error(`El talle ${numero} está fuera del rango permitido (30-50).`);
+      throw new Error(
+        `El talle ${numero} está fuera del rango permitido (30-50).`
+      );
     }
   }
 
-  const numeros = talles.map(t => parseInt(t));
+  const numeros = talles.map((t) => parseInt(t));
   const duplicados = numeros.some((t, i) => numeros.indexOf(t) !== i);
   if (duplicados) {
     throw new Error("No debe haber talles repetidos.");
@@ -70,7 +79,9 @@ export function validarTamanioTapones(valor) {
 
   const valoresValidos = ["largo", "mediano", "corto"];
   if (!valoresValidos.includes(valor.toLowerCase())) {
-    throw new Error("El tamaño de los tapones debe ser 'largo', 'mediano' o 'corto'.");
+    throw new Error(
+      "El tamaño de los tapones debe ser 'largo', 'mediano' o 'corto'."
+    );
   }
 
   return true;

@@ -21,5 +21,5 @@ v.pagBienvenida.frmBienvenida.addEventListener("submit", async (e) => {
 
 v.pagBienvenida.btnAdmin.addEventListener("click", async (e) => {
   e.preventDefault();
-  window.location.href = '/'
+  window.location.href = "/";
 });
